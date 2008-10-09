@@ -23,55 +23,58 @@ or just use the 'Event Category' page to list your forthcoming events.
 EventCalendar works fine with WordPress v2. It should also work with WordPress
 v1.5. Reports of successes and failures are most welcome.
 
- [ Full Documentation: http://wpcal.firetree.net ]
+ [Full Documentation](http://wpcal.firetree.net)
 
 
 == Installation ==
 
 Before you start, make sure that you have at least MySQL v4.
 
-1. Upload to your plugins folder, usually `wp-content/plugins/`
-   The plugin is in the form of a directory called 'eventcalendar3'.
+= 1. Upload to your plugins folder, usually `wp-content/plugins/` =
 
-2. Activate the plugin on the plugin screen.
-   Don't try to view your blog yet. First you must...
+The plugin is in the form of a directory called 'eventcalendar3'.
 
-3. Change settings on the "Options > Event Calendar" options screen.
-   You must choose which WordPress category to use for events. (Viewing the
-   options screen for the first time also sets up the database, and upgrades
-   events from older versions of EventCalendar.)
-   
-    [ Details: http://wpcal.firetree.net/options ]
+= 2. Activate the plugin on the plugin screen. =
 
-4. Add the Event Calendar or Upcoming Events list to your sidebar.
+Don't try to view your blog yet. First you must...
 
-   If you use the WordPress Widgets, then the Event Calendar is available as an
-   easy to install widget. In order to use it you must first activate the 'Event
-   Calendar Widget' plugin.
+= 3. Change settings on the "Options > Event Calendar" options screen. =
 
-   If you use the K2 template then the Event Calendar is available as a sidebar
-   module.
+You must choose which WordPress category to use for events. (Viewing the
+options screen for the first time also sets up the database, and upgrades
+events from older versions of EventCalendar.)
 
-   Otherwise, you need to make a small adition to your template. Add the
-   following code to your sidebar.php:
+ [Details](http://wpcal.firetree.net/options)
 
-     Event Calendar:
-     <li>
-       <?php ec3_get_calendar(); ?>
-     </li>
+= 4. Add the Event Calendar or Upcoming Events list to your sidebar. =
 
-     Upcoming Events:
-     <li>Events
-       <?php ec3_get_events(5); ?>
-     </li>
+If you use the WordPress Widgets, then the Event Calendar is available as an
+easy to install widget. In order to use it you must first activate the 'Event
+Calendar Widget' plugin.
 
-   If you are using an older template, then you should check that your HTML
-   header contains the following tag: <?php wp_head(); ?>
+If you use the K2 template then the Event Calendar is available as a sidebar
+module.
 
-   Caution: The Event Calendar must be unique. If you try to show more than one
-   calendar on a page, then only the first will be displayed.
+Otherwise, you need to make a small adition to your template. Add the
+following code to your sidebar.php:
 
-    [ Details: http://wpcal.firetree.net/template-functions ]
+    Event Calendar:
+    <li>
+      <?php ec3_get_calendar(); ?>
+    </li>
+
+    Upcoming Events:
+    <li>Events
+      <?php ec3_get_events(5); ?>
+    </li>
+
+If you are using an older template, then you should check that your HTML
+header contains the following tag: `<?php wp_head(); ?>`
+
+Caution: The Event Calendar must be unique. If you try to show more than one
+calendar on a page, then only the first will be displayed.
+
+ [Details](http://wpcal.firetree.net/template-functions)
 
 
 == How to make an Event Post ==
@@ -97,8 +100,8 @@ this, make sure that you keep to the correct format:
 
 Example: An event is scheduled from 2-4pm on 14th August, 2006.
 
- Start: 2006-08-14 14:00:00
- End:   2006-08-14 16:00:00
+   Start: 2006-08-14 14:00:00
+   End:   2006-08-14 16:00:00
 
 When you change the 'Start' field, the 'End' field updates automatically, so
 that the event's duration remains the same. If you want to change the duration,
@@ -147,9 +150,9 @@ post edit screen that allows you to set the event date.
 
    If you would like to make a new translation, then just make a copy of the
    file getttext/ec3.pot, and add your translated text. You can use the existing
-   .po files as an example. Post your file to the mailing list
-   (http://penguin.firetree.net/eventcalendar) and we'll add it into the
-   project.
+   .po files as an example. Post your file to the
+   [mailing list](http://penguin.firetree.net/eventcalendar) and we'll add it
+   into the project.
 
 
 == Planned features ==
