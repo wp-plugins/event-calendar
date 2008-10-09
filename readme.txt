@@ -133,20 +133,22 @@ post edit screen that allows you to set the event date.
    
  o Translations are now available in the following languages:
 
-     Catalan             ca_ES (by Vicent Cubells)
-     Danish              dk_DK (by Simon Bognolo)
-     Dutch               nl_NL (by Gerjan Boer & P. Mathijssen)
-     Finnish             fi_FI (by Ralf Strandell)
-     French              fr_FR (by Davy Morel)
-     German              de_DE (by Marc Schumann)
-     Hungarian           hu_HU (by Elbandi)
-     Italian             it_IT (by Jimmi)
-     Macedonian          mk_MK (by Vanco Ordanoski)
-     Norwegian           nb_NO (by Realf Ording Helgesen)
-     Portuguese (Brazil) pt_BR (by DJ Spark)
-     Spanish             es_ES (by Maira Belmonte)
-     Swedish             sv_SE (by Anders Laurin)
-     Turkish             tr_TR (by Firat Cem Tezer)
+     ca_ES  Catalan             (by Vicent Cubells)
+     cs_CZ  Czech               (by Michal Franek)
+     de_DE  German              (by Marc Schumann)
+     dk_DK  Danish              (by Simon Bognolo)
+     es_ES  Spanish             (by Maira Belmonte)
+     fi_FI  Finnish             (by Ralf Strandell)
+     fr_FR  French              (by Davy Morel & Jérôme aka Comme une image)
+     hu_HU  Hungarian           (by Elbandi)
+     it_IT  Italian             (by Jimmi)
+     mk_MK  Macedonian          (by Vanco Ordanoski)
+     nb_NO  Norwegian           (by Realf Ording Helgesen)
+     nl_NL  Dutch               (by Gerjan Boer & P. Mathijssen)
+     pt_BR  Portuguese (Brazil) (by DJ Spark)
+     ro_RO  Romanian            (by Sushkov Stanislav)
+     sv_SE  Swedish             (by Anders Laurin)
+     tr_TR  Turkish             (by Firat Cem Tezer & Roman Neumüller)
 
    If you would like to make a new translation, then just make a copy of the
    file getttext/ec3.pot, and add your translated text. You can use the existing
