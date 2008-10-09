@@ -1,10 +1,10 @@
 === Event Calendar 3 ===
 Tags: calendar, event, vcalendar, icalendar, ical
-Stable tag: 3.1.1._rc3
+Stable tag: trunk
 Contributors: Alex Tingle
 Donate link: http://www.amazon.co.uk/gp/registry/1S44DP6XXOFIN
 Requires at least: 1.5
-Tested up to: 2.3
+Tested up to: 2.6.2
 
 Manage future events as an online calendar. Display upcoming events in a dynamic
 calendar, on a listings page, or as a list in the sidebar.
