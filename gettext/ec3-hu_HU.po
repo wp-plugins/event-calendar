@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1._rc1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2007-05-02 23:03+0200\n"
+"POT-Creation-Date: 2008-10-09 17:22+0100\n"
 "PO-Revision-Date: 2007-05-03 00:27+0100\n"
 "Last-Translator: Elbandi <elbandi@obinet.hu>\n"
 "Language-Team: Andras Elso <ea333@freemail.hu>\n"
@@ -47,155 +47,168 @@ msgstr "Esemény törléses"
 msgid "Error upgrading database for EventCalendar plugin."
 msgstr "Hiba az EventCalendar plugin adatbázis frissítésekor."
 
-#: admin.php:348
+#: admin.php:312
 #, php-format
 msgid "Upgraded database to EventCalendar Version %s"
 msgstr "Adatbázis frissitve az EventCalendar verziohoz: %s"
 
-#: admin.php:352
+#: admin.php:316
 msgid "Table already existed"
 msgstr "A tábla már létezik"
 
-#: admin.php:380
-#: admin.php:390
-#: admin.php:435
+#: admin.php:344 admin.php:354 admin.php:399
 msgid "Event Calendar Options"
 msgstr "EventCalendar beállítások"
 
-#: admin.php:439
+#: admin.php:403
 msgid "Event category"
 msgstr "Esemény kategória"
 
-#: admin.php:449
-msgid "Event posts are put into this category for you. Don't make this your default post category."
-msgstr "Események ebbe a kategóriába tartoznak. Ne tedd ezt a kategóriát az alapértelmezettnek."
+#: admin.php:413
+msgid ""
+"Event posts are put into this category for you. Don't make this your default "
+"post category."
+msgstr ""
+"Események ebbe a kategóriába tartoznak. Ne tedd ezt a kategóriát az "
+"alapértelmezettnek."
 
-#: admin.php:455
+#: admin.php:419
 msgid "Show schedule within posts"
 msgstr "Ütemezés mutatása"
 
-#: admin.php:459
+#: admin.php:423
 msgid "Show Schedule"
 msgstr "Megmutat"
 
-#: admin.php:462
+#: admin.php:426
 msgid "Hide Schedule"
 msgstr "Elrejt"
 
-#: admin.php:469
+#: admin.php:433
 msgid "Show events as blog entries"
 msgstr "Események mutatása mint blog bejegyzés"
 
-#: admin.php:473
+#: admin.php:437
 msgid "Events are Normal Posts"
 msgstr "Események normál postok"
 
-#: admin.php:476
+#: admin.php:440
 msgid "Keep Events Separate"
 msgstr "Események külön tartása"
 
-#: admin.php:480
-msgid "Keep Events Separate: the Event Category page shows future events, in date order. Events do not appear on front page."
-msgstr "Események külön tartása: az esemény kategória oldal mutatja az eljövendõ eseményeket, datum szerint. Az események nem jelennek meg a fõoldalon."
+#: admin.php:444
+msgid ""
+"Keep Events Separate: the Event Category page shows future events, in date "
+"order. Events do not appear on front page."
+msgstr ""
+"Események külön tartása: az esemény kategória oldal mutatja az eljövendõ "
+"eseményeket, datum szerint. Az események nem jelennek meg a fõoldalon."
 
-#: admin.php:486
-#: admin.php:498
+#: admin.php:450 admin.php:462
 msgid "Timezone"
 msgstr "Idõzona"
 
-#: admin.php:490
+#: admin.php:454
 msgid "unknown"
 msgstr "ismeretlen"
 
-#: admin.php:494
-msgid "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to PHP5."
-msgstr "Nem tudod változtatni az idõzonát. Kapcsold ki a 'safe mode'-ot a PHP-bõl vagy frissíts PHP5-re."
+#: admin.php:458
+msgid ""
+"You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
+"PHP5."
+msgstr ""
+"Nem tudod változtatni az idõzonát. Kapcsold ki a 'safe mode'-ot a PHP-bõl "
+"vagy frissíts PHP5-re."
 
-#: admin.php:510
+#: admin.php:474
 msgid "Calendar Display"
 msgstr "Naptár kinézet"
 
-#: admin.php:515
+#: admin.php:479
 msgid "Number of months"
 msgstr "Hónapok száma"
 
-#: admin.php:522
+#: admin.php:486
 msgid "Show all categories in calendar"
 msgstr "Minten kategória mutatása a naptárban"
 
-#: admin.php:526
+#: admin.php:490
 msgid "Only Show Events"
 msgstr "Csak az események mutatása"
 
-#: admin.php:529
+#: admin.php:493
 msgid "Show All Posts"
 msgstr "Minden bejegyzés mutatása"
 
-#: admin.php:536
+#: admin.php:500
 msgid "Show day names as"
 msgstr "Napnevek mutatása mint"
 
-#: admin.php:540
+#: admin.php:504
 msgid "Single Letter"
 msgstr "Egy betü"
 
-#: admin.php:543
+#: admin.php:507
 msgid "3-Letter Abbreviation"
 msgstr "3 betüs rövidítés"
 
-#: admin.php:546
+#: admin.php:510
 msgid "Full Day Name"
 msgstr "Teljes nap nevek"
 
-#: admin.php:553
+#: admin.php:517
 msgid "Show Event Calendar logo"
 msgstr "EventCalendar logo mutatása"
 
-#: admin.php:557
+#: admin.php:521
 msgid "Show Logo"
 msgstr "Logo mutatása"
 
-#: admin.php:560
+#: admin.php:524
 msgid "Hide Logo"
 msgstr "Logo elrejtése"
 
-#: admin.php:567
+#: admin.php:531
 msgid "Position of navigation links"
 msgstr "Navigációs link helye"
 
-#: admin.php:571
+#: admin.php:535
 msgid "Above Calendar"
 msgstr "Naptár felett"
 
-#: admin.php:574
+#: admin.php:538
 msgid "Below Calendar"
 msgstr "Naptár alatt"
 
-#: admin.php:577
+#: admin.php:541
 msgid "Hidden"
 msgstr "Rejtett"
 
-#: admin.php:581
-msgid "The navigation links are more usable when they are above the calendar, but you might prefer them below or hidden for aesthetic reasons."
-msgstr "A navigációs linkek sokkal hasznosabbak ha a naptár felett vannak, de ha akarod alulra is rakhatod oket, vagy akar elrejtheted esztétikai okokból."
+#: admin.php:545
+msgid ""
+"The navigation links are more usable when they are above the calendar, but "
+"you might prefer them below or hidden for aesthetic reasons."
+msgstr ""
+"A navigációs linkek sokkal hasznosabbak ha a naptár felett vannak, de ha "
+"akarod alulra is rakhatod oket, vagy akar elrejtheted esztétikai okokból."
 
-#: admin.php:587
+#: admin.php:551
 msgid "Popup event lists"
 msgstr "Felugróablakok az események listájával"
 
-#: admin.php:591
+#: admin.php:555
 msgid "Show Popups"
 msgstr "Felugrók megjelenítése"
 
-#: admin.php:594
+#: admin.php:558
 msgid "Hide Popups"
 msgstr "Felugrók elrejtése"
 
-#: admin.php:598
+#: admin.php:562
 msgid "You might want to disable popups if you use Nicetitles."
 msgstr "Könnyen letilthatod a felugró ablakokat, ha Szépcímeket használsz"
 
-#: admin.php:611
+#: admin.php:575
 msgid "EXAMPLE SIDEBAR CODE:"
 msgstr "Minta SIDEBAR kod:"
 
@@ -203,9 +216,7 @@ msgstr "Minta SIDEBAR kod:"
 msgid "You must choose an event category."
 msgstr "Ki kell jelölnöd egy esemény kategóriát."
 
-#: template-functions.php:32
-#: widget.php:83
-#: widget.php:146
+#: template-functions.php:32 widget.php:83 widget.php:146
 #: K2/ec3_sidebar_module.php:64
 msgid "Go to Event Calendar Options"
 msgstr "Ugrás a EventCalendar beállításokhoz"
@@ -214,37 +225,29 @@ msgstr "Ugrás a EventCalendar beállításokhoz"
 msgid "Subscribe to iCalendar."
 msgstr "Feliratkozás iCalendar-ra."
 
-#: template-functions.php:155
-#: template-functions.php:435
+#: template-functions.php:155 template-functions.php:435
 msgid "all day"
 msgstr "egész napos"
 
-#: template-functions.php:271
-#: widget.php:91
-#: widget.php:95
+#: template-functions.php:271 widget.php:91 widget.php:95
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Esemény Naptár"
 
-#: template-functions.php:351
-#: widget.php:155
-#: widget.php:159
-#: K2/ec3_sidebar_module.php:71
-#: K2/ec3_sidebar_module.php:77
+#: template-functions.php:351 widget.php:155 widget.php:159
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Közeledõ esemény"
 
-#: template-functions.php:451
+#: template-functions.php:456
 msgid "No events."
 msgstr "Nincs esemény."
 
-#: template-functions.php:488
-#: template-functions.php:502
-#: template-functions.php:514
+#: template-functions.php:493 template-functions.php:507
+#: template-functions.php:519
 msgid "to"
 msgstr "-"
 
 #: widget.php:139
 msgid "Number of events:"
 msgstr "Események száma:"
-

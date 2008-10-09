@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Calendar v3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2007-10-22 20:16+0100\n"
+"POT-Creation-Date: 2008-10-09 17:22+0100\n"
 "PO-Revision-Date: 2006-11-01 21:14+0200\n"
 "Last-Translator: Ralf Strandell <ralf.strandell@auriamail.net>\n"
 "Language-Team: Ralf Strandell <ralf.strandell@auriamail.net>\n"
@@ -213,22 +213,6 @@ msgstr ""
 msgid "EXAMPLE SIDEBAR CODE:"
 msgstr "ESIMERKKIKOODIA SIVUPALKKIIN:"
 
-#: template-functions-new.php:18 template-functions.php:155
-#: template-functions.php:435
-msgid "all day"
-msgstr "koko päivä"
-
-#: template-functions-new.php:65 template-functions-new.php:142
-#: template-functions.php:351 widget.php:155 widget.php:159
-#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
-msgid "Upcoming Events"
-msgstr "Tulevia tapahtumia"
-
-#: template-functions-new.php:133 template-functions-new.php:186
-#: template-functions.php:456
-msgid "No events."
-msgstr "Ei tapahtumia."
-
 #: template-functions.php:29
 msgid "You must choose an event category."
 msgstr "Tapahtuman luokka on valittava"
@@ -242,10 +226,23 @@ msgstr "Siirry tapahtumakalenterin asetuksiin"
 msgid "Subscribe to iCalendar."
 msgstr "Tilaa iCalendar."
 
+#: template-functions.php:155 template-functions.php:435
+msgid "all day"
+msgstr "koko päivä"
+
 #: template-functions.php:271 widget.php:91 widget.php:95
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Tapahtumakalenteri"
+
+#: template-functions.php:351 widget.php:155 widget.php:159
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+msgid "Upcoming Events"
+msgstr "Tulevia tapahtumia"
+
+#: template-functions.php:456
+msgid "No events."
+msgstr "Ei tapahtumia."
 
 #: template-functions.php:493 template-functions.php:507
 #: template-functions.php:519
