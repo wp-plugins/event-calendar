@@ -8,18 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._rc2\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-09 17:22+0100\n"
-"PO-Revision-Date: 2007-02-15 15:27+0100\n"
-"Last-Translator: chris <infos@ilbliege.net>\n"
+"POT-Creation-Date: 2007-11-01 16:00+0000\n"
+"PO-Revision-Date: 2008-06-01 23:16+0100\n"
+"Last-Translator: Comme une image <cui@burp.fr>\n"
 "Language-Team: French <davy.morel@tiscali.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Country: France\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: admin.php:80
 msgid "Event Editor"
-msgstr "Editeur d'évènement"
+msgstr "Editeur d'événement"
 
 #: admin.php:87
 msgid "Start"
@@ -39,41 +41,38 @@ msgstr "Répéter"
 
 #: admin.php:111
 msgid "Add a new event"
-msgstr "Ajouter un nouvel évènement"
+msgstr "Ajouter un nouvel événement"
 
 #: admin.php:161
 msgid "Delete this event"
-msgstr "Supprimer cet évènement"
+msgstr "Supprimer cet événement"
 
 #: admin.php:287
 msgid "Error upgrading database for EventCalendar plugin."
-msgstr ""
-"Erreur pendant la mise à jour de la base de données du plugin EventCalendar"
+msgstr "Erreur pendant la mise à jour de la base de données de l'extension EventCalendar"
 
 #: admin.php:312
 #, php-format
 msgid "Upgraded database to EventCalendar Version %s"
-msgstr "Mise à jour effectué de la base de données EventCalendar Version %s"
+msgstr "Mise à jour effectuée de la base de données EventCalendar Version %s"
 
 #: admin.php:316
 msgid "Table already existed"
 msgstr "La table existe déjà"
 
-#: admin.php:344 admin.php:354 admin.php:399
+#: admin.php:344
+#: admin.php:354
+#: admin.php:399
 msgid "Event Calendar Options"
-msgstr "Options du calendrier d'évènement"
+msgstr "Options du calendrier d'événement"
 
 #: admin.php:403
 msgid "Event category"
-msgstr "Catégorie d'évènement"
+msgstr "Catégorie d'événement"
 
 #: admin.php:413
-msgid ""
-"Event posts are put into this category for you. Don't make this your default "
-"post category."
-msgstr ""
-"Les évènements sont placés dans cet categorie pour vous. N'en faite pas "
-"votre catégorie de message par defaut."
+msgid "Event posts are put into this category for you. Don't make this your default post category."
+msgstr "Les événements sont placés dans cette catégorie pour vous. N'en faites pas votre catégorie de message par défaut."
 
 #: admin.php:419
 msgid "Show schedule within posts"
@@ -89,7 +88,7 @@ msgstr "Cacher le programme"
 
 #: admin.php:433
 msgid "Show events as blog entries"
-msgstr "Montrer les évènements comme des articles du blog"
+msgstr "Montrer les événements comme des articles du blog"
 
 #: admin.php:437
 msgid "Events are Normal Posts"
@@ -97,32 +96,24 @@ msgstr "Les événements sont des messages normaux"
 
 #: admin.php:440
 msgid "Keep Events Separate"
-msgstr "Garder les évènements separés"
+msgstr "Garder les événements séparés"
 
 #: admin.php:444
-msgid ""
-"Keep Events Separate: the Event Category page shows future events, in date "
-"order. Events do not appear on front page."
-msgstr ""
-"Garder les évènements séparés: la page de catégorie d'évènement montre les "
-"évènements futur, par ordre chronologique. Les évènements n'apparaissent pas "
-"en première page."
+msgid "Keep Events Separate: the Event Category page shows future events, in date order. Events do not appear on front page."
+msgstr "Garder les événements séparés&nbsp;: la page de catégorie d'événement montre les événements futurs, par ordre chronologique. Les événements n'apparaissent pas en première page."
 
-#: admin.php:450 admin.php:462
+#: admin.php:450
+#: admin.php:462
 msgid "Timezone"
-msgstr "Zone horaire"
+msgstr "Fuseau horaire"
 
 #: admin.php:454
 msgid "unknown"
 msgstr "inconnu"
 
 #: admin.php:458
-msgid ""
-"You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
-"PHP5."
-msgstr ""
-"Vous ne pouvez changer votre zone horaire. Désactivez le  'safe mode' de PHP "
-"ou upgradez vers php5"
+msgid "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to PHP5."
+msgstr "Vous ne pouvez changer votre fuseau horaire. Désactivez le  'safe mode' de PHP ou mettez à jour vers PHP5"
 
 #: admin.php:474
 msgid "Calendar Display"
@@ -138,7 +129,7 @@ msgstr "Montrer toutes les catégories dans le calendrier"
 
 #: admin.php:490
 msgid "Only Show Events"
-msgstr "Montrer seulement les évènements"
+msgstr "Montrer seulement les événements"
 
 #: admin.php:493
 msgid "Show All Posts"
@@ -146,15 +137,15 @@ msgstr "Montrer tous les messages"
 
 #: admin.php:500
 msgid "Show day names as"
-msgstr "Montrer les noms de jours comme"
+msgstr "Montrer les noms de jour comme"
 
 #: admin.php:504
 msgid "Single Letter"
-msgstr "Un caractère"
+msgstr "Un seul caractère"
 
 #: admin.php:507
 msgid "3-Letter Abbreviation"
-msgstr "abréviation 3 caractères"
+msgstr "Abréviation 3 caractères"
 
 #: admin.php:510
 msgid "Full Day Name"
@@ -162,7 +153,7 @@ msgstr "Nom de jour long"
 
 #: admin.php:517
 msgid "Show Event Calendar logo"
-msgstr "Montrer le logo du calendrier d'évènement"
+msgstr "Montrer le logo du calendrier d'événement"
 
 #: admin.php:521
 msgid "Show Logo"
@@ -189,17 +180,12 @@ msgid "Hidden"
 msgstr "Caché"
 
 #: admin.php:545
-msgid ""
-"The navigation links are more usable when they are above the calendar, but "
-"you might prefer them below or hidden for aesthetic reasons."
-msgstr ""
-"Les liens de navigation sont plus utiles lors qu'ils sont au dessus du "
-"calendrier, mais vous préféré peut être les avoir en dessous ou caché pour "
-"des raisons esthétique."
+msgid "The navigation links are more usable when they are above the calendar, but you might prefer them below or hidden for aesthetic reasons."
+msgstr "Les liens de navigation sont plus utiles lorsqu'ils sont au dessus du calendrier, mais vous préférez peut-être les avoir en dessous ou cachés pour des raisons esthétiques."
 
 #: admin.php:551
 msgid "Popup event lists"
-msgstr "Popup des listes d'évènement"
+msgstr "Popup des listes d'événement"
 
 #: admin.php:555
 msgid "Show Popups"
@@ -211,49 +197,63 @@ msgstr "Cacher les popups"
 
 #: admin.php:562
 msgid "You might want to disable popups if you use Nicetitles."
-msgstr ""
-"Vous voudrez peut être désactiver les popups si vous utilisez Nicetitles."
+msgstr "Vous souhaiterez peut-être désactiver les popups si vous utilisez Nicetitles."
 
 #: admin.php:575
 msgid "EXAMPLE SIDEBAR CODE:"
-msgstr "EXEMPLE DE CODE DE BARRE LATERALE:"
+msgstr "EXEMPLE DE CODE DE BARRE LATERALE&nbsp:"
 
-#: template-functions.php:29
-msgid "You must choose an event category."
-msgstr "Vous devez choisir une catégorie d'évènement."
-
-#: template-functions.php:32 widget.php:83 widget.php:146
-#: K2/ec3_sidebar_module.php:64
-msgid "Go to Event Calendar Options"
-msgstr "Aller aux options du calendrier d'évènement"
-
-#: template-functions.php:91
-msgid "Subscribe to iCalendar."
-msgstr "S'abonner à iCalendar."
-
-#: template-functions.php:155 template-functions.php:435
+#: template-functions-new.php:18
+#: template-functions.php:155
+#: template-functions.php:435
 msgid "all day"
 msgstr "journée entière"
 
-#: template-functions.php:271 widget.php:91 widget.php:95
-#: K2/ec3_sidebar_module.php:31
-msgid "Event Calendar"
-msgstr "Calendrier d'évènement"
-
-#: template-functions.php:351 widget.php:155 widget.php:159
-#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+#: template-functions-new.php:65
+#: template-functions-new.php:142
+#: template-functions.php:351
+#: widget.php:155
+#: widget.php:159
+#: K2/ec3_sidebar_module.php:71
+#: K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
-msgstr "Evènement à venir"
+msgstr "Evénements à venir"
 
+#: template-functions-new.php:133
+#: template-functions-new.php:186
 #: template-functions.php:456
 msgid "No events."
-msgstr "Pas d'évènements."
+msgstr "Pas d'événement."
 
-#: template-functions.php:493 template-functions.php:507
+#: template-functions.php:29
+msgid "You must choose an event category."
+msgstr "Vous devez choisir une catégorie d'événement."
+
+#: template-functions.php:32
+#: widget.php:83
+#: widget.php:146
+#: K2/ec3_sidebar_module.php:64
+msgid "Go to Event Calendar Options"
+msgstr "Aller aux options du calendrier d'événement"
+
+#: template-functions.php:91
+msgid "Subscribe to iCalendar."
+msgstr "S&#39;abonner à iCalendar."
+
+#: template-functions.php:271
+#: widget.php:91
+#: widget.php:95
+#: K2/ec3_sidebar_module.php:31
+msgid "Event Calendar"
+msgstr "Calendrier d'événement"
+
+#: template-functions.php:493
+#: template-functions.php:507
 #: template-functions.php:519
 msgid "to"
 msgstr "au"
 
 #: widget.php:139
 msgid "Number of events:"
-msgstr "Nombre d'évènements:"
+msgstr "Nombre d'événements&nbsp;:"
+
