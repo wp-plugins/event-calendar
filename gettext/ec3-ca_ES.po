@@ -1,0 +1,260 @@
+# Event Calendar plug-in for WordPress.
+# Copyright (C) 2006, Alex Tingle
+# This file is distributed under the same license as the wpcal package.
+# Alex Tingle <alex DOT ec3pot AT firetree.net>, 2005.
+# , fuzzy
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: wpcal 3.1.1._rc1\n"
+"Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
+"POT-Creation-Date: 2007-10-22 20:16+0100\n"
+"PO-Revision-Date: 2007-02-17 17:30+0100\n"
+"Last-Translator: cubells <vicent@vcubells.net>\n"
+"Language-Team: Catalan <vicent@vcubells.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.php:80
+msgid "Event Editor"
+msgstr "Editor d'esdeveniments"
+
+#: admin.php:87
+msgid "Start"
+msgstr "Comença"
+
+#: admin.php:88
+msgid "End"
+msgstr "Acaba"
+
+#: admin.php:89
+msgid "All Day"
+msgstr "Durant tot el dia"
+
+#: admin.php:90
+msgid "Repeat"
+msgstr "Repeteix"
+
+#: admin.php:111
+msgid "Add a new event"
+msgstr "Afegeix un nou esdeveniment"
+
+#: admin.php:161
+msgid "Delete this event"
+msgstr "Esborra aquest esdeveniment"
+
+#: admin.php:287
+msgid "Error upgrading database for EventCalendar plugin."
+msgstr "Error actualitzant la base de dades del connector EventCalendar"
+
+#: admin.php:312
+#, php-format
+msgid "Upgraded database to EventCalendar Version %s"
+msgstr "Actualitzada la base de dades de l'EventCalendar Versió %s"
+
+#: admin.php:316
+msgid "Table already existed"
+msgstr "La Taula ja existeix"
+
+#: admin.php:344 admin.php:354 admin.php:399
+msgid "Event Calendar Options"
+msgstr "Opcions del Calendari d'Esdeveniments"
+
+#: admin.php:403
+msgid "Event category"
+msgstr "Categoria per als esdeveniments"
+
+#: admin.php:413
+msgid ""
+"Event posts are put into this category for you. Don't make this your default "
+"post category."
+msgstr ""
+"Els esdeveniments són agefits en aquesta categoria de manera automàtica. No "
+"hauria de ser la categoria predeterminada per a les teves entrades."
+
+#: admin.php:419
+msgid "Show schedule within posts"
+msgstr "Pel que fa als horaris dintre de les entrades"
+
+#: admin.php:423
+msgid "Show Schedule"
+msgstr "Mostra els horaris"
+
+#: admin.php:426
+msgid "Hide Schedule"
+msgstr "Amaga els horaris"
+
+#: admin.php:433
+msgid "Show events as blog entries"
+msgstr "Pel que fa als esdeveniments i les entrades"
+
+#: admin.php:437
+msgid "Events are Normal Posts"
+msgstr "Els esdeveniments són entrades normals"
+
+#: admin.php:440
+msgid "Keep Events Separate"
+msgstr "Manté els esdeveniments separats"
+
+#: admin.php:444
+msgid ""
+"Keep Events Separate: the Event Category page shows future events, in date "
+"order. Events do not appear on front page."
+msgstr ""
+"Manté els esdeveniments separats: la pàgina de la categoria dels "
+"esdeveniments mostra els esdeveniments futurs ordenats per data. Els "
+"esdeveniments no apareixen a la pàgina principal."
+
+#: admin.php:450 admin.php:462
+msgid "Timezone"
+msgstr "Zona horària"
+
+#: admin.php:454
+msgid "unknown"
+msgstr "Desconeguda"
+
+#: admin.php:458
+msgid ""
+"You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
+"PHP5."
+msgstr ""
+"No pots canviar la teva zona horària. Deshabilita el 'safe mode' del PHP o "
+"actualitza a PHP5."
+
+#: admin.php:474
+msgid "Calendar Display"
+msgstr "Mostra el Calendari"
+
+#: admin.php:479
+msgid "Number of months"
+msgstr "Nombre de mesos"
+
+#: admin.php:486
+msgid "Show all categories in calendar"
+msgstr "Mostra totes les categories al calendari"
+
+#: admin.php:490
+msgid "Only Show Events"
+msgstr "Mostra solament els esdeveniments"
+
+#: admin.php:493
+msgid "Show All Posts"
+msgstr "Mostra totes les entrades"
+
+#: admin.php:500
+msgid "Show day names as"
+msgstr "Mostra els noms dels dies com"
+
+#: admin.php:504
+msgid "Single Letter"
+msgstr "Una lletra simple"
+
+#: admin.php:507
+msgid "3-Letter Abbreviation"
+msgstr "Una abreviatura de 3 lletres"
+
+#: admin.php:510
+msgid "Full Day Name"
+msgstr "El nom del dia sencer"
+
+#: admin.php:517
+msgid "Show Event Calendar logo"
+msgstr "Pel que fa al logotip del Calendari"
+
+#: admin.php:521
+msgid "Show Logo"
+msgstr "Mostra el logotip"
+
+#: admin.php:524
+msgid "Hide Logo"
+msgstr "Amaga el logotip"
+
+#: admin.php:531
+msgid "Position of navigation links"
+msgstr "Pel que fa a la posició dels enllaços de navegació"
+
+#: admin.php:535
+msgid "Above Calendar"
+msgstr "Damunt del calendari"
+
+#: admin.php:538
+msgid "Below Calendar"
+msgstr "Sota el calendari"
+
+#: admin.php:541
+msgid "Hidden"
+msgstr "Ocults"
+
+#: admin.php:545
+msgid ""
+"The navigation links are more usable when they are above the calendar, but "
+"you might prefer them below or hidden for aesthetic reasons."
+msgstr ""
+"Els enllaços de navegació són més usables quan estan a sobre del calendari, "
+"però pots preferir-los per sota o ocults per raons estètiques."
+
+#: admin.php:551
+msgid "Popup event lists"
+msgstr "Finestres emergents de la llista d'esdeveniments"
+
+#: admin.php:555
+msgid "Show Popups"
+msgstr "Mostra finestres emergents"
+
+#: admin.php:558
+msgid "Hide Popups"
+msgstr "Oculta les finestres emergents"
+
+#: admin.php:562
+msgid "You might want to disable popups if you use Nicetitles."
+msgstr ""
+"Pots no voler habilitar les finestres emergents si fas ús de Nicetitles."
+
+#: admin.php:575
+msgid "EXAMPLE SIDEBAR CODE:"
+msgstr "EXEMPLE DE CODI PER ALS MENUS LATERALS"
+
+#: template-functions-new.php:18 template-functions.php:155
+#: template-functions.php:435
+msgid "all day"
+msgstr "durant tot el dia"
+
+#: template-functions-new.php:65 template-functions-new.php:142
+#: template-functions.php:351 widget.php:155 widget.php:159
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+msgid "Upcoming Events"
+msgstr "Esdeveniments futurs"
+
+#: template-functions-new.php:133 template-functions-new.php:186
+#: template-functions.php:456
+msgid "No events."
+msgstr "No hi ha esdeveniments"
+
+#: template-functions.php:29
+msgid "You must choose an event category."
+msgstr "Has de triar una categoria per a l'esdeveniment"
+
+#: template-functions.php:32 widget.php:83 widget.php:146
+#: K2/ec3_sidebar_module.php:64
+msgid "Go to Event Calendar Options"
+msgstr "Vés a les opcions del Calendari d'Esdeveniments"
+
+#: template-functions.php:91
+msgid "Subscribe to iCalendar."
+msgstr "Subscriu-te al iCalendar"
+
+#: template-functions.php:271 widget.php:91 widget.php:95
+#: K2/ec3_sidebar_module.php:31
+msgid "Event Calendar"
+msgstr "Calendari d'Esdeveniments"
+
+#: template-functions.php:493 template-functions.php:507
+#: template-functions.php:519
+msgid "to"
+msgstr "a"
+
+#: widget.php:139
+msgid "Number of events:"
+msgstr "Nombre d'esdeveniments"

@@ -1,0 +1,259 @@
+# Event Calendar plug-in for WordPress.
+# Copyright (C) 2006, Alex Tingle
+# This file is distributed under the same license as the wpcal package.
+# Alex Tingle <alex DOT ec3pot AT firetree.net>, 2005.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: wpcal 3.1.0\n"
+"Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
+"POT-Creation-Date: 2007-10-22 20:16+0100\n"
+"PO-Revision-Date: 2007-07-26 15:33+0000\n"
+"Last-Translator: Firat Cem Tezer <firattezer AT yahoo.ca>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.php:80
+msgid "Event Editor"
+msgstr "Etkinlik Düzenleyici"
+
+#: admin.php:87
+msgid "Start"
+msgstr "Başlat"
+
+#: admin.php:88
+msgid "End"
+msgstr "Son"
+
+#: admin.php:89
+msgid "All Day"
+msgstr "Tüm Gün"
+
+#: admin.php:90
+msgid "Repeat"
+msgstr "Tekrar"
+
+#: admin.php:111
+msgid "Add a new event"
+msgstr "Yeni etkinlik ekle"
+
+#: admin.php:161
+msgid "Delete this event"
+msgstr "Bu etkinliği sil"
+
+#: admin.php:287
+msgid "Error upgrading database for EventCalendar plugin."
+msgstr "EventCalender eklentisi için veritabanı güncelleme hatası"
+
+#: admin.php:312
+#, fuzzy, php-format
+msgid "Upgraded database to EventCalendar Version %s"
+msgstr "EventCalender eklentisi için veritabanı güncelleme hatası"
+
+#: admin.php:316
+msgid "Table already existed"
+msgstr "Tablo zaten var"
+
+#: admin.php:344 admin.php:354 admin.php:399
+msgid "Event Calendar Options"
+msgstr "EventCalender Seçenekleri"
+
+#: admin.php:403
+msgid "Event category"
+msgstr "Etkinlik Kategorisi"
+
+#: admin.php:413
+msgid ""
+"Event posts are put into this category for you. Don't make this your default "
+"post category."
+msgstr ""
+"Etkinlik yazıları sizin için bu kategoriye kondu. Bu kategoriyi standart "
+"yazı kategorisi yapmayın."
+
+#: admin.php:419
+msgid "Show schedule within posts"
+msgstr "Programı yazı yazı listele"
+
+#: admin.php:423
+msgid "Show Schedule"
+msgstr "Programı görüntüle"
+
+#: admin.php:426
+msgid "Hide Schedule"
+msgstr "Programı gizle"
+
+#: admin.php:433
+msgid "Show events as blog entries"
+msgstr "Etkinlikleri blog girişleri olarak göster"
+
+#: admin.php:437
+msgid "Events are Normal Posts"
+msgstr "Etkinlikler normal yazılar  olsun"
+
+#: admin.php:440
+msgid "Keep Events Separate"
+msgstr "Etkinlikleri ayrı ayrı tut"
+
+#: admin.php:444
+msgid ""
+"Keep Events Separate: the Event Category page shows future events, in date "
+"order. Events do not appear on front page."
+msgstr ""
+"Etkinlikleri ayrı ayrı tut: Etkinlik kategorisi gelecek etkinlikleri tarih "
+"sırasında gösterir. Etkinlikler giriş sayfasında görüntülenmez."
+
+#: admin.php:450 admin.php:462
+msgid "Timezone"
+msgstr "Zamandilimi"
+
+#: admin.php:454
+msgid "unknown"
+msgstr "bilinmiyor"
+
+#: admin.php:458
+msgid ""
+"You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
+"PHP5."
+msgstr ""
+"Zaman dilimini değiştiremezsiniz. PHP'nin güvenli modunu kapatın ya da "
+"PHP5'e terfi edin."
+
+#: admin.php:474
+msgid "Calendar Display"
+msgstr "Takvimi Göster"
+
+#: admin.php:479
+msgid "Number of months"
+msgstr "Ay sayısı"
+
+#: admin.php:486
+msgid "Show all categories in calendar"
+msgstr "Takvimde bütün kategorileri listele"
+
+#: admin.php:490
+msgid "Only Show Events"
+msgstr "Sadece Etkinlikleri Göster"
+
+#: admin.php:493
+msgid "Show All Posts"
+msgstr "Bütün Yazıları Göster"
+
+#: admin.php:500
+msgid "Show day names as"
+msgstr "Günleri şu şekilde göster"
+
+#: admin.php:504
+msgid "Single Letter"
+msgstr "Harf"
+
+#: admin.php:507
+msgid "3-Letter Abbreviation"
+msgstr "3 Harfli Kısalatma"
+
+#: admin.php:510
+msgid "Full Day Name"
+msgstr "Tam Gün Adı"
+
+#: admin.php:517
+msgid "Show Event Calendar logo"
+msgstr "Etkinlik Takvimi Logosunu Göster"
+
+#: admin.php:521
+msgid "Show Logo"
+msgstr "Logoyu Göster"
+
+#: admin.php:524
+msgid "Hide Logo"
+msgstr "Logoyu Gizle"
+
+#: admin.php:531
+msgid "Position of navigation links"
+msgstr "Navigasyon bağlantılarının yeri"
+
+#: admin.php:535
+msgid "Above Calendar"
+msgstr "Takvimin Üstünde"
+
+#: admin.php:538
+msgid "Below Calendar"
+msgstr "Takvimin Altında"
+
+#: admin.php:541
+msgid "Hidden"
+msgstr "Gizlenmiş"
+
+#: admin.php:545
+msgid ""
+"The navigation links are more usable when they are above the calendar, but "
+"you might prefer them below or hidden for aesthetic reasons."
+msgstr ""
+"Navigasyon bağlantıları takvimin üzerinde olduklarında daha "
+"kullanışlıdırlar, fakat estetik sebeplerden dolayı altında olmasını veya "
+"gizlenmiş olmasını tercih edebilirsiniz."
+
+#: admin.php:551
+msgid "Popup event lists"
+msgstr "Açılır menü etkinlik listeleri"
+
+#: admin.php:555
+msgid "Show Popups"
+msgstr "Açılır menüleri göster"
+
+#: admin.php:558
+msgid "Hide Popups"
+msgstr "Açılır menüleri gizle"
+
+#: admin.php:562
+msgid "You might want to disable popups if you use Nicetitles."
+msgstr ""
+"Nicetitles eklentisini kullanıyorsanız, açılır menüleri kapatmak "
+"isteyebilirsiniz."
+
+#: admin.php:575
+msgid "EXAMPLE SIDEBAR CODE:"
+msgstr "Örnek yan menü kodu:"
+
+#: template-functions-new.php:18 template-functions.php:155
+#: template-functions.php:435
+msgid "all day"
+msgstr "tüm gün"
+
+#: template-functions-new.php:65 template-functions-new.php:142
+#: template-functions.php:351 widget.php:155 widget.php:159
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+msgid "Upcoming Events"
+msgstr "Yaklaşan Etkinlikler"
+
+#: template-functions-new.php:133 template-functions-new.php:186
+#: template-functions.php:456
+msgid "No events."
+msgstr "Etkinlik yok."
+
+#: template-functions.php:29
+msgid "You must choose an event category."
+msgstr "Etkinlik kategorisi seçmelisiniz."
+
+#: template-functions.php:32 widget.php:83 widget.php:146
+#: K2/ec3_sidebar_module.php:64
+msgid "Go to Event Calendar Options"
+msgstr "EventCalendar Seçeneklerini Göster"
+
+#: template-functions.php:91
+msgid "Subscribe to iCalendar."
+msgstr "iCalender'a üye ol."
+
+#: template-functions.php:271 widget.php:91 widget.php:95
+#: K2/ec3_sidebar_module.php:31
+msgid "Event Calendar"
+msgstr "Etkinlik Takvimi"
+
+#: template-functions.php:493 template-functions.php:507
+#: template-functions.php:519
+msgid "to"
+msgstr "kime:"
+
+#: widget.php:139
+msgid "Number of events:"
+msgstr "Etkinlik sayısı:"
