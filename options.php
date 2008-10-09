@@ -79,8 +79,11 @@ class ec3_Options
   {
     global $table_prefix,$wp_version;
 
-    $this->myfiles=get_option('siteurl').'/wp-content/plugins/'
-     . preg_replace('%^.*/([^/]+)/options.php$%','$1',__FILE__);
+    $mydir=
+      preg_replace('%^.*[/\\\\]([^/\\\\]+)[/\\\\]options.php$%','$1',__FILE__);
+    load_plugin_textdomain('ec3','wp-content/plugins/'.$mydir.'/gettext');
+
+    $this->myfiles=get_option('siteurl').'/wp-content/plugins/'.$mydir;
     $this->schedule=$table_prefix.$this->schedule; // table name
 
     // wp_version < 2.0

@@ -26,8 +26,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-load_plugin_textdomain('ec3','wp-content/plugins/eventcalendar3/gettext');
-
 require_once(dirname(__FILE__).'/options.php');
 require_once(dirname(__FILE__).'/date.php');
 require_once(dirname(__FILE__).'/day.php');
