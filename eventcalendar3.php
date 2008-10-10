@@ -30,6 +30,7 @@ require_once(dirname(__FILE__).'/options.php');
 require_once(dirname(__FILE__).'/date.php');
 require_once(dirname(__FILE__).'/day.php');
 require_once(dirname(__FILE__).'/template-functions.php');
+require_once(dirname(__FILE__).'/template-functions-new.php');
 require_once(dirname(__FILE__).'/admin.php');
 require_once(dirname(__FILE__).'/tz.php');
 
@@ -51,7 +52,7 @@ function ec3_filter_the_posts($posts)
     $post_ids[]=intval($posts[$i]->ID);
     $posts[$i]->ec3_schedule=array();
   }
-  global $ec3,$wp_query,$wpdb;
+  global $ec3,$wpdb;
   $schedule=$wpdb->get_results(
     "SELECT post_id,start,end,allday,rpt,IF(end>='$ec3->today',1,0) AS active
      FROM $ec3->schedule
@@ -134,12 +135,12 @@ function ec3_action_admin_head()
 /** Rewrite date restrictions if the query is day- or category- specific. */
 function ec3_filter_posts_where(&$where)
 {
-  global $ec3,$wp_query,$wpdb;
+  global $ec3,$wpdb;
 
-  if($wp_query->is_page || $wp_query->is_single || $wp_query->is_admin)
+  if($ec3->query->is_page || $ec3->query->is_single || $ec3->query->is_admin)
       return $where;
 
-  if($wp_query->is_date):
+  if($ec3->query->is_date):
 
      // Transfer events' 'post_date' restrictions to 'start'
      $df='YEAR|MONTH|DAYOFMONTH|HOUR|MINUTE|SECOND|WEEK'; // date fields
@@ -167,7 +168,7 @@ function ec3_filter_posts_where(&$where)
        );
 
        $where=preg_replace($re,'',$where);
-       if(is_category($ec3->event_category)):
+       if(ec3_is_event_category()):
          $where.=" AND ($where_start) ";
          $ec3->order_by_start=true;
        else:
@@ -192,7 +193,8 @@ function ec3_filter_posts_where(&$where)
      endif;
 
   elseif($ec3->advanced):
-      if(is_category($ec3->event_category)):
+
+      if(ec3_is_event_category()):
 
           // Hide inactive events
           $where.=" AND ec3_sch.post_id IS NOT NULL ";
@@ -202,13 +204,13 @@ function ec3_filter_posts_where(&$where)
           global $wp;
           $wp->did_permalink=false; // Allows zero results without -> 404
 
-      elseif($wp_query->is_search):
+      elseif($ec3->query->is_search):
 
           $where.=' AND (ec3_sch.post_id IS NULL OR '
                        ."ec3_sch.end>='$ec3->today')";
           $ec3->join_ec3_sch=true;
 
-      elseif(!$wp_query->is_category):
+      elseif(!$ec3->query->is_category):
 
           // Hide all events
           $where.=" AND ec3_sch.post_id IS NULL ";
@@ -218,6 +220,20 @@ function ec3_filter_posts_where(&$where)
   endif;
 
   return $where;
+}
+
+/** Returns TRUE if $ec3->query is an event category query. */
+function ec3_is_event_category()
+{
+  global $ec3;
+  // This bit nabbed from is_category()
+  if($ec3->query->is_category)
+  {
+    $cat_obj = $ec3->query->get_queried_object();
+    if($cat_obj->term_id == $ec3->event_category)
+      return true;
+  }
+  return false;
 }
 
 /** */
@@ -238,13 +254,21 @@ function ec3_filter_posts_join(&$join)
 function ec3_filter_posts_orderby(&$orderby)
 {
   global $ec3, $wpdb;
-  $regexp="/\b$wpdb->posts\.post_date\b( DESC\b| ASC\b)?/i";
-  if($ec3->order_by_start && preg_match($regexp,$orderby,$match))
+  if($ec3->order_by_start)
   {
-    if($match[1] && $match[1]==' DESC')
-      $orderby=preg_replace($regexp,'ec3_sch.start',$orderby);
+    $regexp="/(?<!DATE_FORMAT[(])\b$wpdb->posts\.post_date\b( DESC\b| ASC\b)?/i";
+    if(preg_match($regexp,$orderby,$match))
+    {
+      if($match[1] && $match[1]==' DESC')
+        $orderby=preg_replace($regexp,'ec3_sch.start',$orderby);
+      else
+        $orderby=preg_replace($regexp,'ec3_sch.start DESC',$orderby);
+    }
     else
-      $orderby=preg_replace($regexp,'ec3_sch.start DESC',$orderby);
+    {
+      // Someone's been playing around with the orderby - just overwrite it.
+      $orderby='ec3_sch.start';
+    }
   }
   return $orderby;
 }
@@ -465,7 +489,7 @@ function ec3_filter_parse_query($wp_query)
 {
   global $ec3;
   // query_posts() can be called multiple times. So reset all our variables.
-  $ec3->reset_query();
+  $ec3->reset_query($wp_query);
   // Deal with EC3-specific parameters.
   if( !empty($wp_query->query_vars['ec3_listing']) )
   {
@@ -584,7 +608,7 @@ if($ec3->event_category)
   add_filter('get_the_excerpt', 'ec3_get_the_excerpt');
   
   if($ec3->advanced)
-    add_filter('posts_orderby','ec3_filter_posts_orderby');
+    add_filter('posts_orderby','ec3_filter_posts_orderby',11);
 }
 
 ?>

@@ -340,7 +340,7 @@ define('EC3_DEFAULT_MONTH_FORMAT',  'F Y');
  *   - template_day: %DATE% %SINCE% (only with Time Since plugin)
  *   - template_event: %DATE% %TIME% %LINK% %TITLE% %AUTHOR%
  */
-function ec3_get_events(
+function ec3_get_events_old(
   $limit,
   $template_event=EC3_DEFAULT_TEMPLATE_EVENT,
   $template_day  =EC3_DEFAULT_TEMPLATE_DAY,
@@ -465,7 +465,7 @@ define('EC3_DEFAULT_FORMAT_WRAPPER','<table class="ec3_schedule">%s</table>');
 
 /** Formats the schedule for the current post.
  *  Returns the HTML fragment as a string. */
-function ec3_get_schedule(
+function ec3_get_schedule_old(
   $format_single =EC3_DEFAULT_FORMAT_SINGLE,
   $format_range  =EC3_DEFAULT_FORMAT_RANGE,
   $format_wrapper=EC3_DEFAULT_FORMAT_WRAPPER

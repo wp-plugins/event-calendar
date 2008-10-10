@@ -105,7 +105,7 @@ function ec3_widget_init()
     echo $before_widget . $before_title;
     echo ec3_default_string($options['title'],'Upcoming Events');
     echo $after_title;
-    ec3_get_events($options['limit']); 
+    ec3_widget_upcoming_events($options['limit']); 
     echo $after_widget;
   }
 
