@@ -436,4 +436,4 @@ ec3.reqs=new Array();
 ec3.ELEMENT_NODE=1;
 ec3.TEXT_NODE=3;
 
-ec3.version='3.1.1._rc4';
+ec3.version='3.1.1';
