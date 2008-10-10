@@ -1,5 +1,5 @@
 === Event Calendar 3 ===
-Tags: calendar, event, vcalendar, icalendar, ical
+Tags: calendar, event, vcalendar, icalendar, ical, ajax, widget, sidebar
 Stable tag: trunk
 Contributors: Alex Tingle
 Donate link: http://www.amazon.co.uk/gp/registry/1S44DP6XXOFIN
@@ -159,11 +159,13 @@ post edit screen that allows you to set the event date.
 
 == Screenshots ==
 
-1. The Event Calendar and Upcoming Events widets.
+1. The (AJAX) Event Calendar and Upcoming Events widets.
 
-2. The Event Editor on the Write Post page.
+2. The AJAX Event Calendar has nicely formatted popups.
 
-3. Event Calendar options page.
+3. The Event Editor on the Write Post page.
+
+4. Event Calendar options page.
 
 
 == Planned features ==
