@@ -157,6 +157,15 @@ post edit screen that allows you to set the event date.
    into the project.
 
 
+== Screenshots ==
+
+1. The Event Calendar and Upcoming Events widets.
+
+2. The Event Editor on the Write Post page.
+
+3. Event Calendar options page.
+
+
 == Planned features ==
 
 Some enhancements haven't made it into this release, but they are planned for
