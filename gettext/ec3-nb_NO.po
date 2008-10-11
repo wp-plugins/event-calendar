@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._pre15\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-09 17:22+0100\n"
+"POT-Creation-Date: 2008-10-11 18:21+0100\n"
 "PO-Revision-Date: 2006-10-05 23:33:22+0200\n"
 "Last-Translator: Realf Ording Helgesen\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,6 +207,11 @@ msgstr "Skjul popups"
 msgid "You might want to disable popups if you use Nicetitles."
 msgstr "Dersom du bruker Nicetitles, vil du muligens slå av popups"
 
+#: admin.php:571
+#, fuzzy
+msgid "Update Options"
+msgstr "Oppdateringsinnstillinger"
+
 #: admin.php:575
 msgid "EXAMPLE SIDEBAR CODE:"
 msgstr "EKSEMPEL PÅ SIDEMENY-KODE"
@@ -265,6 +270,3 @@ msgstr "Antall hendelser:"
 
 #~ msgid "Options set."
 #~ msgstr "Innstillinger satt."
-
-#~ msgid "Update options"
-#~ msgstr "Oppdateringsinnstillinger"

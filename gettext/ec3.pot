@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-10 16:43+0100\n"
+"POT-Creation-Date: 2008-10-11 18:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,6 +199,10 @@ msgstr ""
 
 #: admin.php:562
 msgid "You might want to disable popups if you use Nicetitles."
+msgstr ""
+
+#: admin.php:571
+msgid "Update Options"
 msgstr ""
 
 #: admin.php:575

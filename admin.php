@@ -568,7 +568,7 @@ class ec3_Admin
      </fieldset>
 
      <p class="submit"><input type="submit" name="info_update" value="<?php
-      _e('Update Options')
+      _e('Update Options','ec3')
       ?> &raquo;" /></p>
     </form>
 

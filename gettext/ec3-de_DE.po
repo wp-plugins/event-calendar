@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._pre15\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-09 17:22+0100\n"
+"POT-Creation-Date: 2008-10-11 18:21+0100\n"
 "PO-Revision-Date: 2006-10-05 20:36+0100\n"
 "Last-Translator: Marc Schumann <wurblzap@gmail.com>\n"
 "Language-Team:  <wurblzap@gmail.com>\n"
@@ -214,6 +214,11 @@ msgstr ""
 "Wenn Sie Nicetitles im Einsatz haben, werden Sie möglicherweise auf "
 "Aufklappfenster verzichten wollen."
 
+#: admin.php:571
+#, fuzzy
+msgid "Update Options"
+msgstr "Aktualisierungsoptionen"
+
 #: admin.php:575
 msgid "EXAMPLE SIDEBAR CODE:"
 msgstr ""
@@ -272,6 +277,3 @@ msgstr ""
 
 #~ msgid "Options set."
 #~ msgstr "Einstellungen gesichert."
-
-#~ msgid "Update options"
-#~ msgstr "Aktualisierungsoptionen"

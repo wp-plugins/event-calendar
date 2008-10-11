@@ -147,6 +147,7 @@ post edit screen that allows you to set the event date.
      nl_NL  Dutch               (by Gerjan Boer & P. Mathijssen)
      pt_BR  Portuguese (Brazil) (by DJ Spark)
      ro_RO  Romanian            (by Sushkov Stanislav)
+     sl_SI  Slovenian           (by Damjan Gerli)
      sv_SE  Swedish             (by Anders Laurin)
      tr_TR  Turkish             (by Firat Cem Tezer & Roman Neumüller)
 
