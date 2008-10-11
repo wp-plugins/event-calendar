@@ -10,8 +10,8 @@
  */
 function ec3_cmp_events($e0,$e1)
 {
-  if($e0<$e1) return -1;
-  if($e0>$e1) return 1;
+  if( $e0->start < $e1->start ) return -1;
+  if( $e0->start > $e1->start ) return 1;
   return 0;
 }
 
@@ -191,6 +191,10 @@ function ec3_all_events($query=0)
       array_push($ec3->events,$s);
   }
   usort($ec3->events,'ec3_cmp_events');
+  // This is a bit of a hack - only detect 'order=ASC' query var.
+  // Really need our own switch.
+  if(strtoupper($query->query_vars['order'])=='ASC')
+    $ec3->events=array_reverse($ec3->events);
   $ec3->events_count = count($ec3->events);
   $ec3->event        = false;
   $ec3->event_idx    = -1;
@@ -246,7 +250,7 @@ function ec3_get_events(
   elseif(intval($limit)>0)
       $query->query( 'ec3_after=today&posts_per_page='.intval($limit) );
   elseif(intval($limit)<0)
-      $query->query( 'ec3_before=today&posts_per_page='.intval($limit) );
+      $query->query( 'ec3_before=today&order=asc&posts_per_page='.abs(intval($limit)) );
   else
       $query->query( 'ec3_after=today&posts_per_page=5' );
 
@@ -323,7 +327,7 @@ function ec3_widget_upcoming_events($limit)
   elseif(intval($limit)>0)
       $query->query( 'ec3_after=today&posts_per_page='.intval($limit) );
   elseif(intval($limit)<0)
-      $query->query( 'ec3_before=today&posts_per_page='.intval($limit) );
+      $query->query( 'ec3_before=today&order=asc&posts_per_page='.abs(intval($limit)) );
   else
       $query->query( 'ec3_after=today&posts_per_page=5' );
 
