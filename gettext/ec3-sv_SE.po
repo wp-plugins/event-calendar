@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1._rc3\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-09 17:22+0100\n"
+"POT-Creation-Date: 2008-10-11 18:18+0100\n"
 "PO-Revision-Date: 2007-10-29 00:43+1\n"
 "Last-Translator: Anders Laurin <anders AT scenfeber.se>\n"
 "Language-Team: Svenska (Swedish) <LL@li.org>\n"
@@ -211,9 +211,35 @@ msgstr ""
 "Du föredrar förmodligen att inaktivera popup-fönster om du använder "
 "Nicetitles."
 
+#: admin.php:571
+msgid "Update Options"
+msgstr ""
+
 #: admin.php:575
 msgid "EXAMPLE SIDEBAR CODE:"
 msgstr "EXEMPEL På SIDOMENYKOD:"
+
+#: template-functions-new.php:64 template-functions.php:155
+#: template-functions.php:435
+msgid "all day"
+msgstr "hela dygnet"
+
+#: template-functions-new.php:240 template-functions-new.php:318
+#: template-functions.php:351 widget.php:155 widget.php:159
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+msgid "Upcoming Events"
+msgstr "Kommande evenemang"
+
+#: template-functions-new.php:310 template-functions-new.php:362
+#: template-functions.php:456
+msgid "No events."
+msgstr "Inga evenemang."
+
+#: template-functions-new.php:393 template-functions-new.php:407
+#: template-functions-new.php:419 template-functions.php:493
+#: template-functions.php:507 template-functions.php:519
+msgid "to"
+msgstr "till"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
@@ -228,28 +254,10 @@ msgstr "Gå till Inställningar för Evenemangskalender"
 msgid "Subscribe to iCalendar."
 msgstr "Prenumerera på iCalendar."
 
-#: template-functions.php:155 template-functions.php:435
-msgid "all day"
-msgstr "hela dygnet"
-
 #: template-functions.php:271 widget.php:91 widget.php:95
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Evenemangskalender"
-
-#: template-functions.php:351 widget.php:155 widget.php:159
-#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
-msgid "Upcoming Events"
-msgstr "Kommande evenemang"
-
-#: template-functions.php:456
-msgid "No events."
-msgstr "Inga evenemang."
-
-#: template-functions.php:493 template-functions.php:507
-#: template-functions.php:519
-msgid "to"
-msgstr "till"
 
 #: widget.php:139
 msgid "Number of events:"

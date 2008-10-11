@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._rc2\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-09 19:09+0100\n"
+"POT-Creation-Date: 2008-10-11 18:18+0100\n"
 "PO-Revision-Date: 2008-06-01 23:16+0100\n"
 "Last-Translator: Comme une image <cui@burp.fr>\n"
 "Language-Team: French <davy.morel@tiscali.fr>\n"
@@ -217,9 +217,35 @@ msgid "You might want to disable popups if you use Nicetitles."
 msgstr ""
 "Vous souhaiterez peut-être désactiver les popups si vous utilisez Nicetitles."
 
+#: admin.php:571
+msgid "Update Options"
+msgstr ""
+
 #: admin.php:575
 msgid "EXAMPLE SIDEBAR CODE:"
 msgstr "EXEMPLE DE CODE DE BARRE LATERALE&nbsp:"
+
+#: template-functions-new.php:64 template-functions.php:155
+#: template-functions.php:435
+msgid "all day"
+msgstr "journée entière"
+
+#: template-functions-new.php:240 template-functions-new.php:318
+#: template-functions.php:351 widget.php:155 widget.php:159
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+msgid "Upcoming Events"
+msgstr "Evénements à venir"
+
+#: template-functions-new.php:310 template-functions-new.php:362
+#: template-functions.php:456
+msgid "No events."
+msgstr "Pas d'événement."
+
+#: template-functions-new.php:393 template-functions-new.php:407
+#: template-functions-new.php:419 template-functions.php:493
+#: template-functions.php:507 template-functions.php:519
+msgid "to"
+msgstr "au"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
@@ -234,28 +260,10 @@ msgstr "Aller aux options du calendrier d'événement"
 msgid "Subscribe to iCalendar."
 msgstr "S&#39;abonner à iCalendar."
 
-#: template-functions.php:155 template-functions.php:435
-msgid "all day"
-msgstr "journée entière"
-
 #: template-functions.php:271 widget.php:91 widget.php:95
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Calendrier d'événement"
-
-#: template-functions.php:351 widget.php:155 widget.php:159
-#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
-msgid "Upcoming Events"
-msgstr "Evénements à venir"
-
-#: template-functions.php:456
-msgid "No events."
-msgstr "Pas d'événement."
-
-#: template-functions.php:493 template-functions.php:507
-#: template-functions.php:519
-msgid "to"
-msgstr "au"
 
 #: widget.php:139
 msgid "Number of events:"

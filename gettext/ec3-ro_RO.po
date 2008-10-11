@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-09 19:09+0100\n"
+"POT-Creation-Date: 2008-10-11 18:18+0100\n"
 "PO-Revision-Date: 2007-03-30 17:06+0200\n"
 "Last-Translator: Sushkov Stanislav <cool2sv@gmail.com>\n"
 "Language-Team: WordPress Romania <cool2sv@gmail.com>\n"
@@ -216,9 +216,35 @@ msgid "You might want to disable popups if you use Nicetitles."
 msgstr ""
 "Probabil că doriţi să dezactivaţi popup-urile în caz că folosiţi Nicetitles."
 
+#: admin.php:571
+msgid "Update Options"
+msgstr "Actualizează Opţiuni"
+
 #: admin.php:575
 msgid "EXAMPLE SIDEBAR CODE:"
 msgstr "EXEMPLE COD PENTRU PANOU:"
+
+#: template-functions-new.php:64 template-functions.php:155
+#: template-functions.php:435
+msgid "all day"
+msgstr "întreaga zi"
+
+#: template-functions-new.php:240 template-functions-new.php:318
+#: template-functions.php:351 widget.php:155 widget.php:159
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+msgid "Upcoming Events"
+msgstr "Evenimente ce se apropie."
+
+#: template-functions-new.php:310 template-functions-new.php:362
+#: template-functions.php:456
+msgid "No events."
+msgstr "Nici un eveniment."
+
+#: template-functions-new.php:393 template-functions-new.php:407
+#: template-functions-new.php:419 template-functions.php:493
+#: template-functions.php:507 template-functions.php:519
+msgid "to"
+msgstr "până în"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
@@ -233,28 +259,10 @@ msgstr "Mergi la Opţiuni Calendar Evenimente"
 msgid "Subscribe to iCalendar."
 msgstr "Abonează-te la iCalendar"
 
-#: template-functions.php:155 template-functions.php:435
-msgid "all day"
-msgstr "întreaga zi"
-
 #: template-functions.php:271 widget.php:91 widget.php:95
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Calendar Evenimente"
-
-#: template-functions.php:351 widget.php:155 widget.php:159
-#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
-msgid "Upcoming Events"
-msgstr "Evenimente ce se apropie."
-
-#: template-functions.php:456
-msgid "No events."
-msgstr "Nici un eveniment."
-
-#: template-functions.php:493 template-functions.php:507
-#: template-functions.php:519
-msgid "to"
-msgstr "până în"
 
 #: widget.php:139
 msgid "Number of events:"
@@ -265,9 +273,6 @@ msgstr "Numărul de evenimente:"
 
 #~ msgid "- Select -"
 #~ msgstr "- Selectează -"
-
-#~ msgid "Update Options"
-#~ msgstr "Actualizează Opţiuni"
 
 #~ msgid "View posts for %1$s %2$s"
 #~ msgstr "Vezi articolele pentru %1$s %2$s"

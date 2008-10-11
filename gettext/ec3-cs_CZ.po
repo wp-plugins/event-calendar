@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1._rc1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-09 17:22+0100\n"
+"POT-Creation-Date: 2008-10-11 18:18+0100\n"
 "PO-Revision-Date: 2008-04-29 14:02+0100\n"
 "Last-Translator: Michal Franěk <michal.franek@w3w.cz>\n"
 "MIME-Version: 1.0\n"
@@ -210,9 +210,35 @@ msgid "You might want to disable popups if you use Nicetitles."
 msgstr ""
 "Pokud používate efekty jako jsou Nicetitles, je lepší vyskakovací okna skrýt."
 
+#: admin.php:571
+msgid "Update Options"
+msgstr ""
+
 #: admin.php:575
 msgid "EXAMPLE SIDEBAR CODE:"
 msgstr "UKÁZKA KÓDU PRO POSTRANNÍ LIŠTU."
+
+#: template-functions-new.php:64 template-functions.php:155
+#: template-functions.php:435
+msgid "all day"
+msgstr "celý den"
+
+#: template-functions-new.php:240 template-functions-new.php:318
+#: template-functions.php:351 widget.php:155 widget.php:159
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+msgid "Upcoming Events"
+msgstr "Nadcházející události"
+
+#: template-functions-new.php:310 template-functions-new.php:362
+#: template-functions.php:456
+msgid "No events."
+msgstr "Nejsou žádné události."
+
+#: template-functions-new.php:393 template-functions-new.php:407
+#: template-functions-new.php:419 template-functions.php:493
+#: template-functions.php:507 template-functions.php:519
+msgid "to"
+msgstr "až"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
@@ -227,28 +253,10 @@ msgstr "Jdi na možnosti \"Kalendáře událostí\"."
 msgid "Subscribe to iCalendar."
 msgstr "Sledovat kalendář pomocí iCalendar."
 
-#: template-functions.php:155 template-functions.php:435
-msgid "all day"
-msgstr "celý den"
-
 #: template-functions.php:271 widget.php:91 widget.php:95
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Kalendář událostí"
-
-#: template-functions.php:351 widget.php:155 widget.php:159
-#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
-msgid "Upcoming Events"
-msgstr "Nadcházející události"
-
-#: template-functions.php:456
-msgid "No events."
-msgstr "Nejsou žádné události."
-
-#: template-functions.php:493 template-functions.php:507
-#: template-functions.php:519
-msgid "to"
-msgstr "až"
 
 #: widget.php:139
 msgid "Number of events:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-09 17:22+0100\n"
+"POT-Creation-Date: 2008-10-11 18:18+0100\n"
 "PO-Revision-Date: 2006-12-05 09:26+0100\n"
 "Last-Translator: Vanco Ordanoski <vanco.ordanoski AT gmail.com>\n"
 "Language-Team: Event Calendar <alex DOT ec3pot AT firetree.net>\n"
@@ -210,9 +210,35 @@ msgid "You might want to disable popups if you use Nicetitles."
 msgstr ""
 "Можеби ќе сакате да ги исклучите popup-ите ако употребувате Nicetitles."
 
+#: admin.php:571
+msgid "Update Options"
+msgstr ""
+
 #: admin.php:575
 msgid "EXAMPLE SIDEBAR CODE:"
 msgstr "ПРИМЕР НА ПРОГРАМСКИ КОД ВО СТРАНИЧНА ВЕРТИКАЛА:"
+
+#: template-functions-new.php:64 template-functions.php:155
+#: template-functions.php:435
+msgid "all day"
+msgstr "цел ден"
+
+#: template-functions-new.php:240 template-functions-new.php:318
+#: template-functions.php:351 widget.php:155 widget.php:159
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+msgid "Upcoming Events"
+msgstr "Следни активности"
+
+#: template-functions-new.php:310 template-functions-new.php:362
+#: template-functions.php:456
+msgid "No events."
+msgstr "Нема активности."
+
+#: template-functions-new.php:393 template-functions-new.php:407
+#: template-functions-new.php:419 template-functions.php:493
+#: template-functions.php:507 template-functions.php:519
+msgid "to"
+msgstr "до"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
@@ -227,28 +253,10 @@ msgstr "Прејди на опциите на Event Calendar"
 msgid "Subscribe to iCalendar."
 msgstr "Претплати се на iCalendar."
 
-#: template-functions.php:155 template-functions.php:435
-msgid "all day"
-msgstr "цел ден"
-
 #: template-functions.php:271 widget.php:91 widget.php:95
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Календар на активности"
-
-#: template-functions.php:351 widget.php:155 widget.php:159
-#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
-msgid "Upcoming Events"
-msgstr "Следни активности"
-
-#: template-functions.php:456
-msgid "No events."
-msgstr "Нема активности."
-
-#: template-functions.php:493 template-functions.php:507
-#: template-functions.php:519
-msgid "to"
-msgstr "до"
 
 #: widget.php:139
 msgid "Number of events:"
