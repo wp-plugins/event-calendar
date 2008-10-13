@@ -4,7 +4,7 @@ Plugin Name: Event Calendar Widget
 Plugin URI: http://wpcal.firetree.net
 Description: Adds sidebar widgets for Event Calendar and Upcoming Events. Requires the EventCalendar and <a href="http://automattic.com/code/widgets/">Widget</a> plugins (WordPress version 2.1 and earlier). After activating, please visit <a href="themes.php?page=widgets/widgets.php">Sidebar Widgets for WordPress version 2.1 and earlier</a> or <a href="widgets.php">Widgets for WordPress version 2.2 and subsequent</a> to configure and arrange your new widgets.
 Author: Darrell Schulte
-Version: 3.2.dev
+Version: 3.1.1
 Author URI: http://wpcal.firetree.net
 
     This is a WordPress plugin (http://wordpress.org) and widget
@@ -74,8 +74,7 @@ function ec3_widget_init()
     <p>
      <label for="ec3_cal_title">
       <?php _e('Title:'); ?>
-      <input style="width: 250px;" id="ec3_cal_title" name="ec3_cal_title"
-       type="text" value="<?php echo htmlspecialchars($title,ENT_QUOTES); ?>" />
+      <input class="widefat" id="ec3_cal_title" name="ec3_cal_title" type="text" value="<?php echo htmlspecialchars($title,ENT_QUOTES); ?>" />
      </label>
     </p>
 
@@ -105,7 +104,7 @@ function ec3_widget_init()
     echo $before_widget . $before_title;
     echo ec3_default_string($options['title'],'Upcoming Events');
     echo $after_title;
-    ec3_widget_upcoming_events($options['limit']); 
+    ec3_get_events($options['limit']); 
     echo $after_widget;
   }
 
@@ -130,20 +129,20 @@ function ec3_widget_init()
     <p>
      <label for="ec3_list_title">
       <?php _e('Title:'); ?>
-      <input style="width: 250px;" id="ec3_list_title" name="ec3_list_title"
-       type="text" value="<?php echo htmlspecialchars($title,ENT_QUOTES); ?>" />
+      <input class="widefat" id="ec3_list_title" name="ec3_list_title" type="text" value="<?php echo htmlspecialchars($title,ENT_QUOTES); ?>" />
      </label>
     </p>
-    <p style="text-align:left;margin-left:85px;">
-     <label title="Eg. '5', '5 days', '5d'" for="ec3_limit">
-      <?php _e('Number of events:','ec3'); ?>
-      <input style="width: 7.5ex;" id="ec3_limit" name="ec3_limit"
-             type="text" value="<?php echo $limit? $limit: '5'; ?>" />
+    <p>
+     <label title="Eg. '5', '5 days', '5d'" for="ec3_limit"><?php _e('&#035; of events:','ec3'); ?>
+      <br />
+      <input class="widefat" style="width: 50px; text-align: center;" id="ec3_limit" name="ec3_limit" type="text" value="<?php echo $limit? $limit: '5'; ?>" />
      </label>
+      <br />
+      <small>To display recent past events,<br />use a negative number (e.g., -5)</small>
     </p>
-
-    <p><a href="options-general.php?page=ec3_admin">
-      <?php _e('Go to Event Calendar Options','ec3') ?>.</a>
+    
+    <p>
+      <a href="options-general.php?page=ec3_admin"><?php _e('Go to Event Calendar Options','ec3') ?>.</a>
     </p>
 
     <input type="hidden" name="ec3_list_submit" value="1" />
