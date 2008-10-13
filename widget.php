@@ -86,10 +86,11 @@ function ec3_widget_init()
     <?php
   }
 
-  register_sidebar_widget(
-    array(__('Event Calendar','ec3'),'widgets'),
-    'ec3_widget_cal'
+  wp_register_sidebar_widget( 
+	'event-calendar', __('Event Calendar','ec3'), 'ec3_widget_cal', 
+	array('description' => __( 'A calendar of events (Event Calendar Plugin)', 'ec3') ) 
   );
+
   register_widget_control(
     array(__('Event Calendar','ec3'),'widgets'),
     'ec3_widget_cal_control'
@@ -150,10 +151,11 @@ function ec3_widget_init()
     <?php
   }
 
-  register_sidebar_widget(
-    array(__('Upcoming Events','ec3'),'widgets'),
-    'ec3_widget_list'
+	wp_register_sidebar_widget( 
+	  'upcoming-events', __('Upcoming Events','ec3'), 'ec3_widget_list', 
+	  array('description' => __( 'A list of events (Event Calendar Plugin)', 'ec3') )
   );
+
   register_widget_control(
     array(__('Upcoming Events','ec3'),'widgets'),
     'ec3_widget_list_control'
