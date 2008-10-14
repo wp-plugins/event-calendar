@@ -149,12 +149,23 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
   if(!$calendar_entries)
       return $calendar_days;
 
+  // In advanced mode, we don't want to show events as blog posts in the cal.
+  $ignore_post_ids=array();
+  if($ec3->advanced && !$ec3->show_only_events)
+  {
+    foreach($calendar_entries as $ent)
+      if($ent->is_event)
+        array_push(ignore_post_ids,$ent->id);
+  }
+
   $current_post_id=0;
   $current_day_id ='';
   $time_format=get_option('time_format');
   $allday=str_replace(' ','&#160;',__('all day','ec3')); // #160==nbsp
   foreach($calendar_entries as $ent)
   {
+    if(!$ent->is_event && in_array($ent->id,ignore_post_ids))
+        continue;
     if($current_post_id!=$ent->id)
     {
       $current_post_id=$ent->id;
