@@ -8,7 +8,7 @@
  * (Note. This isn't a practical example, because posts' events are already
  *  sorted by start time.)
  */
-function ec3_cmp_events($e0,$e1)
+function ec3_cmp_events(&$e0,&$e1)
 {
   if( $e0->start < $e1->start ) return -1;
   if( $e0->start > $e1->start ) return 1;
@@ -20,7 +20,7 @@ function ec3_cmp_events($e0,$e1)
 function &ec3_sensible_start_event()
 {
   global $ec3, $post;
-  if($ec3->event)
+  if(!empty($ec3->event))
     return $ec3->event;
   elseif(isset($post->ec3_schedule) && count($post->ec3_schedule)>0)
     return $post->ec3_schedule[0];
@@ -33,7 +33,7 @@ function &ec3_sensible_start_event()
 function &ec3_sensible_end_event()
 {
   global $ec3, $post;
-  if($ec3->event)
+  if(!empty($ec3->event))
     return $ec3->event;
   elseif(isset($post->ec3_schedule) && count($post->ec3_schedule)>0)
     return $post->ec3_schedule[ count($post->ec3_schedule) - 1 ];
@@ -147,14 +147,14 @@ function ec3_post_events($id=0)
 {
   global $ec3;
   $post = &get_post($id);
-  if(!isset($post->ec3_schedule) || count($post->ec3_schedule)==0)
+  if(!isset($post->ec3_schedule) || empty($post->ec3_schedule))
   {
     $ec3->events       = false;
     $ec3->events_count = 0;
   }
   else
   {
-    $ec3->events       = $post->ec3_schedule;
+    $ec3->events       =& $post->ec3_schedule;
     $ec3->events_count = count($ec3->events);
     $ec3->event        = false;
     $ec3->event_idx    = -1;
@@ -215,7 +215,7 @@ function ec3_the_event()
   global $ec3,$post;
   // Assert: ec3_have_events() just returned true.
   $ec3->event_idx++;
-  $ec3->event = $ec3->events[$ec3->event_idx];
+  $ec3->event =& $ec3->events[$ec3->event_idx];
   if($post->ID != $ec3->event->post_id)
   {
     $post = get_post($ec3->event->post_id);
@@ -239,7 +239,6 @@ function ec3_get_events(
 {
   if(!ec3_check_installed(__('Upcoming Events','ec3')))
     return;
-  global $post;
 
   // Parse $limit:
   //  NUMBER      - limits number of posts
@@ -294,7 +293,7 @@ function ec3_get_events(
         $current_date=$data['DATE'];
       }
 
-      $data['TIME']  =ec3_get_time();
+      $data['TIME']  =ec3_get_start_time();
       $data['TITLE'] =get_the_title();
       $data['LINK']  =get_permalink();
       $data['AUTHOR']=get_the_author();
@@ -313,7 +312,7 @@ function ec3_get_events(
 }
 
 
-function ec3_widget_upcoming_events($limit)
+function ec3_widget_upcoming_events($limit =5)
 {
   if(!ec3_check_installed(__('Upcoming Events','ec3')))
     return;
@@ -352,7 +351,7 @@ function ec3_widget_upcoming_events($limit)
       }
       // Print the event.
       echo ' <li><a href="'.get_permalink().'">'
-        .  get_the_title().' ('.ec3_get_time().')</a></li>'."\n";
+        .  get_the_title().' ('.ec3_get_start_time().')</a></li>'."\n";
     }
     if($current_date)
         echo "</ul></li>\n";
