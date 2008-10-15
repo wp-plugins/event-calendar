@@ -237,7 +237,7 @@ class ec3_Admin
         );
       elseif($action=='create'):
         $wpdb->query(
-         "INSERT $ec3->schedule
+         "INSERT INTO $ec3->schedule
           (post_id, ".implode(', ',array_keys($vals)).")
           VALUES ($post_ID,".implode(', ',array_values($vals)).")"
         );
