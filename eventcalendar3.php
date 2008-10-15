@@ -407,6 +407,10 @@ function ec3_filter_query_vars_ical($wpvarstoreset=NULL)
       // ?? Should add line folding at 75 octets at some time as per RFC 2445.
       $summary=preg_replace('/([\\,;])/','\\\\$1',$entry->post_title);
       $permalink=get_permalink($entry->post_id);
+      
+      //Added by Damon - looks for a "Custom Field" with a key of 'ec_location'
+      //Allows for the iCal "location" field to be utilized
+	  $location=get_post_meta($entry->post_id, 'ec_location', true);	
 
       echo "BEGIN:VEVENT\r\n";
       echo "SUMMARY:$summary\r\n";
@@ -422,6 +426,7 @@ function ec3_filter_query_vars_ical($wpvarstoreset=NULL)
       }
       $description.='['.sprintf(__('by: %s'),$entry->user_nicename).']';
       echo "DESCRIPTION:$description\r\n";
+      echo "LOCATION:$location\r\n"; //Location value from Custom Field 'ec_location'
       echo "TRANSP:$entry->transp\r\n"; // for availability.
       if($entry->allday)
       {
