@@ -45,7 +45,7 @@ function ec3_upgrade_posts()
 
    <?php while($query->have_posts()): $query->the_post(); ?>
 
-     <?php if(!ec3_is_event()):
+     <?php if(!empty($post->ec3_schedule)):
        $post_date = get_post_time();
        $post_modified_date = get_post_modified_time();
        $rownum++;
