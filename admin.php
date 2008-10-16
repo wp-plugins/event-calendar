@@ -263,7 +263,7 @@ class ec3_Admin
 
 
   /** Upgrade the installation, if necessary. */
-  function upgrade()
+  function upgrade_database()
   {
     global $ec3,$wpdb;
     // Check version - return if no upgrade required.
@@ -303,11 +303,17 @@ class ec3_Admin
            rpt      VARCHAR(64),
            PRIMARY KEY(sched_id)
          )");
+      // Force the special upgrade page if we are coming from v3.0
+      if( $ec3->event_category &&
+          ( empty($v0) || $v0[0]<3 || ($v0[0]==3 && $v0[1]==0) ) )
+      {
+        update_option('ec3_upgrade_posts',1);
+      }
     } // end if(!$table_exists)
 
     // Record the new version number
     update_option('ec3_version',$ec3->version);
-    echo '<div class="updated"><p><strong>'
+    echo '<div id="message" class="updated fade"><p><strong>'
        . sprintf(
            __('Upgraded database to EventCalendar Version %s','ec3'),
            $ec3->version
@@ -315,9 +321,9 @@ class ec3_Admin
     if($table_exists)
         echo '<br />('.__('Table already existed','ec3').')';
     echo ".</strong></p></div>\n";
-  } // end function upgrade();
+  } // end function upgrade_database();
 
-  /** Utility function used by upgrade().
+  /** Utility function used by upgrade_database().
    *  Breaks apart a version string into an array of comparable parts. */
   function ec3_version($str)
   {
@@ -328,6 +334,8 @@ class ec3_Admin
     {
       if(preg_match('/^[0-9]+$/',$i))
           $result[]=intval($i);
+      elseif(empty($i))
+          $result[]=0;
       else
           $result[]=$i;
     }
@@ -337,38 +345,23 @@ class ec3_Admin
 
   function action_admin_menu()
   {
-    if(function_exists('add_submenu_page'))
-    {
-      add_submenu_page(
-        'options-general.php',
-        __('Event Calendar Options','ec3'),
-        'EventCalendar',
-        'manage_options',
-        'ec3_admin',
-        'ec3_options_subpanel'
-      );
-    }
-    else if(function_exists('add_options_page'))
-    {
-      add_options_page(
-        __('Event Calendar Options','ec3'),
-        'EventCalendar',
-        6,
-        'ec3_admin',
-        'ec3_options_subpanel'
-      );
-    }
+    add_options_page(
+      __('Event Calendar Options','ec3'),
+      'EventCalendar',
+      6,
+      'ec3_admin',
+      'ec3_options_subpanel'
+    );
   }
 
 
   function options_subpanel()
   {
-    $this->upgrade();
     global $ec3;
 
     if(isset($_POST['info_update']))
     {
-      echo '<div class="updated"><p><strong>';
+      echo '<div id="message" class="updated fade"><p><strong>';
       if(isset($_POST['ec3_event_category']))
           $ec3->set_event_category( intval($_POST['ec3_event_category']) );
       if(isset($_POST['ec3_num_months']))
@@ -394,10 +387,19 @@ class ec3_Admin
     }
     ?>
 
-   <div class=wrap>
+   <div class="wrap">
     <form method="post">
      <h2><?php _e('Event Calendar Options','ec3'); ?></h2>
-     <table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
+
+     <?php if(isset($_GET['ec3_easteregg'])): ?>
+
+     <h3><?php _e('Easter Egg','ec3') ?>:
+       <input type="submit" name="ec3_upgrade_posts"
+        value="<?php _e('Upgrade Event Posts','ec3') ?>" /></h3>
+
+     <?php endif ?>
+
+     <table class="form-table"> 
 
       <tr valign="top"> 
        <th width="33%" scope="row"><?php _e('Event category','ec3'); ?>:</th> 
@@ -471,9 +473,9 @@ class ec3_Admin
 
      </table>
 
-     <fieldset class="options"><legend><?php _e('Calendar Display','ec3'); ?></legend> 
+     <h3><?php _e('Calendar Display','ec3'); ?></h3> 
 
-     <table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
+     <table class="form-table"> 
 
       <tr valign="top"> 
        <th width="33%" scope="row"><?php _e('Number of months','ec3'); ?>:</th> 
@@ -565,21 +567,10 @@ class ec3_Admin
       </tr> 
 
      </table>
-     </fieldset>
 
-     <p class="submit"><input type="submit" name="info_update" value="<?php
-      _e('Update Options','ec3')
-      ?> &raquo;" /></p>
+     <p class="submit"><input type="submit" name="info_update"
+        value="<?php _e('Save Changes') ?>" /></p>
     </form>
-
-    <h3><?php _e('EXAMPLE SIDEBAR CODE:','ec3'); ?></h3>
-
-    <pre><code>          &lt;li&gt;
-             &lt;?php ec3_get_calendar(); ?&gt;
-          &lt;/li&gt;
-          &lt;li&gt;Events
-             &lt;?php ec3_get_events(5); ?&gt;
-          &lt;/li&gt;</code></pre>
 
    </div> <?php
   } // end function options_subpanel()
@@ -592,6 +583,22 @@ $ec3_admin=new ec3_Admin();
 function ec3_options_subpanel()
 {
   global $ec3_admin;
+
+  // Upgrade
+  if(isset($_POST['ec3_cancel_upgrade']))
+    update_option('ec3_upgrade_posts',0);
+
+  $ec3_admin->upgrade_database(); // May set option ec3_force_upgrade
+
+  if( intval(get_option('ec3_upgrade_posts')) ||
+      isset($_POST['ec3_upgrade_posts']) )
+  {
+    require_once(dirname(__FILE__).'/upgrade-posts.php');
+    ec3_upgrade_posts();
+    return;
+  }
+  
+  // Normal options page...
   $ec3_admin->options_subpanel();
 }
 
