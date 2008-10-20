@@ -137,7 +137,7 @@ function ec3_filter_posts_where(&$where)
 {
   global $ec3,$wpdb;
 
-  if($ec3->query->is_page || $ec3->query->is_single || $ec3->query->is_admin)
+  if($ec3->query->is_page || $ec3->query->is_single || $ec3->query->is_admin || $ec3->query->is_tag)
       return $where;
 
   if($ec3->query->is_date):
