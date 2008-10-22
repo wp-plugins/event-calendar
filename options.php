@@ -30,13 +30,10 @@ class ec3_Options
   // State variables used by the custom loop
 
   /** Points to a sorted list of all events.
-   *  Set by ec3_all_events() or ec3_post_events(). */
+   *  Set by ec3_iter_all_events() or ec3_iter_post_events(). */
   var $events=false;
-  var $events_count=0;
-  /** Points to the current event. Set by ec3_the_event(). */
+  /** Points to the current event. Set by ec3_Iterator::next(). */
   var $event=false;
-  /** Index no. of the current event in $post->ec3_schedule. */
-  var $event_idx=-1;
   
   // Code differences required by different versions of WordPress.
   // Defaults represent the latest version of WP.
@@ -51,7 +48,7 @@ class ec3_Options
   var $wp_have_categories=false;
 
   // Settings used to flags activity between posts_where and other filters:
-  var $current_query=false; // Set by reset_query()
+  var $query=false; ///< Set by reset_query()
   var $is_listing=false;
   var $is_date_range=false;
   var $is_today=false;

@@ -1,5 +1,12 @@
 <?php
 
+/** Returns TRUE if the current post is an event. */
+function ec3_is_event()
+{
+  global $post;
+  return( !empty($post->ec3_schedule) );
+}
+
 /** Comparison function for events' start times.
  *  Example: Sort the events in a post by start time.
  *
@@ -17,7 +24,7 @@ function ec3_cmp_events(&$e0,&$e1)
 
 /** Fetch the first sensible 'current' event. Use this function if you want
  *  to look at the start time. */
-function &ec3_sensible_start_event()
+function ec3_sensible_start_event()
 {
   global $ec3, $post;
   if(!empty($ec3->event))
@@ -30,7 +37,7 @@ function &ec3_sensible_start_event()
 
 /** Fetch the last sensible 'current' event. Use this function if you want
  *  to look at the end time. */
-function &ec3_sensible_end_event()
+function ec3_sensible_end_event()
 {
   global $ec3, $post;
   if(!empty($ec3->event))
@@ -39,6 +46,26 @@ function &ec3_sensible_end_event()
     return $post->ec3_schedule[ count($post->ec3_schedule) - 1 ];
   else
     return false;
+}
+
+/** Get the sched_id of the current event. */
+function ec3_get_sched_id()
+{
+  $event = ec3_sensible_start_event();
+  if(empty($event))
+    return '';
+  else
+    return $event->sched_id;
+}
+
+/** Return TRUE if the current event is in the past. */
+function ec3_is_past()
+{
+  $event = ec3_sensible_end_event();
+  if(empty($event))
+    return false;
+  else
+    return( $event->end < $ec3->today );
 }
 
 /** Get a human-readable 'time since' the current event. */
@@ -135,93 +162,224 @@ function ec3_get_version()
  *    {
  *      the_post();
  *      // Now a nested loop, over the events in each post.
- *      ec3_post_events();
- *      while(ec3_have_events())
+ *      for($evt=ec3_iter_post_events(); $evt->valid(); $evt->next())
  *      {
- *        ec3_the_event();
  *        ...
  *      }
  *    }
  */
-function ec3_post_events($id=0)
+function ec3_iter_post_events($id=0)
 {
   global $ec3;
-  $post = &get_post($id);
+  $post = get_post($id);
+  unset($ec3->events);
   if(!isset($post->ec3_schedule) || empty($post->ec3_schedule))
   {
     $ec3->events       = false;
-    $ec3->events_count = 0;
   }
   else
   {
-    $ec3->events       =& $post->ec3_schedule;
-    $ec3->events_count = count($ec3->events);
-    $ec3->event        = false;
-    $ec3->event_idx    = -1;
+    $ec3->events       = $post->ec3_schedule;
   }
+  return new ec3_EventIterator();
 }
 
-/** Inialialise an event-loop, for ALL events in all posts in the current query. .
- *  By default we use the global query $wp_query, but you can supply your own,
- *  if you prefer.
- *  Example:
- *
- *    if(have_posts())
- *    {
- *      ec3_all_events();
- *      while(ec3_have_events())
- *      {
- *        ec3_the_event();
- *        ...
- *      }
- *    }
- */
-function ec3_all_events($query=0)
+
+/** Initialise an event-loop, for ALL events in all posts in a query.
+ *  You must explicitly state which query is to be used. If you just want to use
+ *  the current query, then use the variant form: ec3_iter_all_events(). */
+function ec3_iter_all_events_q(&$query)
 {
-  global $ec3, $post, $wp_query;
-  if(empty($query))
-    $query =& $wp_query;
+  global $ec3, $post;
+  unset($ec3->events);
   $ec3->events = array();
-  while($query->have_posts())
-  {
-    $query->the_post();
-    if(!isset($post->ec3_schedule))
-      continue;
-    foreach($post->ec3_schedule as $s)
-      array_push($ec3->events,$s);
-  }
+
+  if($query->is_page || $query->is_single || $query->is_admin):
+
+      // Emit all events.
+      while($query->have_posts())
+      {
+        $query->the_post();
+        if(!isset($post->ec3_schedule))
+          continue;
+        foreach($post->ec3_schedule as $s)
+          $ec3->events[] = $s;
+      }
+
+  elseif($query->query_vars['m'] && strlen($query->query_vars['m'])>=4):
+
+      // Only emit events that occur on the given day (or month or year).
+      if(strlen($query->query_vars['m'])>=8)
+      {
+        $m=substr($query->query_vars['m'],0,8);
+        $fmt='Ymd';
+      }
+      elseif(strlen($query->query_vars['m'])>=6)
+      {
+        $m=substr($query->query_vars['m'],0,6);
+        $fmt='Ym';
+      }
+      else
+      {
+        $m=substr($query->query_vars['m'],0,4);
+        $fmt='Y';
+      }
+
+      while($query->have_posts())
+      {
+        $query->the_post();
+        if(!isset($post->ec3_schedule))
+          continue;
+        foreach($post->ec3_schedule as $s)
+          if(mysql2date($fmt,$s->end) >= $m && mysql2date($fmt,$s->start) <= $m)
+            $ec3->events[] = $s;
+      }
+
+  elseif($ec3->is_date_range):
+
+      // The query is date-limited, so only emit events that occur
+      // within the date range.
+      while($query->have_posts())
+      {
+        $query->the_post();
+        if(!isset($post->ec3_schedule))
+          continue;
+        foreach($post->ec3_schedule as $s)
+          if( ( empty($ec3->range_from) ||
+                  mysql2date('Y-m-d',$s->end) >= $ec3->range_from ) &&
+              ( empty($ec3->range_before) ||
+                  mysql2date('Y-m-d',$s->start) <= $ec3->range_before ) )
+          {
+            $ec3->events[] = $s;
+          }
+      }
+
+  elseif($ec3->advanced &&(ec3_is_event_category($query) || $query->is_search)):
+
+      // Hide inactive events
+      while($query->have_posts())
+      {
+        $query->the_post();
+        if(!isset($post->ec3_schedule))
+          continue;
+        foreach($post->ec3_schedule as $s)
+          if( $s->end >= $ec3->today )
+            $ec3->events[] = $s;
+      }
+
+  else:
+
+      // Emit all events (same as the first branch).
+      while($query->have_posts())
+      {
+        $query->the_post();
+        if(!isset($post->ec3_schedule))
+          continue;
+        foreach($post->ec3_schedule as $s)
+          $ec3->events[] = $s;
+      }
+
+  endif;
   usort($ec3->events,'ec3_cmp_events');
   // This is a bit of a hack - only detect 'order=ASC' query var.
   // Really need our own switch.
   if(strtoupper($query->query_vars['order'])=='ASC')
     $ec3->events=array_reverse($ec3->events);
-  $ec3->events_count = count($ec3->events);
-  $ec3->event        = false;
-  $ec3->event_idx    = -1;
+  return new ec3_EventIterator();
 }
 
-/** Event loop function. Returns TRUE if the next call to ec3_the_event() will
- *  succeed. */
-function ec3_have_events()
+
+/** Initialise an event-loop, for ALL events in all posts in the current query.
+ *  Example:
+ *
+ *    if(have_posts())
+ *    {
+ *      for($evt=ec3_iter_all_events(); $evt->valid(); $evt->next())
+ *      {
+ *        ...
+ *      }
+ *    }
+ */
+function ec3_iter_all_events()
 {
-  global $ec3;
-  return( $ec3->event_idx+1 < $ec3->events_count );
+  global $wp_query;
+  return ec3_iter_all_events_q($wp_query);
 }
 
-/** Event loop function. Fetches the next event, and places it in $ec3->event.
- *  From there, ec3 template functions will automatically find it. */
-function ec3_the_event()
+
+/** Iterator class implements loops over events. Generated by
+ *  ec3_iter_post_events() or ec3_iter_all_events().
+ *  These iterators are not independent - don't try to get smart with nested
+ *  loops!
+ *  This class is ready to implement PHP5's Iterator interface.
+ */
+class ec3_EventIterator
 {
-  global $ec3,$post;
-  // Assert: ec3_have_events() just returned true.
-  $ec3->event_idx++;
-  $ec3->event =& $ec3->events[$ec3->event_idx];
-  if($post->ID != $ec3->event->post_id)
+  var $_idx   =0;
+  var $_begin =0;
+  var $_limit =0;
+
+  /** Parameters are andices into the $ec3->events array.
+   *  'begin' points to the first event.
+   *  'limit' is one higher than the last event. */
+  function ec3_EventIterator($begin=0, $limit=-1)
   {
-    $post = get_post($ec3->event->post_id);
-    setup_postdata($post);
+    global $ec3;
+    $this->_begin = $begin;
+    if(empty($ec3->events))
+      $this->_limit = 0;
+    elseif($limit<0)
+      $this->_limit = count($ec3->events);
+    else
+      $this->_limit = $limit;
+    $this->rewind();
   }
-}
+
+  /** Resets this iterator to the beginning. */
+  function rewind()
+  {
+    $this->_idx = $this->_begin - 1;
+    $this->next();
+  }
+
+  /** Move along to the next (possibly empty) event. */
+  function next()
+  {
+    $this->_idx++;
+    $this->current();
+  }
+  
+  /** Returns TRUE if this iterator points to an event. */
+  function valid()
+  {
+    return( $this->_idx < $this->_limit );
+  }
+
+  /** Set the global $ec3->event to match this iterator's index. */
+  function current()
+  {
+    global $ec3,$post;
+    if( $this->_idx < $this->_limit )
+    {
+      $ec3->event = $ec3->events[$this->_idx];
+      if($post->ID != $ec3->event->post_id)
+      {
+        $post = get_post($ec3->event->post_id);
+        setup_postdata($post);
+      }
+    }
+    else
+    {
+      unset($ec3->event); // Need to break the reference.
+      $ec3->event = false;
+    }
+  }
+  
+  function key()
+  {
+    return $this->_idx;
+  }
+}; // limit class ec3_EventIterator
 
 
 /** Template function. Call this from your template to insert a list of
@@ -243,7 +401,7 @@ function ec3_get_events(
   // Parse $limit:
   //  NUMBER      - limits number of posts
   //  NUMBER days - next NUMBER of days
-  $query =& new WP_Query();
+  $query = new WP_Query();
   if(preg_match('/^ *([0-9]+) *d(ays?)?/',$limit,$matches))
       $query->query( 'ec3_listing=event&ec3_days='.intval($matches[1]) );
   elseif(intval($limit)>0)
@@ -261,11 +419,8 @@ function ec3_get_events(
     $current_month=false;
     $current_date=false;
     $data=array();
-    ec3_all_events($query);
-    while(ec3_have_events())
+    for($evt=ec3_iter_all_events_q($query); $evt->valid(); $evt->next())
     {
-      ec3_the_event();
-
       $data['SINCE']=ec3_get_since();
 
       // Month changed?
@@ -320,7 +475,7 @@ function ec3_widget_upcoming_events($limit =5)
   // Parse $limit:
   //  NUMBER      - limits number of posts
   //  NUMBER days - next NUMBER of days
-  $query =& new WP_Query();
+  $query = new WP_Query();
   if(preg_match('/^ *([0-9]+) *d(ays?)?/',$limit,$matches))
       $query->query( 'ec3_days='.intval($matches[1]) );
   elseif(intval($limit)>0)
@@ -335,11 +490,8 @@ function ec3_widget_upcoming_events($limit =5)
   if($query->have_posts())
   {
     $current_date=false;
-    ec3_all_events($query);
-    while(ec3_have_events())
+    for($evt=ec3_iter_all_events_q($query); $evt->valid(); $evt->next())
     {
-      ec3_the_event();
-
       // Date changed?
       $date=ec3_get_date('j F');
       if(!$current_date || $current_date!=$date)
@@ -376,10 +528,8 @@ function ec3_get_schedule(
   $date_format=get_option('date_format');
   $time_format=get_option('time_format');
   $current=false;
-  ec3_post_events();
-  while(ec3_have_events())
+  for($evt=ec3_iter_post_events($query); $evt->valid(); $evt->next())
   {
-    ec3_the_event();
     $date_start=ec3_get_start_date();
     $date_end  =ec3_get_end_date();
     $time_start=ec3_get_start_time();
