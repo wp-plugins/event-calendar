@@ -63,7 +63,7 @@ else:
 endif;
 
 
-/** Converts a WordPress timestamp to Unix time. */
+/** Converts a WordPress timestamp (string in local time) to Unix time. */
 function ec3_to_time($timestamp)
 {
   global $ec3;
@@ -75,7 +75,8 @@ function ec3_to_time($timestamp)
   return $unix_time;
 }
 
-/** Converts a WordPress timestamp to UTC. */
+/** Converts a WordPress timestamp (string in local time) to
+ *  string in formatted UTC. */
 function ec3_to_utc($timestamp,$fmt='%Y%m%dT%H%M00Z')
 {
   $result = gmstrftime($fmt,ec3_to_time($timestamp));
