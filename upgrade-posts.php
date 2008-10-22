@@ -127,7 +127,7 @@ function ec3_upgrade_posts()
 }
 
 
-
+/** Process results from the 'ec3_upgrade_posts' form. */
 function ec3_upgrade_posts_apply()
 {
   if(!isset($_POST) ||
@@ -185,6 +185,5 @@ function ec3_upgrade_posts_apply()
   }
   return $changed_count;
 }
-
 
 ?>
