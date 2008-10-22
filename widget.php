@@ -111,7 +111,12 @@ function ec3_widget_init()
     echo $before_widget . $before_title;
     echo ec3_widget_title($options['title'],'Upcoming Events');
     echo $after_title;
-    ec3_get_events($options['limit']); 
+    ec3_get_events(
+      $options['limit'],
+      EC3_DEFAULT_TEMPLATE_EVENT,
+      EC3_DEFAULT_TEMPLATE_DAY,
+      get_option('date_format')
+    );
     echo $after_widget;
   }
 
@@ -153,7 +158,8 @@ function ec3_widget_init()
     </p>
     
     <p>
-      <a href="options-general.php?page=ec3_admin"><?php _e('Go to Event Calendar Options','ec3') ?>.</a>
+      <a href="options-general.php?page=ec3_admin">
+       <?php _e('Go to Event Calendar Options','ec3') ?>.</a>
     </p>
 
     <input type="hidden" name="ec3_list_submit" value="1" />
