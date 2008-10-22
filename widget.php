@@ -174,7 +174,6 @@ function ec3_widget_init()
     array('description' =>
           __('Display upcoming events as a list.','ec3')
               . ' (Event Calendar '. __('Plugin') .')' ) 
-          )
   );
 
   register_widget_control(
