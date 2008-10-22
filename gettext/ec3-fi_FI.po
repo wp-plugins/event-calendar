@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Calendar v3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-11 18:21+0100\n"
+"POT-Creation-Date: 2008-10-22 20:07+0100\n"
 "PO-Revision-Date: 2006-11-01 21:14+0200\n"
 "Last-Translator: Ralf Strandell <ralf.strandell@auriamail.net>\n"
 "Language-Team: Ralf Strandell <ralf.strandell@auriamail.net>\n"
@@ -45,24 +45,32 @@ msgstr "Poista tämä tapahtuma"
 msgid "Error upgrading database for EventCalendar plugin."
 msgstr "EventCalendar -lisäosan tietokannan päivityksessä virheitä"
 
-#: admin.php:312
+#: admin.php:318
 #, php-format
 msgid "Upgraded database to EventCalendar Version %s"
 msgstr "Tietokanta päivitetty EventCalendar versio %s:n"
 
-#: admin.php:316
+#: admin.php:322
 msgid "Table already existed"
 msgstr "Taulu oli jo olemassa"
 
-#: admin.php:344 admin.php:354 admin.php:399
+#: admin.php:349 admin.php:392
 msgid "Event Calendar Options"
 msgstr "Tapahtumakalenterin asetukset"
 
-#: admin.php:403
+#: admin.php:396
+msgid "Easter Egg"
+msgstr ""
+
+#: admin.php:398 upgrade-posts.php:107
+msgid "Upgrade Event Posts"
+msgstr ""
+
+#: admin.php:405
 msgid "Event category"
 msgstr "Luokka"
 
-#: admin.php:413
+#: admin.php:415
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -71,31 +79,31 @@ msgstr ""
 "etusivulla voidaan erikseen säädellä. Tästä luokasta ei saa tehdä "
 "blogiviestien oletusluokkaa."
 
-#: admin.php:419
+#: admin.php:421
 msgid "Show schedule within posts"
 msgstr "Tapahtuman aikaleima"
 
-#: admin.php:423
+#: admin.php:425
 msgid "Show Schedule"
 msgstr "Näytä aikaleima"
 
-#: admin.php:426
+#: admin.php:428
 msgid "Hide Schedule"
 msgstr "Kätke aikaleima"
 
-#: admin.php:433
+#: admin.php:435
 msgid "Show events as blog entries"
 msgstr "Tapahtumien näyttäminen blogissa"
 
-#: admin.php:437
+#: admin.php:439
 msgid "Events are Normal Posts"
 msgstr "Tapahtumat näkyvät tavallisina blogiviesteinä etusivulla"
 
-#: admin.php:440
+#: admin.php:442
 msgid "Keep Events Separate"
 msgstr "Pidä tapahtumat erillään"
 
-#: admin.php:444
+#: admin.php:446
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -103,15 +111,15 @@ msgstr ""
 "Pidä tapahtumat erillään: Tapahtumat eivät näy etusivulla, mutta "
 "tapahtumaluokan sivulla ne näkyvät aikajärjestyksessä."
 
-#: admin.php:450 admin.php:462
+#: admin.php:452 admin.php:464
 msgid "Timezone"
 msgstr "Aikavyöhyke"
 
-#: admin.php:454
+#: admin.php:456
 msgid "unknown"
 msgstr "tuntematon"
 
-#: admin.php:458
+#: admin.php:460
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -119,71 +127,71 @@ msgstr ""
 "Aikavyöhykettä ei voi vaihtaa. Poista PHP:n 'safe mode' käytöstä tai päivitä "
 "PHP5:n"
 
-#: admin.php:474
+#: admin.php:476
 msgid "Calendar Display"
 msgstr "Kalenteri"
 
-#: admin.php:479
+#: admin.php:481
 msgid "Number of months"
 msgstr "Kuukausia"
 
-#: admin.php:486
+#: admin.php:488
 msgid "Show all categories in calendar"
 msgstr "Näytä kalenterissa"
 
-#: admin.php:490
+#: admin.php:492
 msgid "Only Show Events"
 msgstr "Vain tapahtumat"
 
-#: admin.php:493
+#: admin.php:495
 msgid "Show All Posts"
 msgstr "Kaikki viestit"
 
-#: admin.php:500
+#: admin.php:502
 msgid "Show day names as"
 msgstr "Näytä päivät"
 
-#: admin.php:504
+#: admin.php:506
 msgid "Single Letter"
 msgstr "Yhdellä kirjaimella"
 
-#: admin.php:507
+#: admin.php:509
 msgid "3-Letter Abbreviation"
 msgstr "Kolmella kirjaimella"
 
-#: admin.php:510
+#: admin.php:512
 msgid "Full Day Name"
 msgstr "Koko nimellä"
 
-#: admin.php:517
+#: admin.php:519
 msgid "Show Event Calendar logo"
 msgstr "Näytä Event Calendar—logo"
 
-#: admin.php:521
+#: admin.php:523
 msgid "Show Logo"
 msgstr "Näytä logo"
 
-#: admin.php:524
+#: admin.php:526
 msgid "Hide Logo"
 msgstr "Kätke logo"
 
-#: admin.php:531
+#: admin.php:533
 msgid "Position of navigation links"
 msgstr "Selauslinkkien sijainti"
 
-#: admin.php:535
+#: admin.php:537
 msgid "Above Calendar"
 msgstr "Kalenterin yllä"
 
-#: admin.php:538
+#: admin.php:540
 msgid "Below Calendar"
 msgstr "Kalenterin alla"
 
-#: admin.php:541
+#: admin.php:543
 msgid "Hidden"
 msgstr "Piilossa"
 
-#: admin.php:545
+#: admin.php:547
 msgid ""
 "The navigation links are more usable when they are above the calendar, but "
 "you might prefer them below or hidden for aesthetic reasons."
@@ -191,37 +199,29 @@ msgstr ""
 "Selauslinkit ovat helpoimmin käytettävissä kalenterin yllä, mutta "
 "ulkonäkösyistä ne voidaan sijoittaa alle tai kätkeä."
 
-#: admin.php:551
+#: admin.php:553
 msgid "Popup event lists"
 msgstr "Ponnahdustekstin tyyppi"
 
-#: admin.php:555
+#: admin.php:557
 msgid "Show Popups"
 msgstr "Allekkainen lista kalenterin alla"
 
-#: admin.php:558
+#: admin.php:560
 msgid "Hide Popups"
 msgstr "Ei allekkaista listaa"
 
-#: admin.php:562
+#: admin.php:564
 msgid "You might want to disable popups if you use Nicetitles."
 msgstr ""
 "Ponnahduslista kannattanee poistaa käytöstä Nicetitles -ominaisuutta "
 "käytettäessä."
 
-#: admin.php:571
-msgid "Update Options"
-msgstr ""
-
-#: admin.php:575
-msgid "EXAMPLE SIDEBAR CODE:"
-msgstr "ESIMERKKIKOODIA SIVUPALKKIIN:"
-
 #: template-functions.php:29
 msgid "You must choose an event category."
 msgstr "Tapahtuman luokka on valittava"
 
-#: template-functions.php:32 widget.php:83 widget.php:146
+#: template-functions.php:32 widget.php:84 widget.php:162
 #: K2/ec3_sidebar_module.php:64
 msgid "Go to Event Calendar Options"
 msgstr "Siirry tapahtumakalenterin asetuksiin"
@@ -230,29 +230,49 @@ msgstr "Siirry tapahtumakalenterin asetuksiin"
 msgid "Subscribe to iCalendar."
 msgstr "Tilaa iCalendar."
 
-#: template-functions.php:155 template-functions.php:435
+#: template-functions.php:164 template-functions.php:446
 msgid "all day"
 msgstr "koko päivä"
 
-#: template-functions.php:271 widget.php:91 widget.php:95
+#: template-functions.php:282 widget.php:93 widget.php:101
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Tapahtumakalenteri"
 
-#: template-functions.php:351 widget.php:155 widget.php:159
+#: template-functions.php:362 widget.php:172 widget.php:180
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Tulevia tapahtumia"
 
-#: template-functions.php:456
+#: template-functions.php:467
 msgid "No events."
 msgstr "Ei tapahtumia."
 
-#: template-functions.php:493 template-functions.php:507
-#: template-functions.php:519
+#: template-functions.php:504 template-functions.php:518
+#: template-functions.php:530
 msgid "to"
 msgstr "–"
 
-#: widget.php:139
+#: upgrade-posts.php:22
+msgid "Post upgraded."
+msgstr ""
+
+#: upgrade-posts.php:23
+#, php-format
+msgid "%d posts upgraded."
+msgstr ""
+
+#: widget.php:96
+msgid "Display upcoming events in a dynamic calendar."
+msgstr ""
+
+#: widget.php:153
 msgid "Number of events:"
 msgstr "Tapahtumien lukumäärä:"
+
+#: widget.php:175
+msgid "Display upcoming events as a list."
+msgstr ""
+
+#~ msgid "EXAMPLE SIDEBAR CODE:"
+#~ msgstr "ESIMERKKIKOODIA SIVUPALKKIIN:"

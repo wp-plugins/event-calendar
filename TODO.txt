@@ -1,4 +1,4 @@
-TODO: Event Calendar 3.1.1
+TODO: Event Calendar 3.1.2
 ==========================
 
  ? Fix XML entity rendering on Safari (works on IE/Firefox)

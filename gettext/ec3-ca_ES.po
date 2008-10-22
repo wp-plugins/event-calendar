@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1._rc1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-11 18:21+0100\n"
+"POT-Creation-Date: 2008-10-22 20:07+0100\n"
 "PO-Revision-Date: 2007-02-17 17:30+0100\n"
 "Last-Translator: cubells <vicent@vcubells.net>\n"
 "Language-Team: Catalan <vicent@vcubells.net>\n"
@@ -49,24 +49,32 @@ msgstr "Esborra aquest esdeveniment"
 msgid "Error upgrading database for EventCalendar plugin."
 msgstr "Error actualitzant la base de dades del connector EventCalendar"
 
-#: admin.php:312
+#: admin.php:318
 #, php-format
 msgid "Upgraded database to EventCalendar Version %s"
 msgstr "Actualitzada la base de dades de l'EventCalendar Versió %s"
 
-#: admin.php:316
+#: admin.php:322
 msgid "Table already existed"
 msgstr "La Taula ja existeix"
 
-#: admin.php:344 admin.php:354 admin.php:399
+#: admin.php:349 admin.php:392
 msgid "Event Calendar Options"
 msgstr "Opcions del Calendari d'Esdeveniments"
 
-#: admin.php:403
+#: admin.php:396
+msgid "Easter Egg"
+msgstr ""
+
+#: admin.php:398 upgrade-posts.php:107
+msgid "Upgrade Event Posts"
+msgstr ""
+
+#: admin.php:405
 msgid "Event category"
 msgstr "Categoria per als esdeveniments"
 
-#: admin.php:413
+#: admin.php:415
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -74,31 +82,31 @@ msgstr ""
 "Els esdeveniments són agefits en aquesta categoria de manera automàtica. No "
 "hauria de ser la categoria predeterminada per a les teves entrades."
 
-#: admin.php:419
+#: admin.php:421
 msgid "Show schedule within posts"
 msgstr "Pel que fa als horaris dintre de les entrades"
 
-#: admin.php:423
+#: admin.php:425
 msgid "Show Schedule"
 msgstr "Mostra els horaris"
 
-#: admin.php:426
+#: admin.php:428
 msgid "Hide Schedule"
 msgstr "Amaga els horaris"
 
-#: admin.php:433
+#: admin.php:435
 msgid "Show events as blog entries"
 msgstr "Pel que fa als esdeveniments i les entrades"
 
-#: admin.php:437
+#: admin.php:439
 msgid "Events are Normal Posts"
 msgstr "Els esdeveniments són entrades normals"
 
-#: admin.php:440
+#: admin.php:442
 msgid "Keep Events Separate"
 msgstr "Manté els esdeveniments separats"
 
-#: admin.php:444
+#: admin.php:446
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -107,15 +115,15 @@ msgstr ""
 "esdeveniments mostra els esdeveniments futurs ordenats per data. Els "
 "esdeveniments no apareixen a la pàgina principal."
 
-#: admin.php:450 admin.php:462
+#: admin.php:452 admin.php:464
 msgid "Timezone"
 msgstr "Zona horària"
 
-#: admin.php:454
+#: admin.php:456
 msgid "unknown"
 msgstr "Desconeguda"
 
-#: admin.php:458
+#: admin.php:460
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -123,71 +131,71 @@ msgstr ""
 "No pots canviar la teva zona horària. Deshabilita el 'safe mode' del PHP o "
 "actualitza a PHP5."
 
-#: admin.php:474
+#: admin.php:476
 msgid "Calendar Display"
 msgstr "Mostra el Calendari"
 
-#: admin.php:479
+#: admin.php:481
 msgid "Number of months"
 msgstr "Nombre de mesos"
 
-#: admin.php:486
+#: admin.php:488
 msgid "Show all categories in calendar"
 msgstr "Mostra totes les categories al calendari"
 
-#: admin.php:490
+#: admin.php:492
 msgid "Only Show Events"
 msgstr "Mostra solament els esdeveniments"
 
-#: admin.php:493
+#: admin.php:495
 msgid "Show All Posts"
 msgstr "Mostra totes les entrades"
 
-#: admin.php:500
+#: admin.php:502
 msgid "Show day names as"
 msgstr "Mostra els noms dels dies com"
 
-#: admin.php:504
+#: admin.php:506
 msgid "Single Letter"
 msgstr "Una lletra simple"
 
-#: admin.php:507
+#: admin.php:509
 msgid "3-Letter Abbreviation"
 msgstr "Una abreviatura de 3 lletres"
 
-#: admin.php:510
+#: admin.php:512
 msgid "Full Day Name"
 msgstr "El nom del dia sencer"
 
-#: admin.php:517
+#: admin.php:519
 msgid "Show Event Calendar logo"
 msgstr "Pel que fa al logotip del Calendari"
 
-#: admin.php:521
+#: admin.php:523
 msgid "Show Logo"
 msgstr "Mostra el logotip"
 
-#: admin.php:524
+#: admin.php:526
 msgid "Hide Logo"
 msgstr "Amaga el logotip"
 
-#: admin.php:531
+#: admin.php:533
 msgid "Position of navigation links"
 msgstr "Pel que fa a la posició dels enllaços de navegació"
 
-#: admin.php:535
+#: admin.php:537
 msgid "Above Calendar"
 msgstr "Damunt del calendari"
 
-#: admin.php:538
+#: admin.php:540
 msgid "Below Calendar"
 msgstr "Sota el calendari"
 
-#: admin.php:541
+#: admin.php:543
 msgid "Hidden"
 msgstr "Ocults"
 
-#: admin.php:545
+#: admin.php:547
 msgid ""
 "The navigation links are more usable when they are above the calendar, but "
 "you might prefer them below or hidden for aesthetic reasons."
@@ -195,36 +203,28 @@ msgstr ""
 "Els enllaços de navegació són més usables quan estan a sobre del calendari, "
 "però pots preferir-los per sota o ocults per raons estètiques."
 
-#: admin.php:551
+#: admin.php:553
 msgid "Popup event lists"
 msgstr "Finestres emergents de la llista d'esdeveniments"
 
-#: admin.php:555
+#: admin.php:557
 msgid "Show Popups"
 msgstr "Mostra finestres emergents"
 
-#: admin.php:558
+#: admin.php:560
 msgid "Hide Popups"
 msgstr "Oculta les finestres emergents"
 
-#: admin.php:562
+#: admin.php:564
 msgid "You might want to disable popups if you use Nicetitles."
 msgstr ""
 "Pots no voler habilitar les finestres emergents si fas ús de Nicetitles."
-
-#: admin.php:571
-msgid "Update Options"
-msgstr ""
-
-#: admin.php:575
-msgid "EXAMPLE SIDEBAR CODE:"
-msgstr "EXEMPLE DE CODI PER ALS MENUS LATERALS"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
 msgstr "Has de triar una categoria per a l'esdeveniment"
 
-#: template-functions.php:32 widget.php:83 widget.php:146
+#: template-functions.php:32 widget.php:84 widget.php:162
 #: K2/ec3_sidebar_module.php:64
 msgid "Go to Event Calendar Options"
 msgstr "Vés a les opcions del Calendari d'Esdeveniments"
@@ -233,29 +233,49 @@ msgstr "Vés a les opcions del Calendari d'Esdeveniments"
 msgid "Subscribe to iCalendar."
 msgstr "Subscriu-te al iCalendar"
 
-#: template-functions.php:155 template-functions.php:435
+#: template-functions.php:164 template-functions.php:446
 msgid "all day"
 msgstr "durant tot el dia"
 
-#: template-functions.php:271 widget.php:91 widget.php:95
+#: template-functions.php:282 widget.php:93 widget.php:101
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Calendari d'Esdeveniments"
 
-#: template-functions.php:351 widget.php:155 widget.php:159
+#: template-functions.php:362 widget.php:172 widget.php:180
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Esdeveniments futurs"
 
-#: template-functions.php:456
+#: template-functions.php:467
 msgid "No events."
 msgstr "No hi ha esdeveniments"
 
-#: template-functions.php:493 template-functions.php:507
-#: template-functions.php:519
+#: template-functions.php:504 template-functions.php:518
+#: template-functions.php:530
 msgid "to"
 msgstr "a"
 
-#: widget.php:139
+#: upgrade-posts.php:22
+msgid "Post upgraded."
+msgstr ""
+
+#: upgrade-posts.php:23
+#, php-format
+msgid "%d posts upgraded."
+msgstr ""
+
+#: widget.php:96
+msgid "Display upcoming events in a dynamic calendar."
+msgstr ""
+
+#: widget.php:153
 msgid "Number of events:"
 msgstr "Nombre d'esdeveniments"
+
+#: widget.php:175
+msgid "Display upcoming events as a list."
+msgstr ""
+
+#~ msgid "EXAMPLE SIDEBAR CODE:"
+#~ msgstr "EXEMPLE DE CODI PER ALS MENUS LATERALS"

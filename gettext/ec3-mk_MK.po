@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-11 18:21+0100\n"
+"POT-Creation-Date: 2008-10-22 20:07+0100\n"
 "PO-Revision-Date: 2006-12-05 09:26+0100\n"
 "Last-Translator: Vanco Ordanoski <vanco.ordanoski AT gmail.com>\n"
 "Language-Team: Event Calendar <alex DOT ec3pot AT firetree.net>\n"
@@ -47,24 +47,32 @@ msgstr "Избриши ја оваа активност"
 msgid "Error upgrading database for EventCalendar plugin."
 msgstr "Грешка во надградбата на базата на податоци на EventCalendar."
 
-#: admin.php:312
+#: admin.php:318
 #, php-format
 msgid "Upgraded database to EventCalendar Version %s"
 msgstr "Базата е надградена во верзија %s на EventCalendar"
 
-#: admin.php:316
+#: admin.php:322
 msgid "Table already existed"
 msgstr "Табелата веќе постоеше"
 
-#: admin.php:344 admin.php:354 admin.php:399
+#: admin.php:349 admin.php:392
 msgid "Event Calendar Options"
 msgstr "Опции на Event Calendar"
 
-#: admin.php:403
+#: admin.php:396
+msgid "Easter Egg"
+msgstr ""
+
+#: admin.php:398 upgrade-posts.php:107
+msgid "Upgrade Event Posts"
+msgstr ""
+
+#: admin.php:405
 msgid "Event category"
 msgstr "Категорија на активности"
 
-#: admin.php:413
+#: admin.php:415
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -72,31 +80,31 @@ msgstr ""
 "Содржините со активности се ставаат во оваа категорија. На ја поставувајте "
 "како своја подразбрана категорија за содржини."
 
-#: admin.php:419
+#: admin.php:421
 msgid "Show schedule within posts"
 msgstr "Прикажи ја агендата заедно со другите содржини"
 
-#: admin.php:423
+#: admin.php:425
 msgid "Show Schedule"
 msgstr "Прикажи ја агендата"
 
-#: admin.php:426
+#: admin.php:428
 msgid "Hide Schedule"
 msgstr "Сокриј ја агендата"
 
-#: admin.php:433
+#: admin.php:435
 msgid "Show events as blog entries"
 msgstr "Прикажи ги активностите како блог содржини"
 
-#: admin.php:437
+#: admin.php:439
 msgid "Events are Normal Posts"
 msgstr "Активностите се нормални содржини"
 
-#: admin.php:440
+#: admin.php:442
 msgid "Keep Events Separate"
 msgstr "Чувај ги активностите посебно"
 
-#: admin.php:444
+#: admin.php:446
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -105,15 +113,15 @@ msgstr ""
 "прикажува идните активности, подредени по датум. Активностите не се "
 "појавуваат на насловната страна."
 
-#: admin.php:450 admin.php:462
+#: admin.php:452 admin.php:464
 msgid "Timezone"
 msgstr "Временска зона"
 
-#: admin.php:454
+#: admin.php:456
 msgid "unknown"
 msgstr "непознато"
 
-#: admin.php:458
+#: admin.php:460
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -121,71 +129,71 @@ msgstr ""
 "Не можете да ја промените временската зона. Исклучете го 'safe mode' на PHP, "
 "или надградете се на PHP5."
 
-#: admin.php:474
+#: admin.php:476
 msgid "Calendar Display"
 msgstr "Приказ на календарот"
 
-#: admin.php:479
+#: admin.php:481
 msgid "Number of months"
 msgstr "Број на месеци"
 
-#: admin.php:486
+#: admin.php:488
 msgid "Show all categories in calendar"
 msgstr "Прикажи ги сите категории во календарот"
 
-#: admin.php:490
+#: admin.php:492
 msgid "Only Show Events"
 msgstr "Прикажи ги само активностите"
 
-#: admin.php:493
+#: admin.php:495
 msgid "Show All Posts"
 msgstr "Прикажи ги сите постови"
 
-#: admin.php:500
+#: admin.php:502
 msgid "Show day names as"
 msgstr "Прикажи ги имињата на деновите со"
 
-#: admin.php:504
+#: admin.php:506
 msgid "Single Letter"
 msgstr "Кратенка од една буква"
 
-#: admin.php:507
+#: admin.php:509
 msgid "3-Letter Abbreviation"
 msgstr "Кратенка од три букви"
 
-#: admin.php:510
+#: admin.php:512
 msgid "Full Day Name"
 msgstr "Полно име на денот"
 
-#: admin.php:517
+#: admin.php:519
 msgid "Show Event Calendar logo"
 msgstr "Прикажи го логото на Event Calendar"
 
-#: admin.php:521
+#: admin.php:523
 msgid "Show Logo"
 msgstr "Прикажи го логото"
 
-#: admin.php:524
+#: admin.php:526
 msgid "Hide Logo"
 msgstr "Сокриј го логото"
 
-#: admin.php:531
+#: admin.php:533
 msgid "Position of navigation links"
 msgstr "Позиција на линковите за навигација"
 
-#: admin.php:535
+#: admin.php:537
 msgid "Above Calendar"
 msgstr "Над календарот"
 
-#: admin.php:538
+#: admin.php:540
 msgid "Below Calendar"
 msgstr "Под календарот"
 
-#: admin.php:541
+#: admin.php:543
 msgid "Hidden"
 msgstr "Сокриено"
 
-#: admin.php:545
+#: admin.php:547
 msgid ""
 "The navigation links are more usable when they are above the calendar, but "
 "you might prefer them below or hidden for aesthetic reasons."
@@ -193,36 +201,28 @@ msgstr ""
 "Линковите за навигација се поупотребливи кога се над календарот, но вие "
 "можеби повеќе сакате да бидат под него или сокриени, од естетски причини."
 
-#: admin.php:551
+#: admin.php:553
 msgid "Popup event lists"
 msgstr "Popup листа на активности"
 
-#: admin.php:555
+#: admin.php:557
 msgid "Show Popups"
 msgstr "Прикажи ги popup-ите"
 
-#: admin.php:558
+#: admin.php:560
 msgid "Hide Popups"
 msgstr "Сокриј ги popup-ите"
 
-#: admin.php:562
+#: admin.php:564
 msgid "You might want to disable popups if you use Nicetitles."
 msgstr ""
 "Можеби ќе сакате да ги исклучите popup-ите ако употребувате Nicetitles."
-
-#: admin.php:571
-msgid "Update Options"
-msgstr ""
-
-#: admin.php:575
-msgid "EXAMPLE SIDEBAR CODE:"
-msgstr "ПРИМЕР НА ПРОГРАМСКИ КОД ВО СТРАНИЧНА ВЕРТИКАЛА:"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
 msgstr "Морате да изберете категорија на активностите."
 
-#: template-functions.php:32 widget.php:83 widget.php:146
+#: template-functions.php:32 widget.php:84 widget.php:162
 #: K2/ec3_sidebar_module.php:64
 msgid "Go to Event Calendar Options"
 msgstr "Прејди на опциите на Event Calendar"
@@ -231,29 +231,49 @@ msgstr "Прејди на опциите на Event Calendar"
 msgid "Subscribe to iCalendar."
 msgstr "Претплати се на iCalendar."
 
-#: template-functions.php:155 template-functions.php:435
+#: template-functions.php:164 template-functions.php:446
 msgid "all day"
 msgstr "цел ден"
 
-#: template-functions.php:271 widget.php:91 widget.php:95
+#: template-functions.php:282 widget.php:93 widget.php:101
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Календар на активности"
 
-#: template-functions.php:351 widget.php:155 widget.php:159
+#: template-functions.php:362 widget.php:172 widget.php:180
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Следни активности"
 
-#: template-functions.php:456
+#: template-functions.php:467
 msgid "No events."
 msgstr "Нема активности."
 
-#: template-functions.php:493 template-functions.php:507
-#: template-functions.php:519
+#: template-functions.php:504 template-functions.php:518
+#: template-functions.php:530
 msgid "to"
 msgstr "до"
 
-#: widget.php:139
+#: upgrade-posts.php:22
+msgid "Post upgraded."
+msgstr ""
+
+#: upgrade-posts.php:23
+#, php-format
+msgid "%d posts upgraded."
+msgstr ""
+
+#: widget.php:96
+msgid "Display upcoming events in a dynamic calendar."
+msgstr ""
+
+#: widget.php:153
 msgid "Number of events:"
 msgstr "Број на активности:"
+
+#: widget.php:175
+msgid "Display upcoming events as a list."
+msgstr ""
+
+#~ msgid "EXAMPLE SIDEBAR CODE:"
+#~ msgstr "ПРИМЕР НА ПРОГРАМСКИ КОД ВО СТРАНИЧНА ВЕРТИКАЛА:"

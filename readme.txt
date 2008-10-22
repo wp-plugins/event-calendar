@@ -1,6 +1,6 @@
 === Event Calendar 3 ===
 Tags: calendar, event, vcalendar, icalendar, ical, ajax, widget, sidebar
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 Contributors: Alex Tingle
 Donate link: http://www.amazon.co.uk/gp/registry/1S44DP6XXOFIN
 Requires at least: 1.5
@@ -139,7 +139,7 @@ post edit screen that allows you to set the event date.
      dk_DK  Danish              (by Simon Bognolo)
      es_ES  Spanish             (by Maira Belmonte)
      fi_FI  Finnish             (by Ralf Strandell)
-     fr_FR  French              (by Davy Morel & Jérôme aka Comme une image)
+     fr_FR  French              (by Davy Morel & JÃ©rÃ´me aka Comme une image)
      hu_HU  Hungarian           (by Elbandi)
      it_IT  Italian             (by Jimmi)
      mk_MK  Macedonian          (by Vanco Ordanoski)
@@ -147,9 +147,10 @@ post edit screen that allows you to set the event date.
      nl_NL  Dutch               (by Gerjan Boer & P. Mathijssen)
      pt_BR  Portuguese (Brazil) (by DJ Spark)
      ro_RO  Romanian            (by Sushkov Stanislav)
+     ru_RU  Russian             (by Ivan Matveyev)
      sl_SI  Slovenian           (by Damjan Gerli)
      sv_SE  Swedish             (by Anders Laurin)
-     tr_TR  Turkish             (by Firat Cem Tezer & Roman Neumüller)
+     tr_TR  Turkish             (by Firat Cem Tezer & Roman NeumÃ¼ller)
 
    If you would like to make a new translation, then just make a copy of the
    file getttext/ec3.pot, and add your translated text. You can use the existing

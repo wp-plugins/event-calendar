@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Event Calendar
-Version: 3.1.1
+Version: 3.1.2
 Plugin URI: http://wpcal.firetree.net
 Description: Manage future events as an online calendar. Display upcoming events in a dynamic calendar, on a listings page, or as a list in the sidebar. You can subscribe to the calendar from iCal (OSX) or Sunbird. Change settings on the <a href="options-general.php?page=ec3_admin">Event Calendar Options</a> screen.
 Author: Alex Tingle
@@ -136,6 +136,10 @@ function ec3_filter_posts_where(&$where)
 {
   global $ec3,$wp_query,$wpdb;
 
+  // To prevent breaking prior to WordPress v2.3
+  if(function_exists('get_the_tags') && $wp_query->is_tag)
+      return $where;
+
   if($wp_query->is_page || $wp_query->is_single || $wp_query->is_admin)
       return $where;
 
@@ -238,13 +242,21 @@ function ec3_filter_posts_join(&$join)
 function ec3_filter_posts_orderby(&$orderby)
 {
   global $ec3, $wpdb;
-  $regexp="/\b$wpdb->posts\.post_date\b( DESC\b| ASC\b)?/i";
-  if($ec3->order_by_start && preg_match($regexp,$orderby,$match))
+  if($ec3->order_by_start)
   {
-    if($match[1] && $match[1]==' DESC')
-      $orderby=preg_replace($regexp,'ec3_sch.start',$orderby);
+    $regexp="/(?<!DATE_FORMAT[(])\b$wpdb->posts\.post_date\b( DESC\b| ASC\b)?/i";
+    if(preg_match($regexp,$orderby,$match))
+    {
+      if($match[1] && $match[1]==' DESC')
+        $orderby=preg_replace($regexp,'ec3_sch.start',$orderby);
+      else
+        $orderby=preg_replace($regexp,'ec3_sch.start DESC',$orderby);
+    }
     else
-      $orderby=preg_replace($regexp,'ec3_sch.start DESC',$orderby);
+    {
+      // Someone's been playing around with the orderby - just overwrite it.
+      $orderby='ec3_sch.start';
+    }
   }
   return $orderby;
 }
@@ -584,7 +596,7 @@ if($ec3->event_category)
   add_filter('get_the_excerpt', 'ec3_get_the_excerpt');
   
   if($ec3->advanced)
-    add_filter('posts_orderby','ec3_filter_posts_orderby');
+    add_filter('posts_orderby','ec3_filter_posts_orderby',11);
 }
 
 ?>

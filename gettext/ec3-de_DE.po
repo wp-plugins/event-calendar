@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._pre15\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-11 18:21+0100\n"
+"POT-Creation-Date: 2008-10-22 20:07+0100\n"
 "PO-Revision-Date: 2006-10-05 20:36+0100\n"
 "Last-Translator: Marc Schumann <wurblzap@gmail.com>\n"
 "Language-Team:  <wurblzap@gmail.com>\n"
@@ -52,55 +52,63 @@ msgstr ""
 "Bei der Anpassung der Datebank für das EventCalendar-Plugin ist ein Fehler "
 "aufgetreten."
 
-#: admin.php:312
+#: admin.php:318
 #, php-format
 msgid "Upgraded database to EventCalendar Version %s"
 msgstr "Datenbank für EventCalendar Version %s angepasst"
 
-#: admin.php:316
+#: admin.php:322
 msgid "Table already existed"
 msgstr "Die Tabelle existierte bereits"
 
-#: admin.php:344 admin.php:354 admin.php:399
+#: admin.php:349 admin.php:392
 msgid "Event Calendar Options"
 msgstr "Einstellungen für EventCalendar"
 
-#: admin.php:403
+#: admin.php:396
+msgid "Easter Egg"
+msgstr ""
+
+#: admin.php:398 upgrade-posts.php:107
+msgid "Upgrade Event Posts"
+msgstr ""
+
+#: admin.php:405
 msgid "Event category"
 msgstr "Terminkategorie"
 
-#: admin.php:413
+#: admin.php:415
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
 msgstr ""
 
-#: admin.php:419
+#: admin.php:421
 #, fuzzy
 msgid "Show schedule within posts"
 msgstr "Zeige Termin-Box in Beiträgen"
 
-#: admin.php:423
+#: admin.php:425
 msgid "Show Schedule"
 msgstr "Zeigen"
 
-#: admin.php:426
+#: admin.php:428
 msgid "Hide Schedule"
 msgstr "Verbergen"
 
-#: admin.php:433
+#: admin.php:435
 msgid "Show events as blog entries"
 msgstr "Zeige Termine als Beiträge"
 
-#: admin.php:437
+#: admin.php:439
 msgid "Events are Normal Posts"
 msgstr "Termine sind normale Beiträge"
 
-#: admin.php:440
+#: admin.php:442
 msgid "Keep Events Separate"
 msgstr "Termine separat halten"
 
-#: admin.php:444
+#: admin.php:446
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -109,85 +117,85 @@ msgstr ""
 "Termine in zeitlicher Reihenfolge. Termine sind auf der Hauptseite nicht "
 "sichtbar."
 
-#: admin.php:450 admin.php:462
+#: admin.php:452 admin.php:464
 msgid "Timezone"
 msgstr ""
 
-#: admin.php:454
+#: admin.php:456
 msgid "unknown"
 msgstr ""
 
-#: admin.php:458
+#: admin.php:460
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
 msgstr ""
 
-#: admin.php:474
+#: admin.php:476
 msgid "Calendar Display"
 msgstr "Kalenderanzeige"
 
-#: admin.php:479
+#: admin.php:481
 msgid "Number of months"
 msgstr "Anzahl angezeigter Monate"
 
-#: admin.php:486
+#: admin.php:488
 msgid "Show all categories in calendar"
 msgstr "Alle Kategorien im Kalender anzeigen"
 
-#: admin.php:490
+#: admin.php:492
 msgid "Only Show Events"
 msgstr "Nur Termine zeigen"
 
-#: admin.php:493
+#: admin.php:495
 msgid "Show All Posts"
 msgstr "Alle Beiträge zeigen"
 
-#: admin.php:500
+#: admin.php:502
 msgid "Show day names as"
 msgstr "Zeige Wochentagsnamen als"
 
-#: admin.php:504
+#: admin.php:506
 msgid "Single Letter"
 msgstr "Ein Buchstabe"
 
-#: admin.php:507
+#: admin.php:509
 msgid "3-Letter Abbreviation"
 msgstr "Drei-Buchstaben-Abkürzung"
 
-#: admin.php:510
+#: admin.php:512
 msgid "Full Day Name"
 msgstr "Vollständiger Wochentagsname"
 
-#: admin.php:517
+#: admin.php:519
 msgid "Show Event Calendar logo"
 msgstr "Zeige das EventCalendar-Logo"
 
-#: admin.php:521
+#: admin.php:523
 msgid "Show Logo"
 msgstr "Logo zeigen"
 
-#: admin.php:524
+#: admin.php:526
 msgid "Hide Logo"
 msgstr "Logo verbergen"
 
-#: admin.php:531
+#: admin.php:533
 msgid "Position of navigation links"
 msgstr "Position der Navigationsverweise"
 
-#: admin.php:535
+#: admin.php:537
 msgid "Above Calendar"
 msgstr "Über dem Kalender"
 
-#: admin.php:538
+#: admin.php:540
 msgid "Below Calendar"
 msgstr "Unter dem Kalender"
 
-#: admin.php:541
+#: admin.php:543
 msgid "Hidden"
 msgstr "Verborgen"
 
-#: admin.php:545
+#: admin.php:547
 msgid ""
 "The navigation links are more usable when they are above the calendar, but "
 "you might prefer them below or hidden for aesthetic reasons."
@@ -196,38 +204,29 @@ msgstr ""
 "Kalenders liegen, aber aus ästhetischen Gründen möchten Sie sie "
 "möglicherweise unterhalb des Kalenders anordnen."
 
-#: admin.php:551
+#: admin.php:553
 msgid "Popup event lists"
 msgstr "Aufklappfenster mit Terminlisten anzeigen"
 
-#: admin.php:555
+#: admin.php:557
 msgid "Show Popups"
 msgstr "Aufklappfenster zeigen"
 
-#: admin.php:558
+#: admin.php:560
 msgid "Hide Popups"
 msgstr "Aufklappfenster verbergen"
 
-#: admin.php:562
+#: admin.php:564
 msgid "You might want to disable popups if you use Nicetitles."
 msgstr ""
 "Wenn Sie Nicetitles im Einsatz haben, werden Sie möglicherweise auf "
 "Aufklappfenster verzichten wollen."
 
-#: admin.php:571
-#, fuzzy
-msgid "Update Options"
-msgstr "Aktualisierungsoptionen"
-
-#: admin.php:575
-msgid "EXAMPLE SIDEBAR CODE:"
-msgstr ""
-
 #: template-functions.php:29
 msgid "You must choose an event category."
 msgstr ""
 
-#: template-functions.php:32 widget.php:83 widget.php:146
+#: template-functions.php:32 widget.php:84 widget.php:162
 #: K2/ec3_sidebar_module.php:64
 msgid "Go to Event Calendar Options"
 msgstr "Die EventCalendar-Einstellungen anzeigen"
@@ -236,32 +235,53 @@ msgstr "Die EventCalendar-Einstellungen anzeigen"
 msgid "Subscribe to iCalendar."
 msgstr "Den iCalendar abonnieren."
 
-#: template-functions.php:155 template-functions.php:435
+#: template-functions.php:164 template-functions.php:446
 msgid "all day"
 msgstr "ganztägig"
 
-#: template-functions.php:271 widget.php:91 widget.php:95
+#: template-functions.php:282 widget.php:93 widget.php:101
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Terminkalender"
 
-#: template-functions.php:351 widget.php:155 widget.php:159
+#: template-functions.php:362 widget.php:172 widget.php:180
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Nächste Termine"
 
-#: template-functions.php:456
+#: template-functions.php:467
 msgid "No events."
 msgstr "Keine Termine."
 
-#: template-functions.php:493 template-functions.php:507
-#: template-functions.php:519
+#: template-functions.php:504 template-functions.php:518
+#: template-functions.php:530
 msgid "to"
 msgstr "bis"
 
-#: widget.php:139
+#: upgrade-posts.php:22
+msgid "Post upgraded."
+msgstr ""
+
+#: upgrade-posts.php:23
+#, php-format
+msgid "%d posts upgraded."
+msgstr ""
+
+#: widget.php:96
+msgid "Display upcoming events in a dynamic calendar."
+msgstr ""
+
+#: widget.php:153
 msgid "Number of events:"
 msgstr ""
+
+#: widget.php:175
+msgid "Display upcoming events as a list."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Update Options"
+#~ msgstr "Aktualisierungsoptionen"
 
 #~ msgid "Schedule Editor"
 #~ msgstr "Terminplan"
