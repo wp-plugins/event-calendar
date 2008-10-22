@@ -155,7 +155,7 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
   {
     foreach($calendar_entries as $ent)
       if($ent->is_event)
-        array_push($ignore_post_ids,$ent->id);
+        $ignore_post_ids[] = $ent->id;
   }
 
   $current_post_id=0;
@@ -164,7 +164,7 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
   $allday=str_replace(' ','&#160;',__('all day','ec3')); // #160==nbsp
   foreach($calendar_entries as $ent)
   {
-    if(!$ent->is_event && in_array($ent->id,ignore_post_ids))
+    if(!$ent->is_event && in_array($ent->id,$ignore_post_ids))
         continue;
     if($current_post_id!=$ent->id)
     {
