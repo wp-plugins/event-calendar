@@ -4,7 +4,7 @@ Plugin Name: Event Calendar Widget
 Plugin URI: http://wpcal.firetree.net
 Description: Adds sidebar widgets for Event Calendar and Upcoming Events. Requires the EventCalendar and <a href="http://automattic.com/code/widgets/">Widget</a> plugins (WordPress version 2.1 and earlier). After activating, please visit <a href="themes.php?page=widgets/widgets.php">Sidebar Widgets for WordPress version 2.1 and earlier</a> or <a href="widgets.php">Widgets for WordPress version 2.2 and subsequent</a> to configure and arrange your new widgets.
 Author: Darrell Schulte
-Version: 3.1.1
+Version: 3.2.dev
 Author URI: http://wpcal.firetree.net
 
     This is a WordPress plugin (http://wordpress.org) and widget
@@ -35,13 +35,14 @@ function ec3_widget_init()
   if ( !function_exists('register_sidebar_widget') )
     return;
 
-  /** Utility function: Returns $s, or if it's empty, __($default,'ec3'). */
-  function ec3_default_string($s,$default)
+  /** Utility function: Gets the (possibly translated) widget title, given the
+   *  value of the 'title' option. */
+  function ec3_widget_title($title,$default)
   {
-    if ( empty($s) )
+    if ( empty($title) )
         return __($default,'ec3');
     else
-        return $s;
+        return apply_filters('widget_title',$title);
   }
 
 
@@ -51,7 +52,7 @@ function ec3_widget_init()
     extract($args);
     $options = get_option('ec3_widget_cal');
     echo $before_widget . $before_title;
-    echo ec3_default_string($options['title'],'Event Calendar');
+    echo ec3_widget_title($options['title'],'Event Calendar');
     echo $after_title;
     ec3_get_calendar(); 
     echo $after_widget;
@@ -69,12 +70,12 @@ function ec3_widget_init()
       $options = $newoptions;
       update_option('ec3_widget_cal', $options);
     }
-    $title = ec3_default_string($options['title'],'Event Calendar');
+    $title = ec3_widget_title($options['title'],'Event Calendar');
     ?>
     <p>
      <label for="ec3_cal_title">
       <?php _e('Title:'); ?>
-      <input style="width: 250px;" id="ec3_cal_title" name="ec3_cal_title"
+      <input class="widefat" id="ec3_cal_title" name="ec3_cal_title"
        type="text" value="<?php echo htmlspecialchars($title,ENT_QUOTES); ?>" />
      </label>
     </p>
@@ -87,10 +88,15 @@ function ec3_widget_init()
     <?php
   }
 
-  register_sidebar_widget(
-    array(__('Event Calendar','ec3'),'widgets'),
-    'ec3_widget_cal'
+  wp_register_sidebar_widget(
+    'event-calendar',
+    __('Event Calendar','ec3'),
+    'ec3_widget_cal', 
+    array('description' =>
+          __( 'Display upcoming events in a dynamic calendar.','ec3')
+              . ' (Event Calendar '. __('Plugin') .')' ) 
   );
+
   register_widget_control(
     array(__('Event Calendar','ec3'),'widgets'),
     'ec3_widget_cal_control'
@@ -103,7 +109,7 @@ function ec3_widget_init()
     extract($args);
     $options = get_option('ec3_widget_list');
     echo $before_widget . $before_title;
-    echo ec3_default_string($options['title'],'Upcoming Events');
+    echo ec3_widget_title($options['title'],'Upcoming Events');
     echo $after_title;
     ec3_get_events($options['limit']); 
     echo $after_widget;
@@ -123,27 +129,31 @@ function ec3_widget_init()
       update_option('ec3_widget_list', $options);
     }
   
-    $title = ec3_default_string($options['title'],'Upcoming Events');
+    $title = ec3_widget_title($options['title'],'Upcoming Events');
     $limit = $options['limit'];
+
+    $ec3_limit_title =
+      __("Examples: '5', '5 days', '5d'. To display recent past events, use a negative number: '-5'.");
     ?>
 
     <p>
      <label for="ec3_list_title">
       <?php _e('Title:'); ?>
-      <input style="width: 250px;" id="ec3_list_title" name="ec3_list_title"
+      <input class="widefat" id="ec3_list_title" name="ec3_list_title"
        type="text" value="<?php echo htmlspecialchars($title,ENT_QUOTES); ?>" />
      </label>
     </p>
-    <p style="text-align:left;margin-left:85px;">
-     <label title="Eg. '5', '5 days', '5d'" for="ec3_limit">
+    <p>
+     <label for="ec3_limit" title="<?php echo $ec3_limit_title ?>">
       <?php _e('Number of events:','ec3'); ?>
-      <input style="width: 7.5ex;" id="ec3_limit" name="ec3_limit"
-             type="text" value="<?php echo $limit? $limit: '5'; ?>" />
+      <input class="widefat" style="width: 50px; text-align: center;"
+       id="ec3_limit" name="ec3_limit" type="text"
+       value="<?php echo $limit? $limit: '5'; ?>" />
      </label>
     </p>
-
-    <p><a href="options-general.php?page=ec3_admin">
-      <?php _e('Go to Event Calendar Options','ec3') ?>.</a>
+    
+    <p>
+      <a href="options-general.php?page=ec3_admin"><?php _e('Go to Event Calendar Options','ec3') ?>.</a>
     </p>
 
     <input type="hidden" name="ec3_list_submit" value="1" />
@@ -151,10 +161,16 @@ function ec3_widget_init()
     <?php
   }
 
-  register_sidebar_widget(
-    array(__('Upcoming Events','ec3'),'widgets'),
-    'ec3_widget_list'
+  wp_register_sidebar_widget( 
+    'upcoming-events',
+    __('Upcoming Events','ec3'),
+    'ec3_widget_list', 
+    array('description' =>
+          __('Display upcoming events as a list.','ec3')
+              . ' (Event Calendar '. __('Plugin') .')' ) 
+          )
   );
+
   register_widget_control(
     array(__('Upcoming Events','ec3'),'widgets'),
     'ec3_widget_list_control'
