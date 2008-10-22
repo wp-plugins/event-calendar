@@ -38,6 +38,25 @@ require_once(dirname(__FILE__).'/tz.php');
 $ec3_today_id=str_replace('_0','_',ec3_strftime("ec3_%Y_%m_%d"));
 
 
+function ec3_action_init()
+{
+  add_feed('ical','ec3_do_feed_ical');
+  add_feed('ec3xml','ec3_do_feed_ec3xml');
+}
+
+
+function ec3_do_feed_ical()
+{
+  load_template( dirname(__FILE__).'/feed-ical.php' );
+}
+
+
+function ec3_do_feed_ec3xml()
+{
+  load_template( dirname(__FILE__).'/feed-ec3xml.php' );
+}
+
+
 /** Read the schedule table for the posts, and add an ec3_schedule array
  * to each post. */
 function ec3_filter_the_posts($posts)
@@ -54,7 +73,7 @@ function ec3_filter_the_posts($posts)
   }
   global $ec3,$wpdb;
   $schedule=$wpdb->get_results(
-    "SELECT post_id,start,end,allday,rpt,IF(end>='$ec3->today',1,0) AS active
+    "SELECT *,IF(end>='$ec3->today',1,0) AS active
      FROM $ec3->schedule
      WHERE post_id IN (".implode(',',$post_ids).")
      ORDER BY start"
@@ -73,54 +92,7 @@ function ec3_filter_the_posts($posts)
 
 function ec3_action_wp_head()
 {
-  global $ec3,$month,$month_abbrev;
-?>
-
-	<!-- Added by EventCalendar plugin. Version <?php echo $ec3->version; ?> -->
-	<script type='text/javascript' src='<?php echo $ec3->myfiles; ?>/xmlhttprequest.js'></script>
-	<script type='text/javascript' src='<?php echo $ec3->myfiles; ?>/ec3.js'></script>
-	<script type='text/javascript'><!--
-	ec3.start_of_week=<?php echo intval( get_option('start_of_week') ); ?>;
-	ec3.month_of_year=new Array('<?php echo implode("','",$month); ?>');
-	ec3.month_abbrev=new Array('<?php echo implode("','",$month_abbrev); ?>');
-	ec3.myfiles='<?php echo $ec3->myfiles; ?>';
-	ec3.home='<?php echo get_option('home'); ?>';
-	ec3.hide_logo=<?php echo $ec3->hide_logo; ?>;
-	ec3.viewpostsfor="<?php echo __('View posts for %1$s %2$s'); ?>";
-	// --></script>
-
-<?php if(!$ec3->nocss): ?>
-<style type='text/css' media='screen'>
-@import url(<?php echo $ec3->myfiles; ?>/ec3.css);
-.ec3_ec {
- background-image:url(<?php echo $ec3->myfiles; ?>/ec.png) !IMPORTANT;
- background-image:none;
- filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo $ec3->myfiles; ?>/ec.png');
-}
-<?php   if(!$ec3->disable_popups): ?>
-#ec3_shadow0 {
- background-image:url(<?php echo $ec3->myfiles; ?>/shadow0.png) !IMPORTANT;
- background-image:none;
-}
-#ec3_shadow0 div {
- filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo $ec3->myfiles; ?>/shadow0.png',sizingMethod='scale');
-}
-#ec3_shadow1 {
- background-image:url(<?php echo $ec3->myfiles; ?>/shadow1.png) !IMPORTANT;
- background-image:none;
- filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo $ec3->myfiles; ?>/shadow1.png',sizingMethod='crop');
-}
-#ec3_shadow2 {
- background-image:url(<?php echo $ec3->myfiles; ?>/shadow2.png) !IMPORTANT;
- background-image:none;
-}
-#ec3_shadow2 div {
- filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo $ec3->myfiles; ?>/shadow2.png',sizingMethod='scale');
-}
-<?php   endif; ?>
-</style>
-
-<?php endif;
+  require(dirname(__FILE__).'/wp-head.php');
 }
 
 
@@ -137,11 +109,9 @@ function ec3_filter_posts_where(&$where)
 {
   global $ec3,$wpdb;
 
-  //To prevent breaking prior to ver 2.3
-  if(function_exists('get_the_tags')) {
-      if($ec3->query->is_tag)
-          return $where;
-  }
+  // To prevent breaking prior to WordPress v2.3
+  if(function_exists('get_the_tags') && $ec3->query->is_tag)
+      return $where;
 
   if($ec3->query->is_page || $ec3->query->is_single || $ec3->query->is_admin)
       return $where;
@@ -174,7 +144,7 @@ function ec3_filter_posts_where(&$where)
        );
 
        $where=preg_replace($re,'',$where);
-       if(ec3_is_event_category()):
+       if(ec3_is_event_category($ec3->query)):
          $where.=" AND ($where_start) ";
          $ec3->order_by_start=true;
        else:
@@ -200,7 +170,7 @@ function ec3_filter_posts_where(&$where)
 
   elseif($ec3->advanced):
 
-      if(ec3_is_event_category()):
+      if(ec3_is_event_category($ec3->query)):
 
           // Hide inactive events
           $where.=" AND ec3_sch.post_id IS NOT NULL ";
@@ -229,13 +199,13 @@ function ec3_filter_posts_where(&$where)
 }
 
 /** Returns TRUE if $ec3->query is an event category query. */
-function ec3_is_event_category()
+function ec3_is_event_category(&$query)
 {
   global $ec3;
   // This bit nabbed from is_category()
-  if($ec3->query->is_category)
+  if($query->is_category)
   {
-    $cat_obj = $ec3->query->get_queried_object();
+    $cat_obj = $query->get_queried_object();
     if($cat_obj->term_id == $ec3->event_category)
       return true;
   }
@@ -307,10 +277,21 @@ function ec3_filter_posts_fields(&$fields)
 
 function ec3_filter_query_vars($wpvarstoreset)
 {
+  // Backwards compatibility with URLs from old versions of EC.
   if(isset($_GET['ec3_xml']))
+  {
     ec3_filter_query_vars_xml();
+    // Will be this...
+    //ec3_do_feed_ec3xml();
+    //exit(0);
+  }
   if(isset($_GET['ec3_ical']) || isset($_GET['ec3_vcal']))
+  {
     ec3_filter_query_vars_ical();
+    // Will be this...
+    //ec3_do_feed_ical();
+    //exit(0);
+  }
   if(isset($_GET['ec3_dump']))
     ec3_filter_query_vars_dump();
   // else...
@@ -335,7 +316,7 @@ function ec3_filter_query_vars_xml()
   $components=explode('_',$_GET['ec3_xml']);
   if(count($components)==2)
   {
-    $date=new ec3_Date($components[0],$components[1]);
+    $date=new ec3_Date(intval($components[0]),intval($components[1]));
     $end=$date->next_month();
     $calendar_days=ec3_util_calendar_days($date->month_id(),$end->month_id());
     @header('Content-type: text/xml');
@@ -441,17 +422,30 @@ function ec3_filter_query_vars_ical($wpvarstoreset=NULL)
         echo sprintf("DTEND;VALUE=DATE-TIME:%s\r\n",ec3_to_utc($entry->dt_end));
       }
 
-		//add location support for iCal
-		$location=get_post_meta($entry->post_id,'location',true);
-		$location=apply_filters('ical_location',$location);
-		if(!empty($location))
- 			echo "LOCATION:$location\r\n"; // need to escape this
+      // Alex: I'm not sure about this code. I think the new ical feed
+      // might offer a better way of integrating with other plugins.
+      
+      // Furthermore, escaping needs to be broken out into a function.
 
-		//add geo support for iCal
-		$geo=get_post_meta($entry->post_id,'geo',true);
-		$geo=apply_filters('ical_geo',$geo);
-		if(!empty($geo))
-			echo "GEO:$geo\r\n"; // need to escape this
+      // Location
+      $location=get_post_meta($entry->post_id,'location',true);
+      $location=apply_filters('ical_location',$location);
+      if(!empty($location))
+      {
+        $location=preg_replace('/[ \r\n]+/',' ',$location);
+        $location=preg_replace('/([\\,;])/','\\\\$1',$location);
+ 	echo "LOCATION:$location\r\n";
+      }
+
+      // GEO
+      $geo=get_post_meta($entry->post_id,'geo',true);
+      $geo=apply_filters('ical_geo',$geo);
+      if(!empty($geo))
+      {
+        $geo=preg_replace('/[ \r\n]+/',' ',$geo);
+        $geo=preg_replace('/([\\,;])/','\\\\$1',$geo);
+	echo "GEO:$geo\r\n";
+      }
 
       echo "END:VEVENT\r\n";
     }
@@ -530,8 +524,8 @@ function ec3_filter_parse_query($wp_query)
     // Show the next N days.
     $ec3->days=intval($wp_query->query_vars['ec3_days']);
     $secs=$ec3->days*24*3600;
-    $wp_query->query_vars['ec3_after' ]=ec3_strftime('%Y_%m_%d');
-    $wp_query->query_vars['ec3_before']=ec3_strftime('%Y_%m_%d',time()+$secs);
+    $wp_query->query_vars['ec3_after' ]=ec3_strftime('%Y-%m-%d');
+    $wp_query->query_vars['ec3_before']=ec3_strftime('%Y-%m-%d',time()+$secs);
   }
 
   // Get values (if any) for after ($a) & before ($b).
@@ -610,6 +604,7 @@ function ec3_get_the_excerpt($text)
 // Hook in...
 if($ec3->event_category)
 {
+  add_action('init',         'ec3_action_init');
   add_action('wp_head',      'ec3_action_wp_head');
   add_action('admin_head',   'ec3_action_admin_head');
   add_filter('query_vars',   'ec3_filter_query_vars');
