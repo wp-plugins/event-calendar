@@ -155,7 +155,7 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
   {
     foreach($calendar_entries as $ent)
       if($ent->is_event)
-        array_push(ignore_post_ids,$ent->id);
+        array_push($ignore_post_ids,$ent->id);
   }
 
   $current_post_id=0;
