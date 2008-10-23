@@ -56,7 +56,31 @@ class ec3_Admin
   //
 
 
+  /** Only for pre WP2.5. Inserts the Event Editor into the Write Post page. */
   function filter_edit_form()
+  { ?>
+    
+    <!-- Build the user interface for Event Calendar. -->
+    <div class="dbx-b-ox-wrapper">
+    <fieldset id='ec3_schedule_editor' class="dbx-box">
+    <div class="dbx-h-andle-wrapper">
+    <h3 class="dbx-handle"><?php _e('Event Editor','ec3'); ?></h3>
+    </div>
+    <div class="dbx-c-ontent-wrapper">
+    <div class="dbx-content">
+
+    <?php $this->event_editor_box() ?>
+
+    </div>
+    </div>
+    </fieldset>
+    </div>
+
+    <?php
+  }
+
+
+  function event_editor_box()
   {
     global $ec3,$wp_version,$wpdb,$post_ID;
     if(isset($post_ID))
@@ -71,22 +95,19 @@ class ec3_Admin
     else
       $schedule = false;
 
+    if(function_exists('wp_create_nonce'))
+    {
+      echo '<input type="hidden" name="ec3_nonce" id="ec3_nonce" value="' . 
+        wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+    }
     ?>
-    
-    <!-- Build the user interface for Event Calendar. -->
-    <div class="dbx-b-ox-wrapper">
-    <fieldset id='ec3_schedule_editor' class="dbx-box">
-    <div class="dbx-h-andle-wrapper">
-    <h3 class="dbx-handle"><?php _e('Event Editor','ec3'); ?></h3>
-    </div>
-    <div class="dbx-c-ontent-wrapper">
-    <div class="dbx-content">
 
+    <!-- Event Calendar: Event Editor -->
     <table width="100%" cellspacing="2" cellpadding="5" class="editform">
      <thead><tr>
       <th><?php _e('Start','ec3'); ?></th>
       <th><?php _e('End','ec3'); ?></th>
-      <th><?php _e('All Day','ec3'); ?></th>
+      <th style="text-align:center"><?php _e('All Day','ec3'); ?></th>
       <!-- th><?php _e('Repeat','ec3'); ?></th -->
       <th></th>
      </tr></thead>
@@ -106,7 +127,7 @@ class ec3_Admin
     ?>
       <tr> 
        <td colspan="4" style="text-align:left">
-        <p class="submit" style="margin:0;padding:0;text-align:left">
+        <p style="margin:0;padding:0;text-align:left">
          <input type="button" name="ec3_new_row" value=" + "
           title="<?php _e('Add a new event','ec3'); ?>"
           onclick="Ec3EditForm.add_row()" />
@@ -117,21 +138,17 @@ class ec3_Admin
       </tr> 
      <tbody>
     </table>
-    </div>
-    </div>
-    </fieldset>
-    </div>
 
     <?php
-  } // end function filter_edit_form()
+  }
 
-  /** Utility function called by filter_edit_form(). */
+  /** Utility function called by event_editor_box(). */
   function schedule_row($start,$end,$sid,$action,$allday)
   {
     $s="ec3_start_$sid";
     $e="ec3_end_$sid";
     ?>
-      <tr valign="middle"<?php
+      <tr class="ec3_schedule_row" valign="middle"<?php
        if('create'==$action){ echo ' style="display:none"'; } ?>>
        <td>
         <input type="hidden" name="ec3_action_<?php echo $sid;
@@ -147,7 +164,7 @@ class ec3_Admin
          ?>" value="<?php echo $end; ?>" />
         <button type="reset" id="trigger_<?php echo $e; ?>">&hellip;</button>
        </td>
-       <td>
+       <td style="text-align:center">
         <input type="checkbox" name="ec3_allday_<?php echo $sid;
          ?>" value="1"<?php if($allday){ echo ' checked="checked"'; } ?> />
        </td>
@@ -155,7 +172,7 @@ class ec3_Admin
         <input type="text" name="ec3_repeat_<?php echo $sid; ?>" value="<?php echo $s->rpt; ?>" />
        </td -->
        <td>
-        <p class="submit" style="margin:0;padding:0">
+        <p style="margin:0;padding:0">
          <input type="button" name="ec3_del_row_<?php echo $sid;
           ?>" value=" &mdash; "
           title="<?php _e('Delete this event','ec3'); ?>"
@@ -171,6 +188,18 @@ class ec3_Admin
   {
     if(!$_POST)
         return;
+
+    if(function_exists('wp_verify_nonce'))
+    {
+      if(!wp_verify_nonce($_POST['ec3_nonce'], plugin_basename(__FILE__) ))
+          return;
+    }
+
+    if(function_exists('current_user_can'))
+    {
+      if(!current_user_can('edit_post',$post_id))
+          return;
+    }
 
     // Ensure that we only save each post once.
     if(isset($this->save_post_called) && $this->save_post_called[$post_ID])
@@ -345,6 +374,7 @@ class ec3_Admin
 
   function action_admin_menu()
   {
+    global $ec3;
     add_options_page(
       __('Event Calendar Options','ec3'),
       'EventCalendar',
@@ -352,6 +382,30 @@ class ec3_Admin
       'ec3_admin',
       'ec3_options_subpanel'
     );
+
+    if(empty($ec3->event_category))
+      return; // Until EC is properly configured, only show the options page.
+    
+    if(function_exists('add_meta_box'))
+    {
+      add_meta_box(
+        'ec3_schedule_editor',   // HTML id for container div
+        __('Event Editor','ec3'),
+        'ec3_event_editor_box',  // callback function
+        'post',                  // page type
+        'advanced',              // context
+        'high'                   // priority
+      );
+    }
+    else
+    {
+      // Old (pre WP2.5) functionality.
+      add_filter('simple_edit_form',    array(&$ec3_admin,'filter_edit_form'));
+      if($ec3->wp_have_dbx)
+        add_filter('dbx_post_advanced', array(&$ec3_admin,'filter_edit_form'));
+      else
+        add_filter('edit_form_advanced',array(&$ec3_admin,'filter_edit_form'));
+    }
   }
 
 
@@ -602,21 +656,19 @@ function ec3_options_subpanel()
   $ec3_admin->options_subpanel();
 }
 
+function ec3_event_editor_box()
+{
+  global $ec3_admin;
+  $ec3_admin->event_editor_box();
+}
+
 
 //
 // Hook in...
 if($ec3->event_category)
 {
-  add_filter('admin_head',          array(&$ec3_admin,'filter_admin_head'));
-  
-  add_filter('simple_edit_form',    array(&$ec3_admin,'filter_edit_form'));
-  if($ec3->wp_have_dbx)
-    add_filter('dbx_post_advanced', array(&$ec3_admin,'filter_edit_form'));
-  else
-    add_filter('edit_form_advanced',array(&$ec3_admin,'filter_edit_form'));
-  
-  add_action('save_post',           array(&$ec3_admin,'action_save_post'));
-  add_action('edit_post',           array(&$ec3_admin,'action_save_post'));
+  add_filter('admin_head',array(&$ec3_admin,'filter_admin_head'));
+  add_action('save_post', array(&$ec3_admin,'action_save_post'));
 }
 
 // Always hook into the admin_menu - it's required to allow users to
