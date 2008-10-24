@@ -121,6 +121,7 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
        1 AS is_event
      FROM $wpdb->posts,$ec3->schedule
      WHERE post_status='publish'
+       AND post_type='post'
        AND post_id=id
        AND end>='$begin_date'
        AND start<'$end_date'";
@@ -137,6 +138,7 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
          0 AS is_event
        FROM $wpdb->posts
        WHERE post_status='publish'
+         AND post_type='post'
          AND post_date>='$begin_date'
          AND post_date<'$end_date'
          AND post_date<NOW()
@@ -155,7 +157,7 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
   {
     foreach($calendar_entries as $ent)
       if($ent->is_event)
-        array_push($ignore_post_ids,$ent->id);
+        $ignore_post_ids[] = $ent->id;
   }
 
   $current_post_id=0;
