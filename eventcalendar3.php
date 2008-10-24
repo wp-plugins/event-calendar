@@ -33,6 +33,7 @@ require_once(dirname(__FILE__).'/template-functions.php');
 require_once(dirname(__FILE__).'/template-functions-new.php');
 require_once(dirname(__FILE__).'/admin.php');
 require_once(dirname(__FILE__).'/tz.php');
+require_once(dirname(__FILE__).'/widget.php');
 
 
 $ec3_today_id=str_replace('_0','_',ec3_strftime("ec3_%Y_%m_%d"));
