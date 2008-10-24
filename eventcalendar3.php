@@ -9,7 +9,7 @@ Author URI: http://blog.firetree.net/
 */
 
 /*
-Copyright (c) 2005-2007, Alex Tingle.  $Revision: 284 $
+Copyright (c) 2005-2008, Alex Tingle.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

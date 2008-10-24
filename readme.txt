@@ -4,7 +4,7 @@ Stable tag: 3.1.2
 Contributors: Alex Tingle
 Donate link: http://www.amazon.co.uk/gp/registry/1S44DP6XXOFIN
 Requires at least: 1.5
-Tested up to: 2.6.2
+Tested up to: 2.6.3
 
 Manage future events as an online calendar. Display upcoming events in a dynamic
 calendar, on a listings page, or as a list in the sidebar.
@@ -178,6 +178,6 @@ the future. Look in the file TODO.txt for details.
 
 == Note: ==
 
-Copyright (c) 2005-2007  Alex Tingle and others.
+Copyright (c) 2005-2008  Alex Tingle and others.
 License: GPL
 Some of this code was developed with the financial support of Stephen Hinton.
