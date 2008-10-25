@@ -1,4 +1,4 @@
-/* EventCalendar. Copyright (C) 2005-2007, Alex Tingle.  $Revision: 284 $
+/* EventCalendar. Copyright (C) 2005-2008, Alex Tingle.
  * This file is licensed under the GNU GPL. See LICENSE file for details.
  */
 
@@ -436,4 +436,4 @@ ec3.reqs=new Array();
 ec3.ELEMENT_NODE=1;
 ec3.TEXT_NODE=3;
 
-ec3.version='3.2.dev';
+ec3.version='3.2.dev-01';

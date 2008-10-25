@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2005-2007, Alex Tingle.  $Revision: 287 $
+Copyright (c) 2005-2008, Alex Tingle.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,6 +16,49 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
+
+/** Utility class used by upgrade_database().
+ *  Breaks apart a version string into an array of comparable parts. */
+class ec3_Version
+{
+  var $part; ///< Array of version parts.
+
+  function ec3_Version($str)
+  {
+    $s=preg_replace('/([a-z])([0-9])/','\1.\2',$str);
+    $v=explode('.',$s);
+    $this->part=array();
+    foreach($v as $i)
+    {
+      if(preg_match('/^[0-9]+$/',$i))
+          $this->part[]=intval($i);
+      elseif(empty($i))
+          $this->part[]=0;
+      else
+          $this->part[]=$i;
+    }
+  }
+
+  /** Compares this version with $other. */
+  function cmp($other)
+  {
+    for($i=0; $i < min(count($this->part),count($other->part)); $i++)
+    {
+      if( $this->part[$i] > $other->part[$i] )
+          return 1;
+      if( $this->part[$i] < $other->part[$i] )
+          return -1;
+    }
+    // Equal so far - compare lengths
+    if( count($this->part) > count($other->part) )
+        return 1;
+    if( count($this->part) < count($other->part) )
+        return -1;
+    // They really are equal.
+    return 0;
+  }
+};
 
 
 class ec3_Admin
@@ -260,7 +303,7 @@ class ec3_Admin
       elseif($action=='update' && $sid>0 && $sid_ok):
         $wpdb->query(
          "UPDATE $ec3->schedule
-          SET ".$this->implode_assoc(', ',$vals)."
+          SET sequence=sequence+1, ".$this->implode_assoc(', ',$vals)."
           WHERE post_id=$post_ID
             AND sched_id=$sid"
         );
@@ -268,7 +311,7 @@ class ec3_Admin
         $wpdb->query(
          "INSERT INTO $ec3->schedule
           (post_id, ".implode(', ',array_keys($vals)).")
-          VALUES ($post_ID,".implode(', ',array_values($vals)).")"
+          VALUES ($post_ID, ".implode(', ',array_values($vals)).")"
         );
       endif;
     }
@@ -300,32 +343,38 @@ class ec3_Admin
     if($installed_version==$ec3->version)
       return;
 
-    $v0=$this->ec3_version($installed_version);
-    $v1=$this->ec3_version($ec3->version);
-    for($i=0; $i<min(count($v0),count($v1)); $i++)
-    {
-      if( $v0[$i] > $v1[$i] )
-          return; // Installed version later than this one ?!?!
-      if( $v0[$i] < $v1[$i] )
-          break;  // Installed version earlier than this one.
-    }
+    $v0 = new ec3_Version($installed_version);
+    $v1 = new ec3_Version($ec3->version);
+    if( $v0->cmp($v1) > 0 )
+      return; // Installed version later than this one ?!?!
 
     // Upgrade.
+    $message = sprintf(
+        __('Upgraded database to EventCalendar Version %s','ec3'), $ec3->version
+      ) . '.';
+
     $tables=$wpdb->get_results('SHOW TABLES',ARRAY_N);
     if(!$tables)
       die(__('Error upgrading database for EventCalendar plugin.','ec3'));
-    
+
     $table_exists=false;
     foreach($tables as $t)
         if(preg_match("/$ec3->schedule/",$t[0]))
             $table_exists=true;
 
-    if(!$table_exists)
+    if($table_exists)
     {
+      $message .= '<br />'.__('Table already existed','ec3').'.';
+    }
+    else
+    {
+      $message .= '<br />'
+        . sprintf(__('Created table %s','ec3'),$ec3->schedule).'.';
       $wpdb->query(
         "CREATE TABLE $ec3->schedule (
            sched_id BIGINT(20) AUTO_INCREMENT,
            post_id  BIGINT(20),
+           sequence BIGINT(20),
            start    DATETIME,
            end      DATETIME,
            allday   BOOL,
@@ -340,36 +389,26 @@ class ec3_Admin
       }
     } // end if(!$table_exists)
 
+    // Sequence column is new in v3.2.dev-01
+    $v32dev01 = new ec3_Version('3.2.dev-01');
+    if( $v0->cmp($v32dev01) < 0 )
+    {
+      $message .= '<br />'
+        . sprintf(__('Added SEQUENCE column to table %s','ec3'),$ec3->schedule)
+        . '.';
+      $wpdb->query(
+        "ALTER TABLE $ec3->schedule ADD COLUMN sequence BIGINT(20) DEFAULT 1"
+      );
+    }
+
     // Record the new version number
     update_option('ec3_version',$ec3->version);
-    echo '<div id="message" class="updated fade"><p><strong>'
-       . sprintf(
-           __('Upgraded database to EventCalendar Version %s','ec3'),
-           $ec3->version
-         );
-    if($table_exists)
-        echo '<br />('.__('Table already existed','ec3').')';
-    echo ".</strong></p></div>\n";
-  } // end function upgrade_database();
 
-  /** Utility function used by upgrade_database().
-   *  Breaks apart a version string into an array of comparable parts. */
-  function ec3_version($str)
-  {
-    $s=preg_replace('/([a-z])([0-9])/','\1.\2',$str);
-    $v=explode('.',$s);
-    $result=array();
-    foreach($v as $i)
-    {
-      if(preg_match('/^[0-9]+$/',$i))
-          $result[]=intval($i);
-      elseif(empty($i))
-          $result[]=0;
-      else
-          $result[]=$i;
-    }
-    return $result;
-  }
+    // Display an informative message.
+    echo '<div id="message" class="updated fade"><p><strong>';
+    echo $message;
+    echo "</strong></p></div>\n";
+  } // end function upgrade_database();
 
 
   function action_admin_menu()

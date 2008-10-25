@@ -55,6 +55,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       echo "BEGIN:VEVENT\r\n";
       echo "SUMMARY:$summary\r\n";
       echo "URL;VALUE=URI:$permalink\r\n";
+      echo "SEQUENCE:$entry->sequence\r\n";
       echo "UID:$entry->sched_id-$permalink\r\n";
       $description='';
       $excerpt = get_the_excerpt();
