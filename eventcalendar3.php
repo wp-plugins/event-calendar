@@ -136,13 +136,41 @@ function ec3_filter_posts_where(&$where)
          elseif(    'MINUTE'==$matches[2][$i]) $rtime[1]=$matches[4][$i];
          elseif(    'SECOND'==$matches[2][$i]) $rtime[2]=$matches[4][$i];
        }
-       // start either matches the date criteria,
-       //   OR the rdate/rtime is between start..end:
+       // rdate/rtime should be between start..end:
+       $year_num = intval(date('Y'));
+       $sdateobj = new ec3_Date($year_num,1,1);
+       $edateobj = new ec3_Date($year_num,12,0);
+       $stime = array('00','00','00');
+       $etime = array('23','59','59');
+       for($i=0; $i<count($matches[1]); $i++)
+       {
+         $num = intval( str_replace("'",'',$matches[4][$i]) );
+         if(          'YEAR'==$matches[2][$i])
+           $sdateobj->year_num = $edateobj->year_num = $num;
+         elseif(     'MONTH'==$matches[2][$i])
+           $sdateobj->month_num = $edateobj->month_num = $num;
+         elseif('DAYOFMONTH'==$matches[2][$i])
+           $sdateobj->day_num = $edateobj->day_num = $num;
+         elseif(      'HOUR'==$matches[2][$i])
+           $stime[0] = $etime[0] = zeroise($num,2);
+         elseif(    'MINUTE'==$matches[2][$i])
+           $stime[1] = $etime[1] = zeroise($num,2);
+         elseif(    'SECOND'==$matches[2][$i])
+           $stime[2] = $etime[2] = zeroise($num,2);
+       }
+
+       // If the end day num has not been set, then choose the month's last day.
+       if($edateobj->day_num<1)
+       {
+         $edateobj->day_num = 1;
+         $edateobj->day_num = $edateobj->days_in_month();
+       }
+
        $where_start=
-       sprintf("(%1\$s) OR (start<='%2\$s' AND end>='%2\$s')",
-         preg_replace("/\b$wpdb->posts\.post_date\b/",'start',$where_post_date),
-         str_replace( "'", '', implode('-',$rdate).' '.implode(':',$rtime) )
-       );
+         sprintf("start<='%1\$s' AND end>='%2\$s'",
+           $edateobj->to_mysqldate().' '.implode(':',$etime),
+           $sdateobj->to_mysqldate().' '.implode(':',$stime)
+         );
 
        $where=preg_replace($re,'',$where);
        if(ec3_is_event_category($ec3->query)):
