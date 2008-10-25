@@ -1,5 +1,6 @@
 /* EventCalendar. Copyright (C) 2005 2006, Alex Tingle.  $Revision: 263 $
  * This file is licensed under the GNU GPL. See LICENSE file for details.
+ * As modified by Rick Boatright Based on Matt M's BigCal css with additions
  */
 
 /***
@@ -141,7 +142,8 @@ table.ec3_schedule {
  border-collapse:collapse;
  margin:0.5ex 1ex 0.5ex 0;
  border:solid 1px #800;
- float:left;
+ /*Matthew: BUGFIX: Don't default to float here (float:left);*/
+
 }
 
 table.ec3_schedule td {
@@ -152,3 +154,115 @@ table.ec3_schedule td {
 td.ec3_start { text-align:right; }
 
 td.ec3_to    { text-align:center; }
+
+/*Matthew: begin style for big calendar patch*/
+
+/*Style for new schedule tags*/
+div.ec3_schedule_div_small {
+ margin-left: 2.2ex;
+}
+div.ec3_schedule_div_small > span {
+ border: solid 1px #800;
+ padding:0 0.5ex 0 0.5ex;
+}
+/*big calendar display settings*/
+
+
+.ec3_big_calendar table caption {
+font-size: 2em;
+margin-bottom: 5px;
+}
+.ec3_big_calendar table #prev #ec3_prev,.ec3_big_calendar table #next #ec3_next {
+font-size: 1.5em;
+}
+
+
+.ec3_big_calendar table.ec3_calendar_table {
+width: 500px !important;
+table-layout: fixed !important;
+}
+
+
+
+.ec3_big_calendar table.ec3_calendar_table TD {
+width: 14.2% !important;
+height: 80px !important;
+vertical-align: top;
+border-width: 1px !important;
+border-color: #3c3c3c !important;
+border-style: solid !important;
+font-size:10px;
+}
+
+.ec3_big_calendar #today {
+background-color: #FFFF80;
+}
+
+.ec3_big_calendar table.ec3_calendar_table TD A {
+color: #1c2cDD !important;
+}
+
+
+.ec3_big_calendar table.ec3_calendar_table TD A:hover {
+color: #DD2c1c !important;
+}
+
+.ec3_big_calendar td {
+padding: 0px !important;
+}
+
+div.ec3_big_calendar {
+clear:both;
+width:100% !important;
+margin-left:auto !important;
+margin-right:auto !important;
+text-align:center !important;
+}
+
+div.ec3_big_calendar table.ec3_calendar_table tbody td {
+font-size:x-small !important;
+text-align:left !important;
+/* display:block !important; */
+}
+
+div.ec3_big_calendar table.ec3_calendar_table span.ec3_event_day_num {
+background-color:#335588;
+color:white;
+display:block;
+font-size:medium;
+font-weight:bold;
+text-align:center;
+width:100%;
+}
+
+div.ec3_big_calendar table.ec3_calendar_table th {
+background-color:#335588;
+color:white;
+font-size:medium;
+font-weight:bold;
+}
+
+div.ec3_big_calendar table caption a {
+background-color:#335588;
+color:white;
+display:block !important;
+padding-bottom:2px;
+padding-top:2px;
+}
+
+p.ec3_event_day_evt {
+padding:2px;
+text-indent:0 !important;
+}
+
+p.ec3_alt_class_0, p.ec3_alt_class_1 {
+border-bottom:1px solid maroon;
+}
+
+p.ec3_alt_class_0 {
+background:transparent none repeat scroll 0 0;
+}
+
+p.ec3_alt_class_1 {
+background-color:white;
+}

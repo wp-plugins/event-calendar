@@ -189,7 +189,7 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
       else
           $time=mysql2date($time_format,$ent->start_date);
       //?? Should only record start time on FIRST day.
-      $calendar_days[$day_id]->add_post($ent->post_title,$time,$ent->is_event);
+      $calendar_days[$day_id]->add_post($ent->post_title,$time,$ent->is_event,"","");
       if($date->to_unixdate()==$end_date->to_unixdate())
         break;
       $date->increment_day();
@@ -199,16 +199,17 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
 }
 
 /** Echos one event calendar month table. */
-function ec3_get_calendar_month($date,$calendar_days,$thead)
+/* Matthew: added big calendar support to this function */
+function ec3_get_calendar_month($date,$calendar_days,$thead,$ec3_calendarType)
 {
   global $ec3;
   //
   // Table start.
   $title=
     sprintf(__('View posts for %1$s %2$s'),$date->month_name(),$date->year_num);
-  echo "<table id='" . $date->month_id() . "'>\n<caption>"
+  echo "<table class='ec3_calendar_table' id='" . $date->month_id() . "'>\n<caption>"
     . '<a href="' . $date->month_link() . '" title="' . $title . '">'
-    . $date->month_name() . ' ' . $date->year_num . "</a></caption>\n";
+    . $date->month_name() . ' ' . $date->year_num . "</a></caption>\n"; //Added class name to this file for usage in CSS
   echo $thead;
 
   //
@@ -235,25 +236,54 @@ function ec3_get_calendar_month($date,$calendar_days,$thead)
     }
     // insert day
     $day_id = $date->day_id();
-    echo "<td id='$day_id'";
+ //Mary add
+   echo "<td width=14% id='$day_id'";
 
-    if(array_key_exists($day_id,$calendar_days))
+    if ((array_key_exists($day_id,$calendar_days)) && ($ec3_calendarType == 0)) //Do not link the day when showing a big calendar
     {
       echo ' class="ec3_postday';
       if($calendar_days[$day_id]->is_event)
           echo ' ec3_eventday';
       echo '">';
+      // BEGIN CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
+      echo '<span class="ec3_event_day_num">';
+      // END CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
       echo '<a href="' . $date->day_link()
          . '" title="' . $calendar_days[$day_id]->get_titles() . '"';
       if($calendar_days[$day_id]->is_event)
           echo ' class="eventday"';
       echo ">$date->day_num</a>";
+      // BEGIN CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
+      echo '</span>';
+      // END CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
     }
     else
     {
-      echo '>' . $date->day_num;
+      // BEGIN CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
+      echo '><span class="ec3_event_day_num">';
+      // END CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
+      echo $date->day_num;
+      // BEGIN CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
+      echo '</span>';
+      // END CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
     }
-
+    //Show full links in big calendar table
+    if ((array_key_exists($day_id,$calendar_days)) && ($ec3_calendarType == 1)) {
+    //This is a big calendar, so show all events in the table.
+	// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
+	$alt_class = 1;	// This will alternate between 1 and 0.
+	// END CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
+  
+     foreach ($calendar_days[$day_id]->events as $key=>&$val) {
+		// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
+		$alt_class = $alt_class ? 0 : 1;	// Alternate the class
+     	echo '<p class="ec3_event_day_evt ec3_alt_class_'.$alt_class.'">';
+    	echo '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title . '</a> - ' . $val->time. '</p>';
+//    	echo '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title . '</a> - ' . $val->time . '<hr/>';
+//     	echo '</p>';
+		// END CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
+     }
+    }
     echo '</td>';
 
     $col++;
@@ -279,7 +309,14 @@ function ec3_get_calendar_month($date,$calendar_days,$thead)
 
 /** Template function. Call this from your template to insert the
  *  Event Calendar. */
-function ec3_get_calendar()
+ /*Matthew: added options to this to customize calendar, including making a big calendar*/
+function ec3_get_calendar(
+$ec3_This_Calendar_ID = "ec3default", //NOT USED - reserved for when the necessary CSS is fixed.
+$ec3_calendarType = 0, //Small calendar = 0, Big calendar = 1
+$filter_categories = '', //Contains a comma delimited list of categories of event to include.  (defaults to all events in all categories)
+$start_month = 0, //1-12, selects the month of the calendar.  Defaults to current month.
+$start_year = 0 //Four digit year.  Defaults to current year.
+)
 {
   if(!ec3_check_installed(__('Event Calendar','ec3')))
     return;
@@ -295,8 +332,23 @@ function ec3_get_calendar()
     return;
   }
 
-  echo "<div id='wp-calendar'>\n";
+  if ($ec3_calendarType == 1) //Big calendar..
+   echo "<div class='ec3_big_calendar' id='wp-calendar' ec3filter='$filter_categories'>\n";
+  else
+   echo "<div class='ec3_small_calendar' id='wp-calendar' ec3filter='$filter_categories'>\n"; /*Added class name*/
 
+
+  if (($start_month>0) && ($start_year==0)) {
+   //Determine the year automatically
+   $the_current_month = date('n');
+   $start_year = date('Y');
+   if ($start_month < $the_current_month)
+    $start_year++; //This way, the function defaults to the upcoming month
+  }
+  if (($start_month>0) && ($start_year>0)) {
+   global $m;
+   $m = sprintf("%04d%02d",$start_year,$start_month); //Set Wordpress's month variable
+  }
   $this_month = new ec3_Date();
 
   // Display navigation panel.
@@ -316,7 +368,7 @@ function ec3_get_calendar()
   for($i=0; $i<$ec3->num_months; $i++)
   {
     $next_month=$this_month->next_month();
-    ec3_get_calendar_month($this_month,$calendar_days,$thead);
+    ec3_get_calendar_month($this_month,$calendar_days,$thead,$ec3_calendarType); //Changed internal function
     $this_month=$next_month;
   }
 
@@ -342,7 +394,8 @@ function ec3_format_str($format,$data)
 }
 
 
-define('EC3_DEFAULT_TEMPLATE_EVENT','<a href="%LINK%">%TITLE% (%TIME%)</a>');
+//Matthew: BUGFIX: show start time first, before title
+define('EC3_DEFAULT_TEMPLATE_EVENT','<a href="%LINK%">%TIME%: %TITLE%</a>');
 define('EC3_DEFAULT_TEMPLATE_DAY',  '%DATE%:');
 define('EC3_DEFAULT_DATE_FORMAT',   'j F');
 define('EC3_DEFAULT_TEMPLATE_MONTH','');

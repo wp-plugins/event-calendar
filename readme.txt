@@ -1,7 +1,7 @@
 === Event Calendar 3 ===
 Tags: calendar, event, vcalendar, icalendar, ical, ajax, widget, sidebar
-Stable tag: 3.1.2
-Contributors: Alex Tingle
+Stable tag: 3.1.2.bigcal.1
+Contributors: Alex Tingle and a cast of dozens
 Donate link: http://www.amazon.co.uk/gp/registry/1S44DP6XXOFIN
 Requires at least: 1.5
 Tested up to: 2.6.3
@@ -22,6 +22,9 @@ or just use the 'Event Category' page to list your forthcoming events.
 
 EventCalendar works fine with WordPress v2. It should also work with WordPress
 v1.5. Reports of successes and failures are most welcome.
+
+This version supports printing a "big" calendar on pages by adding the characters 
+[EC3BigCalendar] to a post.  That is replaced with a "big" calendar. 
 
  [Full Documentation](http://wpcal.firetree.net)
 

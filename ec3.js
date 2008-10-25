@@ -1,6 +1,7 @@
 /* EventCalendar. Copyright (C) 2005-2007, Alex Tingle.  $Revision: 284 $
  * This file is licensed under the GNU GPL. See LICENSE file for details.
- */
+3.1.2-bigcal
+  */
 
 // Set in HTML file:
 //   var ec3.start_of_week
@@ -12,6 +13,48 @@
 //   var ec3.viewpostsfor
 
 /** Register an onload function. */
+var ec3_bigcalendar = 0; /*Matthew: this is 1 for big calendar mode*/
+var ec3_filter_by_categories = ''; /*Matthew: This is a comma delimited list of categories of events to include.  An empty string means include all events.*/
+
+
+//The following function (ec3_decode64) was written by Tyler Akins
+//and has been placed into the public domain.  http://rumkin.com
+var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+function ec3_decode64(input) {
+   var output = "";
+   var chr1, chr2, chr3;
+   var enc1, enc2, enc3, enc4;
+   var i = 0;
+
+   // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+   input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+   do {
+      enc1 = keyStr.indexOf(input.charAt(i++));
+      enc2 = keyStr.indexOf(input.charAt(i++));
+      enc3 = keyStr.indexOf(input.charAt(i++));
+      enc4 = keyStr.indexOf(input.charAt(i++));
+
+      chr1 = (enc1 << 2) | (enc2 >> 4);
+      chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+      chr3 = ((enc3 & 3) << 6) | enc4;
+
+      output = output + String.fromCharCode(chr1);
+
+      if (enc3 != 64) {
+         output = output + String.fromCharCode(chr2);
+      }
+      if (enc4 != 64) {
+         output = output + String.fromCharCode(chr3);
+      }
+   } while (i < input.length);
+
+   return output;
+}
+//End public domain base64 code
+
+
+
 function WindowOnload(f)
 {
   var prev=window.onload;
@@ -23,6 +66,7 @@ function ec3()
 {
   WindowOnload( function()
   {
+    
     // Overwrite the href links in ec3_prev & ec3_next to activate EC3.
     var prev=document.getElementById('ec3_prev');
     var next=document.getElementById('ec3_next');
@@ -101,14 +145,17 @@ function ec3()
       var caption_text=ec3.month_of_year[month_num0] + ' ' + year_num;
       if(c && c.firstChild && c.firstChild.nodeType==ec3.TEXT_NODE )
       {
-	if(month_num<10) 
-	{
-	  c.href=ec3.home+'/?m='+year_num+'0'+month_num;
-	}
-	else
-	{
-	  c.href=ec3.home+'/?m='+year_num+month_num;
-	}
+        	if(month_num<10) 
+	  {
+			c.href=ec3.home+'/?m='+year_num+'0'+month_num;
+	  }
+	  else
+	  {
+			c.href=ec3.home+'/?m='+year_num+month_num;
+	  }
+         if(ec3.catClause)
+            c.href+=ec3.catClause; // Copy cat' limit from original month link.
+         c.title=ec3.viewpostsfor;
         if(ec3.catClause)
            c.href+=ec3.catClause; // Copy cat' limit from original month link.
         c.title=ec3.viewpostsfor;
@@ -155,7 +202,13 @@ function ec3()
       }
       // insert day
       td=document.createElement('td');
-      td.appendChild(document.createTextNode(date.getDate()));
+      // BEGIN CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
+      var sp=document.createElement('span');
+      sp.className = 'ec3_event_day_num';
+      sp.appendChild(document.createTextNode(date.getDate()));
+      td.appendChild(sp);
+//      td.appendChild(document.createTextNode(date.getDate()));
+      // END CDM -Oct. 13, 2007 -Added span to allow dates to be differentiated
       td.id=calc_day_id(date.getDate(),month_num,year_num);
       tr.appendChild(td);
       col++;
@@ -200,8 +253,19 @@ function ec3()
     {
       ec3.reqs.push(req);
       req.onreadystatechange=process_xml;
+      /*Matthew: Use different XML for big calendar*/
+      var categoryfiltering_request = '';
+      if (ec3_filter_by_categories.length > 0)
+      {
+       /*We need to request the categories*/
+       categoryfiltering_request = '_' + ec3_filter_by_categories;
+      }
+      if (ec3_bigcalendar == 1)
+      var $my_xml_url = ec3.home+'/?ec3_xml='+year_num+'_'+month_num+'_bigcalendar'+categoryfiltering_request;
+      else
+       var $my_xml_url = ec3.home+'/?ec3_xml='+year_num+'_'+month_num+categoryfiltering_request;
       req.open("GET",
-        ec3.home+'/?ec3_xml='+year_num+'_'+month_num,true);
+        $my_xml_url,true);
       set_spinner(1);
       req.send(null);
     }
@@ -212,6 +276,10 @@ function ec3()
   function get_calendars()
   {
     var div=document.getElementById('wp-calendar');
+    ec3_filter_by_categories = div.getAttribute('ec3filter'); //set category filtering variable
+    if (div.className == 'ec3_big_calendar') { /*Detect big calendar mode*/
+     ec3_bigcalendar = 1;
+    }/*end big calendar changes*/
     var result=new Array();
     for(var i=0; i<div.childNodes.length; i++)
     {
@@ -390,7 +458,13 @@ function ec3()
     for(var i=0; i<days.length; i++)
     {
       var td=document.getElementById(days[i].getAttribute('id'));
-      if(td && td.firstChild && td.firstChild.nodeType==ec3.TEXT_NODE)
+      /*for the big calendar, we want to simply add the appropriate html and skip the rest of this*/
+      if (ec3_bigcalendar == 1) {
+       td.innerHTML = td.innerHTML + ec3_decode64(days[i].getAttribute('innerhtml')) + days[i].getAttribute('titles') + ec3_decode64(days[i].getAttribute('innerend'));
+      }
+      else { /*For the regular small calendar*/
+      /*Fix major regression due to CDM HTML changes*/
+      if(td && td.firstChild.firstChild && td.firstChild.firstChild.nodeType==ec3.TEXT_NODE)
       {
         td.className='ec3_postday';
         var txt=td.removeChild(td.firstChild);
@@ -405,6 +479,7 @@ function ec3()
         a.appendChild(txt);
         td.appendChild(a);
       }
+      }/*End big calendar changes*/
     }
     if(typeof ec3_Popup != 'undefined')
     {
@@ -435,5 +510,4 @@ ec3.reqs=new Array();
 
 ec3.ELEMENT_NODE=1;
 ec3.TEXT_NODE=3;
-
-ec3.version='3.1.2';
+ec3.version='3.1.2.bigcal.1';

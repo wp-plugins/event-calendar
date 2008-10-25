@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Event Calendar
-Version: 3.1.2
+Version: 3.1.2.bigcal.1
 Plugin URI: http://wpcal.firetree.net
 Description: Manage future events as an online calendar. Display upcoming events in a dynamic calendar, on a listings page, or as a list in the sidebar. You can subscribe to the calendar from iCal (OSX) or Sunbird. Change settings on the <a href="options-general.php?page=ec3_admin">Event Calendar Options</a> screen.
 Author: Alex Tingle
@@ -330,13 +330,38 @@ function ec3_filter_query_vars_xml()
         $dc=explode('_', ec3_strftime(":_%Y_%m_%d") );
       else
         $dc=explode('_',$day_id);
-      if(count($dc)==4)
-      {
-        $date->day_num=$dc[3];
-        $titles=$day->get_titles();
-        echo "<day id='$day_id' is_event='$day->is_event'"
-        .    " titles='$titles' link='" . $date->day_link() . "'/>\n";
+      //Check for bigcalendar and output day information correctly
+      if ($components[2] == 'bigcalendar') {
+       if(count($dc)==4) //same check done for regular XML days
+       {
+        $my_innerhtml = '';
+		// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
+		$alt_class = 1;	// This will alternate between 1 and 0.
+		// END CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
+        foreach ($day->events as $key=>&$val) {
+			// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
+			$alt_class = $alt_class ? 0 : 1;	// Alternate the class
+			$my_innerhtml .= '<p class="ec3_event_day_evt ec3_alt_class_'.$alt_class.'">';
+			$my_innerhtml .= '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title . '</a> - ' . $val->time . '</p>';
+	//    	$my_innerhtml .= '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title . '</a> - ' . $val->time . '<hr/>';
+	//     	$my_innerhtml .= '</p>';
+			// END CDM -Oct. 14, 2007 -Moved <hr/> out of the <p> to avoid problems with validation.
+        }
+        //The innerhtml is now set, so display the day tag.
+        //Note: the innerhtml is encoded base64 for xml transmission.
+        echo "<day id='$day_id' innerhtml='" . base64_encode($my_innerhtml) . "'/>\n";
+		   
+       }
       }
+      else { //not a big calendar - work like normal
+       if(count($dc)==4)
+       {
+         $date->day_num=$dc[3];
+         $titles=$day->get_titles();
+         echo "<day id='$day_id' is_event='$day->is_event'"
+         .    " titles='$titles' link='" . $date->day_link() . "'/>\n";
+       }
+      } //end big calendar changes
     }
     echo "</month></calendar>\n";
     exit(0);
@@ -534,11 +559,29 @@ function ec3_filter_parse_query($wp_query)
     $ec3->range_before=$b;
   }
 }
-
+//Stolen from Events-Calendar 6
+function ec_strstr($haystack, $needle, $before_needle=FALSE) {
+ if(($pos=strpos($haystack,$needle))===FALSE) return FALSE;
+ if($before_needle) return substr($haystack,0,$pos);
+  else return substr($haystack,$pos+strlen($needle));
+}
+//End Stolen Code
 
 function ec3_filter_the_content(&$post_content)
 {
-  return ec3_get_schedule() . $post_content;
+   if(!$ec3->hide_event_box)
+   	$post_content = ec3_get_schedule() . $post_content;
+   	
+   $return_this = $post_content;
+   if(preg_match("[EC3BigCalendar]",$post_content)) {
+	    $calendar = ec3_get_calendar("ec3default",1,0,0);
+    	$ec_match_filter = '[[EC3BigCalendar]]';
+    	$before_large_calendar = ec_strstr($post_content, $ec_match_filter, TRUE);
+    	$after_large_calendar  = ec_strstr($post_content, $ec_match_filter, FALSE);
+    	//$calendar, $before_large_calendar);
+    	$return_this = $before_large_calendar . $calendar . $after_large_calendar;			
+	}
+	return $return_this;
 }
 
 
@@ -588,9 +631,7 @@ if($ec3->event_category)
   add_filter('posts_groupby','ec3_filter_posts_groupby');
   add_filter('posts_fields', 'ec3_filter_posts_fields');
   add_filter('the_posts',    'ec3_filter_the_posts');
-  
-  if(!$ec3->hide_event_box)
-    add_filter('the_content','ec3_filter_the_content',20);
+  add_filter('the_content',  'ec3_filter_the_content');
   
   remove_filter('get_the_excerpt', 'wp_trim_excerpt');
   add_filter('get_the_excerpt', 'ec3_get_the_excerpt');
