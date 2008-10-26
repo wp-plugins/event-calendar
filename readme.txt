@@ -1,6 +1,6 @@
 === Event Calendar 3 ===
 Tags: calendar, event, vcalendar, icalendar, ical, ajax, widget, sidebar
-Stable tag: 3.1.2.bigcal.1
+Stable tag: 3.1.2
 Contributors: Alex Tingle and a cast of dozens
 Donate link: http://www.amazon.co.uk/gp/registry/1S44DP6XXOFIN
 Requires at least: 1.5
