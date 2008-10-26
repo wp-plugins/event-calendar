@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-load_plugin_textdomain('ec3','wp-content/plugins/eventcalendar3/gettext');
+//load_plugin_textdomain('ec3','wp-content/plugins/eventcalendar3/gettext');
 
 require_once(dirname(__FILE__).'/options.php');
 require_once(dirname(__FILE__).'/date.php');
@@ -55,7 +55,7 @@ function ec3_filter_the_posts($posts)
   }
   global $ec3,$wp_query,$wpdb;
   $schedule=$wpdb->get_results(
-    "SELECT post_id,start,end,allday,location,rpt,IF(end>='$ec3->today',1,0) AS active
+    "SELECT post_id,start,end,allday, '' as location,rpt,IF(end>='$ec3->today',1,0) AS active
      FROM $ec3->schedule
      WHERE post_id IN (".implode(',',$post_ids).")
      ORDER BY start"
