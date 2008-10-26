@@ -26,6 +26,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+load_plugin_textdomain('ec3','wp-content/plugins/eventcalendar3/gettext');
+
 require_once(dirname(__FILE__).'/options.php');
 require_once(dirname(__FILE__).'/date.php');
 require_once(dirname(__FILE__).'/day.php');
@@ -53,7 +55,7 @@ function ec3_filter_the_posts($posts)
   }
   global $ec3,$wp_query,$wpdb;
   $schedule=$wpdb->get_results(
-    "SELECT post_id,start,end,allday,rpt,IF(end>='$ec3->today',1,0) AS active
+    "SELECT post_id,start,end,allday,location,rpt,IF(end>='$ec3->today',1,0) AS active
      FROM $ec3->schedule
      WHERE post_id IN (".implode(',',$post_ids).")
      ORDER BY start"
@@ -315,11 +317,26 @@ function ec3_filter_query_vars($wpvarstoreset)
 function ec3_filter_query_vars_xml()
 {
   $components=explode('_',$_GET['ec3_xml']);
-  if(count($components)==2)
+  if ((count($components)==2) || (count($components)==3) || (count($components)==4)) //Valid either of these three ways (Matthew)
   {
+  
+    //Check for category filtering
+    $filter_by_categories = '';
+    if ($components[2] == 'bigcalendar') {
+      //Check for category filtering
+     if (count($components) == 4)
+      $filter_by_categories = $components[3]; //This is filtered and checked later, don't worry about it now.  This is a comma delimited list of category numbers to include.
+    }
+    else {
+     //Small calendar; check for category filtering
+     if (count($components) == 3)
+      $filter_by_categories = $components[2];
+    } //end checking for filtering
+  
+
     $date=new ec3_Date($components[0],$components[1]);
     $end=$date->next_month();
-    $calendar_days=ec3_util_calendar_days($date->month_id(),$end->month_id());
+    $calendar_days=ec3_util_calendar_days($date->month_id(),$end->month_id(), $filter_by_categories);
     @header('Content-type: text/xml');
     echo '<?xml version="1.0" encoding="'.get_option('blog_charset')
     .    '" standalone="yes"?>';
@@ -334,7 +351,8 @@ function ec3_filter_query_vars_xml()
       if ($components[2] == 'bigcalendar') {
        if(count($dc)==4) //same check done for regular XML days
        {
-        $my_innerhtml = '';
+	 $my_innerhtml = '';
+	 $my_innerEnd = '';
 		// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
 		$alt_class = 1;	// This will alternate between 1 and 0.
 		// END CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
@@ -342,14 +360,16 @@ function ec3_filter_query_vars_xml()
 			// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
 			$alt_class = $alt_class ? 0 : 1;	// Alternate the class
 			$my_innerhtml .= '<p class="ec3_event_day_evt ec3_alt_class_'.$alt_class.'">';
-			$my_innerhtml .= '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title . '</a> - ' . $val->time . '</p>';
-	//    	$my_innerhtml .= '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title . '</a> - ' . $val->time . '<hr/>';
-	//     	$my_innerhtml .= '</p>';
-			// END CDM -Oct. 14, 2007 -Moved <hr/> out of the <p> to avoid problems with validation.
+			$my_innerhtml .= '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">';
+		$my_innerEnd .= '</a>:<br/>' . $val->time . '</p>';
+
         }
         //The innerhtml is now set, so display the day tag.
         //Note: the innerhtml is encoded base64 for xml transmission.
-        echo "<day id='$day_id' innerhtml='" . base64_encode($my_innerhtml) . "'/>\n";
+         $date->day_num=$dc[3];
+         $titles=apply_filters ( 'the_title', $val->title );
+         echo "<day id='$day_id' is_event='$day->is_event'"
+         .    " titles='$titles' link='" . $date->day_link() . "' innerhtml='" . base64_encode($my_innerhtml) . "' innerend='" . base64_encode($my_innerEnd) . "'/>\n";
 		   
        }
       }
@@ -357,7 +377,7 @@ function ec3_filter_query_vars_xml()
        if(count($dc)==4)
        {
          $date->day_num=$dc[3];
-         $titles=$day->get_titles();
+         $titles=apply_filters ( 'the_title', $day->get_titles() );
          echo "<day id='$day_id' is_event='$day->is_event'"
          .    " titles='$titles' link='" . $date->day_link() . "'/>\n";
        }
@@ -406,7 +426,8 @@ function ec3_filter_query_vars_ical($wpvarstoreset=NULL)
            ) AS dt_end,
          $ec3->wp_user_nicename AS user_nicename,
          IF(allday,'TRANSPARENT','OPAQUE') AS transp,
-         allday
+         allday,
+	 location
        FROM $wpdb->posts p
        LEFT  JOIN $wpdb->users   u ON p.post_author=u.ID
        INNER JOIN $ec3->schedule s ON p.id=s.post_id
@@ -569,16 +590,15 @@ function ec_strstr($haystack, $needle, $before_needle=FALSE) {
 
 function ec3_filter_the_content(&$post_content)
 {
-   if(!$ec3->hide_event_box)
+//   if(!$ec3->hide_event_box)
    	$post_content = ec3_get_schedule() . $post_content;
    	
    $return_this = $post_content;
    if(preg_match("[EC3BigCalendar]",$post_content)) {
-	    $calendar = ec3_get_calendar("ec3default",1,0,0);
+	    $calendar = ec3_get_calendar("ec3default",1);
     	$ec_match_filter = '[[EC3BigCalendar]]';
     	$before_large_calendar = ec_strstr($post_content, $ec_match_filter, TRUE);
     	$after_large_calendar  = ec_strstr($post_content, $ec_match_filter, FALSE);
-    	//$calendar, $before_large_calendar);
     	$return_this = $before_large_calendar . $calendar . $after_large_calendar;			
 	}
 	return $return_this;
@@ -610,7 +630,8 @@ function ec3_get_the_excerpt($text)
 
   if($post->ec3_schedule)
   {
-    $schedule=ec3_get_schedule('%s; ',"%1\$s %3\$s %2\$s. ",'[ %s] ');
+    //Matthew: BUGFIX: display red box in excerpt view
+    $schedule=ec3_get_schedule('%s ','%s: ','<br/>%s',"%1\$s%3\$s%2\$s",'<div class="e_schedule"><p class="event-info">%s</p></div>'); //Display something more friendly here...
     $text=$schedule.$text;
   }
   

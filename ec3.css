@@ -167,6 +167,12 @@ div.ec3_schedule_div_small > span {
 }
 /*big calendar display settings*/
 
+.ec3_bigcalendar {
+width:500px; 
+margin-left:auto; 
+margin-right:auto; 
+text-align:center;
+}
 
 .ec3_big_calendar table caption {
 font-size: 2em;

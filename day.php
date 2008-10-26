@@ -71,7 +71,11 @@ class ec3_Day
     $temporary_title_array = array();
     foreach ($this->events as $key=>&$val) { //Thus, $val becomes a pointer to the ec3_Day_Event object.
      //This loops through the events
-     $temporary_title_array[] = $val->title . ' @ ' . $val->time;
+    if($val->allday) {
+     $temporary_title_array[] = $val->title . ' ' . $val->time;
+       } else {
+     $temporary_title_array[] = $val->title . ': ' . $val->time;
+     }
     }
     return implode(', ',$temporary_title_array);
   }

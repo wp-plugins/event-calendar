@@ -109,22 +109,83 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
 {
   $begin_date=date('Y-m-d 00:00:00',ec3_dayid2php($begin_month_id));
   $end_date  =date('Y-m-d 00:00:00',ec3_dayid2php($end_month_id));
-  global $ec3, $wpdb;
+  global $ec3, $wpdb,$wp_version;
 
-  $sql=
-    "SELECT DISTINCT
-       id,
-       post_title,
-       GREATEST(start,'$begin_date') AS start_date,
-       LEAST(end,'$end_date') AS end_date,
-       allday,
-       1 AS is_event
-     FROM $wpdb->posts,$ec3->schedule
+/*Matthew: BEGIN CATEGORY FILTERING*/
+
+  //Sanitize the filter_categories option
+  $filtercategories_array = explode(',',$filter_categories);
+  $goodcategories_array = array(); //Matthew: We can't trust blind input for SQL queries
+  
+  $i = 0;
+  foreach($filtercategories_array as $mycategory) {
+   $mycategory = intval($mycategory); //Nothing other than category NUMBERS here.
+   if ($mycategory > 0) { //Is a valid category number
+    $goodcategories_array[$i] = $mycategory;
+    $i++;
+   }
+  }
+
+ $additional_joins = ''; /*Additional tables to JOIN*/
+ $additional_and_statements = ''; /*Additional and statements*/
+ if (!empty($goodcategories_array)) {
+  if ($wp_version < 2.3) {
+   //WORDPRESS 2.2 AND BELOW
+   $additional_joins = "LEFT JOIN $wpdb->post2cat ON ($wpdb->posts.ID = $wpdb->post2cat.post_id)";
+   $additional_and_statements = 'AND (';
+
+   //Now, we can add the category filters.
+   $mysql_NeedAnOr = 0;
+   foreach($goodcategories_array as $goodcategory) { /*IMPORTANT: THIS HAS ALREADY BEEN VERIFIED TO BE AN ARRAY OF INTEGERS*/
+    if ($mysql_NeedAnOr)
+     $additional_and_statements.= 'OR ';
+    $mysql_NeedAnOr = 1;
+    $additional_and_statements .= "$wpdb->post2cat.category_id = $goodcategory ";
+   }
+   $additional_and_statements .= ')';
+  }
+
+  /*WORDPRESS 2.3 AND LATER*/
+  else { //2.3 and later
+    $additional_joins = "LEFT JOIN $wpdb->term_relationships
+                        ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
+                         LEFT JOIN $wpdb->term_taxonomy
+                          ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)";
+
+   $additional_and_statements = "AND $wpdb->term_taxonomy.taxonomy = 'category'
+                                 AND ( ";
+   //Now, we can add the category filters.
+   $mysql_NeedAnOr = 0;
+   foreach($goodcategories_array as $goodcategory) { /*IMPORTANT: THIS HAS ALREADY BEEN VERIFIED TO BE AN ARRAY OF INTEGERS*/
+    if ($mysql_NeedAnOr)
+     $additional_and_statements.= 'OR ';
+    $mysql_NeedAnOr = 1;
+    $additional_and_statements .= "$wpdb->term_taxonomy.term_id = $goodcategory ";
+   }
+   $additional_and_statements .= ')';
+
+  } //end WP2.3+
+ }
+ //MATTHEW: END CATEGORY FILTERING
+  
+  //MATTHEW: Changing the comma join to an explicit INNER JOIN.
+   $sql=
+     "SELECT DISTINCT
+        id,
+        post_title,
+        GREATEST(start,'$begin_date') AS start_date,
+        LEAST(end,'$end_date') AS end_date,
+        allday,
+        1 AS is_event
+      FROM $wpdb->posts
+      INNER JOIN $ec3->schedule
+       ON ($ec3->schedule.post_id=$wpdb->posts.id)
+      $additional_joins
      WHERE post_status='publish'
        AND post_type='post'
-       AND post_id=id
        AND end>='$begin_date'
-       AND start<'$end_date'";
+        AND start<'$end_date'
+	$additional_and_statements";
   if(!$ec3->show_only_events)
   {
     // We are interested in normal posts, as well as events.
@@ -137,11 +198,13 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
          0 AS allday,
          0 AS is_event
        FROM $wpdb->posts
+	$additional_joins
        WHERE post_status='publish'
          AND post_type='post'
          AND post_date>='$begin_date'
          AND post_date<'$end_date'
          AND post_date<NOW()
+	  $additional_and_statements
      )";
   }
   $sql.=' ORDER BY id, allday DESC, start_date, is_event DESC';
@@ -186,10 +249,12 @@ function ec3_util_calendar_days($begin_month_id,$end_month_id)
 
       if($ent->allday)
           $time=$allday;
-      else
-          $time=mysql2date($time_format,$ent->start_date);
+      elseif($ent->start_date!=$ent->end_date)
+          $time=mysql2date($time_format,$ent->start_date) . '-' . mysql2date($time_format,$ent->end_date);
+      else 
+	  $time=mysql2date($time_format,$ent->start_date);
       //?? Should only record start time on FIRST day.
-      $calendar_days[$day_id]->add_post($ent->post_title,$time,$ent->is_event,"","");
+      $calendar_days[$day_id]->add_post($ent->post_title,$time,$ent->is_event,$ent->allday, $ent->id); //Matthew: Changed internal function for big calendar
       if($date->to_unixdate()==$end_date->to_unixdate())
         break;
       $date->increment_day();
