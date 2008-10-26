@@ -590,7 +590,7 @@ function ec_strstr($haystack, $needle, $before_needle=FALSE) {
 
 function ec3_filter_the_content(&$post_content)
 {
-//   if(!$ec3->hide_event_box)
+   if(!$ec3->hide_event_box)
    	$post_content = ec3_get_schedule() . $post_content;
    	
    $return_this = $post_content;
