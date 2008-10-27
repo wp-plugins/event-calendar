@@ -86,7 +86,7 @@ function ec3_widget_list($args)
     $options['limit'],
     EC3_DEFAULT_TEMPLATE_EVENT,
     EC3_DEFAULT_TEMPLATE_DAY,
-    get_option('date_format')
+    EC3_DEFAULT_DATE_FORMAT
   );
   echo $after_widget;
 }
