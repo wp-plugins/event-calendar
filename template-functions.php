@@ -339,7 +339,7 @@ function ec3_get_calendar_month($date,$calendar_days,$thead,$ec3_calendarType)
 	$alt_class = 1;	// This will alternate between 1 and 0.
 	// END CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
   
-     foreach ($calendar_days[$day_id]->events as $key=>&$val) {
+     foreach ($calendar_days[$day_id]->events as $key=>$val) {
 		// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
 		$alt_class = $alt_class ? 0 : 1;	// Alternate the class
      	echo '<p class="ec3_event_day_evt ec3_alt_class_'.$alt_class.'">';
