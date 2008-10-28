@@ -528,7 +528,7 @@ function ec3_get_schedule(
   $date_format=get_option('date_format');
   $time_format=get_option('time_format');
   $current=false;
-  for($evt=ec3_iter_post_events($query); $evt->valid(); $evt->next())
+  for($evt=ec3_iter_post_events(); $evt->valid(); $evt->next())
   {
     $date_start=ec3_get_start_date();
     $date_end  =ec3_get_end_date();
