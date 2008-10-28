@@ -590,11 +590,9 @@ function ec_strstr($haystack, $needle, $before_needle=FALSE) {
 
 function ec3_filter_the_content(&$post_content)
 {
-   if(!$ec3->hide_event_box)
-   	$post_content = ec3_get_schedule() . $post_content;
-   	
    $return_this = $post_content;
-   if(preg_match("[EC3BigCalendar]",$post_content)) {
+   if(strpos($post_content,'[EC3BigCalendar]')!==FALSE)
+   {
 	    $calendar = ec3_get_calendar("ec3default",1);
     	$ec_match_filter = '[[EC3BigCalendar]]';
     	$before_large_calendar = ec_strstr($post_content, $ec_match_filter, TRUE);
@@ -603,7 +601,10 @@ function ec3_filter_the_content(&$post_content)
 	}
 	return $return_this;
 }
-
+function ec3_filter_the_schedule(&$post_content)
+{
+   	return ec3_get_schedule() . $post_content;
+}
 
 /** Replaces default wp_trim_excerpt filter. Fakes an excerpt if needed.
  *  Adds a textual summary of the schedule to the excerpt.*/
@@ -653,6 +654,8 @@ if($ec3->event_category)
   add_filter('posts_fields', 'ec3_filter_posts_fields');
   add_filter('the_posts',    'ec3_filter_the_posts');
   add_filter('the_content',  'ec3_filter_the_content');
+  if(!$ec3->hide_event_box)
+    add_filter('the_content','ec3_filter_the_schedule',20);
   
   remove_filter('get_the_excerpt', 'wp_trim_excerpt');
   add_filter('get_the_excerpt', 'ec3_get_the_excerpt');
