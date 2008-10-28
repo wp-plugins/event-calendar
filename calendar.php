@@ -75,6 +75,13 @@ class ec3_CalendarDay
     return !( $this->has_posts() || $this->has_events() );
   }
 
+  function iter_events_allday()
+  {
+    global $ec3;
+    $ec3->events = $this->_events_allday;
+    return new ec3_EventIterator();
+  }
+
   function iter_events()
   {
     global $ec3;
@@ -99,15 +106,30 @@ class ec3_Calendar
 
   /** Map of ec3_CalendarDay objects. */
   var $_days = false;
+  
+  /** Status variable used during calendar generation. Points to the
+   *  current ec3_CalendarDay object (if any). */
+  var $dayobj;
+
+  /** Status variable used during calendar generation. Points to the
+   *  current ec3_Date object (if any). */
+  var $dateobj;
 
   /** $month_date is a string of the form "YYYY-MM..."
    *  $num_months is the number of months covered by the calendar.*/
-  function ec3_Calendar($month_date,$num_months=1)
+  function ec3_Calendar($month_date=false,$num_months=1)
   {
-    $parts=explode('-',$month_date);
-    $year_num =intval($parts[0]);
-    $month_num=intval($parts[1]);
-    $this->begin_dateobj = new ec3_Date($year_num,$month_num,1);
+    if(empty($month_date))
+    {
+      $this->begin_dateobj = new ec3_Date(); // defaults to the current month
+    }
+    else
+    {
+      $parts=explode('-',$month_date);
+      $year_num =intval($parts[0]);
+      $month_num=intval($parts[1]);
+      $this->begin_dateobj = new ec3_Date($year_num,$month_num,1);
+    }
     $this->limit_dateobj = $this->begin_dateobj->plus_months($num_months);
     $this->_days = array();
   }
@@ -151,41 +173,75 @@ class ec3_Calendar
     }
   }
 
-  function wrap_month($monthstr,$dateobj)
+  function wrap_month($monthstr)
   {
-    return $dateobj->month_name().' '.$dateobj->year_num."\n".$monthstr."\n";
+    return $this->dateobj->month_name().' '.$this->dateobj->year_num."\n"
+           . $monthstr."\n";
   }
   
-  function wrap_week($weekstr,$dateobj)
+  function wrap_week($weekstr)
   {
     return $weekstr."\n";
   }
   
-  /** dayobj - ec3_CalendarDay object, may be empty. */
-  function wrap_day($daystr,$dateobj,$dayobj)
-  {
-    return $daystr.' ';
-  }
-
   function make_pad($num_days,$is_start_of_month)
   {
     return substr('                              ',0,$num_days*3);
   }
   
-  /** Second param may be empty. */
-  function make_day($dateobj,$dayobj)
+  /** dayobj - ec3_CalendarDay object, may be empty. */
+  function wrap_day($daystr)
   {
-    return zeroise($dateobj->day_num,2);
+    return $daystr.' ';
+  }
+
+  /** dayobj - ec3_CalendarDay object, may be empty. */
+  function make_day()
+  {
+    global $ec3;
+    $result = '';
+    if(!empty($this->dayobj))
+    {
+      for($evt=$this->dayobj->iter_events_allday(); $evt->valid(); $evt->next())
+          $result .= $this->make_event_allday($ec3->event);
+
+      for($evt=$this->dayobj->iter_events(); $evt->valid(); $evt->next())
+          $result .= $this->make_event($ec3->event);
+
+      foreach($this->dayobj->_posts as $p)
+      {
+        global $post;
+        $post = get_post($p->ID);
+        setup_postdata($post);
+        $result .= $this->make_post($post);
+      }
+    }
+    return $result;
+  }
+
+  function make_event_allday(&$event)
+  {
+    return $this->make_event($event);
+  }
+
+  function make_event(&$event)
+  {
+    return get_the_title();
+  }
+
+  function make_post(&$post)
+  {
+    return get_the_title();
   }
 
   function generate()
   {
     $result='';
-    $dateobj = $this->begin_dateobj;
-    while($dateobj->less_than($this->limit_dateobj))
+    $curr_dateobj = $this->begin_dateobj;
+    while($curr_dateobj->less_than($this->limit_dateobj))
     {
-      $days_in_month =$dateobj->days_in_month();
-      $week_day=( $dateobj->week_day() + 7 - intval(get_option('start_of_week')) ) % 7;
+      $days_in_month =$curr_dateobj->days_in_month();
+      $week_day=( $curr_dateobj->week_day() + 7 - intval(get_option('start_of_week')) ) % 7;
       $col =0;
 
       $monthstr= '';
@@ -193,9 +249,10 @@ class ec3_Calendar
 
       while(True)
       {
+        $this->dateobj = $curr_dateobj;
         if($col>6)
         {
-          $monthstr .= $this->wrap_week($weekstr,$dateobj);
+          $monthstr .= $this->wrap_week($weekstr,$curr_dateobj);
           $weekstr = '';
           $col=0;
         }
@@ -206,22 +263,22 @@ class ec3_Calendar
           $col=$week_day;
         }
         // insert day
-        $datetime = $dateobj->to_mysqldate();
-        $dayobj = $this->_days[$datetime]; // might be empty
-        $daystr = $this->make_day($dateobj,$dayobj);
-        $weekstr .= $this->wrap_day($daystr,$dateobj,$dayobj);
+        $datetime    =  $curr_dateobj->to_mysqldate();
+        $this->dayobj=  $this->_days[$datetime]; // might be empty
+        $daystr      =  $this->make_day();
+        $weekstr     .= $this->wrap_day($daystr);
 
         $col++;
-        $last_dob = $dateobj;
-        $dateobj->increment_day();
-        if(1==$dateobj->day_num)
+        $last_dob = $curr_dateobj;
+        $curr_dateobj->increment_day();
+        if(1==$curr_dateobj->day_num)
             break;
         $week_day=($week_day+1) % 7;
       }
       // insert padding
       $weekstr .= $this->make_pad( 7 - $col, false );
-      $monthstr .= $this->wrap_week($weekstr,$last_dob);
-      $result .= $this->wrap_month($monthstr,$last_dob);
+      $monthstr .= $this->wrap_week($weekstr);
+      $result .= $this->wrap_month($monthstr);
     }
     return $result;
   }
