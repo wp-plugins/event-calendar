@@ -562,7 +562,14 @@ function ec3_filter_parse_query($wp_query)
       $a=$wp_query->query_vars['ec3_after'];
   else if( !empty($wp_query->query_vars['ec3_from']) )
       $a=$wp_query->query_vars['ec3_from'];
-  $b=$wp_query->query_vars['ec3_before'];
+  else
+      $a=NULL;
+
+  if( !empty($wp_query->query_vars['ec3_before']) )
+      $b=$wp_query->query_vars['ec3_before'];
+  else
+      $b=NULL;
+
   if( $a=='today' )
       $a=ec3_strftime('%Y-%m-%d');
   if( $b=='today' )
