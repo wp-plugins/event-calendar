@@ -125,17 +125,6 @@ function ec3_filter_posts_where(&$where)
      if(preg_match_all($re,$where,$matches)):
        $where_post_date = implode(' AND ',$matches[1]);
 
-       $rdate=array(0,0,0);
-       $rtime=array(0,0,0);
-       for($i=0; $i<count($matches[1]); $i++)
-       {
-         if(          'YEAR'==$matches[2][$i]) $rdate[0]=$matches[4][$i];
-         elseif(     'MONTH'==$matches[2][$i]) $rdate[1]=$matches[4][$i];
-         elseif('DAYOFMONTH'==$matches[2][$i]) $rdate[2]=$matches[4][$i];
-         elseif(      'HOUR'==$matches[2][$i]) $rtime[0]=$matches[4][$i];
-         elseif(    'MINUTE'==$matches[2][$i]) $rtime[1]=$matches[4][$i];
-         elseif(    'SECOND'==$matches[2][$i]) $rtime[2]=$matches[4][$i];
-       }
        // rdate/rtime should be between start..end:
        $year_num = intval(date('Y'));
        $sdateobj = new ec3_Date($year_num,1,1);
