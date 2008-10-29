@@ -266,7 +266,7 @@ function ec3_get_calendar_month($date,$calendar_days,$thead)
   $pad=7-$col;
   if($pad>1)
       echo "<td colspan='$pad' class='pad' style='vertical-align:bottom'>"
-      . "<a href='http://blog.firetree.net/?ec3_version=$ec3->version'"
+      . "<a href='http://wordpress.org/extend/plugins/event-calendar/'"
       . " title='Event Calendar $ec3->version'"
       . ($ec3->hide_logo? " style='display:none'>": ">")
       . "<span class='ec3_ec'><span>EC</span></span></a></td>";
