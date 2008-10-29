@@ -293,6 +293,21 @@ function ec3_filter_posts_fields(&$fields)
 }
 
 
+/** Remove limts when we are making an ec3xml feed. */
+function ec3_filter_post_limits(&$limits)
+{
+  global $ec3;
+  if( $ec3->query->is_feed &&
+      $ec3->query->feed=='ec3xml' &&
+      $ec3->query->is_date )
+  {
+    // No limits!! Might be a but risky if the date has many many many posts...
+    return '';
+  }
+  return $limits;
+}
+
+
 function ec3_filter_query_vars($wpvarstoreset)
 {
   // Backwards compatibility with URLs from old versions of EC.
@@ -638,6 +653,7 @@ if($ec3->event_category)
   add_filter('posts_join',   'ec3_filter_posts_join');
   add_filter('posts_groupby','ec3_filter_posts_groupby');
   add_filter('posts_fields', 'ec3_filter_posts_fields');
+  add_filter('post_limits',  'ec3_filter_post_limits');
   add_filter('the_posts',    'ec3_filter_the_posts');
   
   if(!$ec3->hide_event_box)
