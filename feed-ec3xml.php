@@ -3,26 +3,15 @@
 //
 // ** This is all very experimental **
 
-
-// Ignore the params for now: make a dummy query,
-$month_ago = ec3_strftime('%Y-%m-%d',time()-(3600*24*31));
-//query_posts('ec3_after='.$month_ago.'&nopaging=1');
-
 require_once(dirname(__FILE__).'/calendar.php');
-
-@header('Content-type: text/plain; charset=' . get_option('blog_charset'));
-//@header('Content-type: text/xml; charset=' . get_option('blog_charset'));
-
-echo '<?xml version="1.0" encoding="'.get_option('blog_charset')
-.    '" standalone="yes"?>'."\n";
-
-global $ec3,$wp_query;
-
-//var_dump($wp_query);
-
 class ec3_ec3xml extends ec3_Calendar
 {
-  function ec3_ec3xml($datetime=0,$num=1) {$this->ec3_Calendar($datetime,$num);}
+  var $details = array();
+
+  function ec3_ec3xml($datetime=0,$num=1)
+  {
+    $this->ec3_Calendar($datetime,$num);
+  }
 
   function wrap_month($monthstr)
   {
@@ -42,8 +31,9 @@ class ec3_ec3xml extends ec3_Calendar
       return $daystr;
 
     $day_id   = $this->dateobj->day_id();
+    $date     = $this->dateobj->to_mysqldate();
     $day_link = $this->dateobj->day_link();
-    $result ="<day id='$day_id' link='$day_link'";
+    $result ="<day id='$day_id' date='$date' link='$day_link'";
     if(!empty($this->dayobj->titles))
       $result.=" titles='".implode(', ',$this->dayobj->titles)."'";
     if(empty($daystr))
@@ -61,17 +51,23 @@ class ec3_ec3xml extends ec3_Calendar
   function make_event(&$event)
   {
     global $id;
-    $title=get_the_title();
-    $this->_add_title($title);
-    $link=get_permalink(); 
-    $result = " <event title='$title' post_id='$id' link='$link'";
-    $result .= " sched_id='$event->sched_id'";
+    $this->_add_detail();
+    $result = " <event post_id='pid_$id'";
+    $result .= " sched_id='sid_$event->sched_id'";
     if($event->allday)
-      $result .= " allday='0'";
-    $result .= ">\n  <start>$event->start</start>\n  <end>$event->end</end>\n";
-    $excerpt = get_the_excerpt();
-    if(!empty($excerpt))
-      $result .= "  <excerpt><![CDATA[$excerpt]]></excerpt>\n";
+    {
+      $result .= " allday='0'>\n";
+    }
+    else
+    {
+      $result .= ">\n";
+      if(substr($event->start,0,10) < $this->dayobj->date)
+        $result.= "  <end>$event->end</end>\n";
+      elseif(substr($event->end,0,10) > $this->dayobj->date)
+        $result.= "  <start>$event->start</start>\n";
+      else
+        $result.= "  <start>$event->start</start>\n  <end>$event->end</end>\n";
+    }
     $result .= " </event>\n";
     return $result;
   }
@@ -79,19 +75,17 @@ class ec3_ec3xml extends ec3_Calendar
   function make_post(&$post)
   {
     global $id;
-    $title=get_the_title();
-    $this->_add_title($title);
-    $link=get_permalink(); 
-    $result = " <post title='$title' post_id='$id' link='$link'>\n";
-    $excerpt = get_the_excerpt();
-    if(!empty($excerpt))
-      $result .= "  <excerpt><![CDATA[$excerpt]]></excerpt>\n";
-    $result .= " </post>\n";
+    $this->_add_detail();
+    $result = " <post post_id='$id' />\n";
     return $result;
   }
-  
-  function _add_title($title)
+    
+  function _add_detail()
   {
+    global $id, $post;
+
+    // Record the post's title for today.
+    $title=get_the_title();
     if(empty($this->dayobj->titles))
       $this->dayobj->titles = array();
     $safe_title=strip_tags($title);
@@ -105,23 +99,44 @@ class ec3_ec3xml extends ec3_Calendar
           get_option('blog_charset')
         )
       );
-    $safe_title .= ' @'.ec3_get_start_time();
+    if(!empty($post->ec3_schedule))
+      $safe_title .= ' @'.ec3_get_start_time();
     $this->dayobj->titles[] = $safe_title;
+
+    // Make a unique <detail> element.
+    if(array_key_exists($id,$this->details))
+      return;
+
+    $link=get_permalink(); 
+    $d = " <detail id='pid_$id' title='$title' link='$link'";
+    $excerpt = get_the_excerpt();
+    if(empty($excerpt))
+      $d .= " />\n";
+    else
+      $d .= "><excerpt><![CDATA[$excerpt]]></excerpt></detail>\n";
+    $this->details[$id] = $d;
   }
+}; // end class ec3_ec3xml
 
-};
 
+@header('Content-type: text/xml; charset=' . get_option('blog_charset'));
+echo '<?xml version="1.0" encoding="'.get_option('blog_charset')
+.    '" standalone="yes"?>'."\n";
+
+// Turn off EC's content filtering.
 remove_filter('the_content','ec3_filter_the_content',20);
 remove_filter('get_the_excerpt', 'ec3_get_the_excerpt');
 add_filter('get_the_excerpt', 'wp_trim_excerpt');
 
+global $wp_query;
 $cal = new ec3_ec3xml();
 $cal->add_events($wp_query);
 $cal->add_posts($wp_query);
 
-
-echo "<calendar>\n";
-echo $cal->generate();
-echo "</calendar>\n";
-
 ?>
+<calendar>
+<?php echo $cal->generate() ?>
+<details>
+<?php echo implode('',$cal->details) ?>
+</details>
+</calendar>

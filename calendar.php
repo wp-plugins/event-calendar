@@ -34,14 +34,14 @@ Glossary:
 
 class ec3_CalendarDay
 {
-  var $_date; // MySQL date "YYYY-MM-DD"
+  var $date; // MySQL date "YYYY-MM-DD"
   var $_posts;
   var $_events;
   var $_events_allday;
 
   function ec3_CalendarDay($date)
   {
-    $this->_date = $date;
+    $this->date = $date;
     $this->_posts = array();
     $this->_events = array();
     $this->_events_allday = array();
