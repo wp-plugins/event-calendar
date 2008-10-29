@@ -195,11 +195,11 @@ class ec3_Admin
           return;
     }
 
-    if(function_exists('current_user_can'))
-    {
-      if(!current_user_can('edit_post',$post_id))
-          return;
-    }
+//   if(function_exists('current_user_can'))
+//   {
+//     if(!current_user_can('edit_post',$post_id))
+//         return;
+//   }
 
     // Ensure that we only save each post once.
     if(isset($this->save_post_called) && $this->save_post_called[$post_ID])
