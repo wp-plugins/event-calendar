@@ -39,7 +39,9 @@ function ec3_check_installed($title)
 
 
 /** Calculate the header (days of week). */
-function ec3_util_thead()
+function ec3_util_thead(
+$calendarType = 0
+)
 {
   global
     $ec3,
@@ -47,15 +49,19 @@ function ec3_util_thead()
     $weekday_abbrev,
     $weekday_initial;
 
+  $ln_daylength = $ec3->day_length;  
+  if($calendarType == 1) {
+	  $ln_daylength = 3;
+  }  
   $result="<thead><tr>\n";
 
   $start_of_week =intval( get_option('start_of_week') );
   for($i=0; $i<7; $i++)
   {
     $full_day_name=$weekday[ ($i+$start_of_week) % 7 ];
-    if(3==$ec3->day_length)
+    if(3==$ln_daylength)
         $display_day_name=$weekday_abbrev[$full_day_name];
-    elseif($ec3->day_length<3)
+    elseif($ln_daylength<3)
         $display_day_name=$weekday_initial[$full_day_name];
     else
         $display_day_name=$full_day_name;
@@ -429,7 +435,13 @@ $start_year = 0 //Four digit year.  Defaults to current year.
     );
 
   // Display months.
-  $thead=ec3_util_thead();
+  if ($ec3_calendarType == 1) //Big calendar..
+     $thead=ec3_util_thead(1);
+  else
+     $thead=ec3_util_thead(0);
+
+  
+  $thead=ec3_util_thead($ec3_calendarType);
   for($i=0; $i<$ec3->num_months; $i++)
   {
     $next_month=$this_month->next_month();
