@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2008, Alex Tingle.  $Revision: 287 $
+Copyright (c) 2008, Alex Tingle.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -95,7 +95,7 @@ class ec3_CalendarDay
 
 
 /** Calendar class, used for rendering calendars. */
-class ec3_Calendar
+class ec3_BasicCalendar
 {
   /** First date covered by this calendar (always 1st of the month).
    *  An ec3_Date object. */
@@ -117,7 +117,7 @@ class ec3_Calendar
 
   /** $month_date is a string of the form "YYYY-MM..."
    *  $num_months is the number of months covered by the calendar.*/
-  function ec3_Calendar($month_date=false,$num_months=1)
+  function ec3_BasicCalendar($month_date=false,$num_months=1)
   {
     if(empty($month_date))
     {

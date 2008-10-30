@@ -3,14 +3,15 @@
 //
 // ** This is all very experimental **
 
-require_once(dirname(__FILE__).'/calendar.php');
-class ec3_ec3xml extends ec3_Calendar
+require_once(dirname(__FILE__).'/calendar-basic.php');
+
+class ec3_ec3xml extends ec3_BasicCalendar
 {
   var $details = array();
 
   function ec3_ec3xml($datetime=0,$num=1)
   {
-    $this->ec3_Calendar($datetime,$num);
+    $this->ec3_BasicCalendar($datetime,$num);
   }
 
   function wrap_month($monthstr)
@@ -129,14 +130,14 @@ remove_filter('get_the_excerpt', 'ec3_get_the_excerpt');
 add_filter('get_the_excerpt', 'wp_trim_excerpt');
 
 global $wp_query;
-$cal = new ec3_ec3xml();
-$cal->add_events($wp_query);
-$cal->add_posts($wp_query);
+$calobj = new ec3_ec3xml();
+$calobj->add_events($wp_query);
+$calobj->add_posts($wp_query);
 
 ?>
 <calendar>
-<?php echo $cal->generate() ?>
+<?php echo $calobj->generate() ?>
 <details>
-<?php echo implode('',$cal->details) ?>
+<?php echo implode('',$calobj->details) ?>
 </details>
 </calendar>
