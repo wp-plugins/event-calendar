@@ -68,18 +68,18 @@ function ec3_util_thead()
 }
 
 
-/** Echos the event calendar navigation controls. */
+/** Returns the event calendar navigation controls. */
 function ec3_get_calendar_nav($date,$num_months)
 {
   global $ec3;
-  echo "<table class='nav'><tbody><tr>\n";
+  $nav = "<table class='nav'><tbody><tr>\n";
 
   // Previous
   $prev=$date->prev_month();
-  echo "\t<td id='prev'><a id='ec3_prev' href='" . $prev->month_link() . "'"
+  $nav .= "\t<td id='prev'><a id='ec3_prev' href='" . $prev->month_link() . "'"
      . '>&laquo;&nbsp;' . $prev->month_abbrev() . "</a></td>\n";
 
-  echo "\t<td><img id='ec3_spinner' style='display:none' src='" 
+  $nav .= "\t<td><img id='ec3_spinner' style='display:none' src='" 
      . $ec3->myfiles . "/ec_load.gif' alt='spinner' />\n";
   // iCalendar link.
   $webcal=get_feed_link('ical');
@@ -87,18 +87,19 @@ function ec3_get_calendar_nav($date,$num_months)
   // It's hard to guess on other platforms, so stick to http://
   if(strstr($_SERVER['HTTP_USER_AGENT'],'Mac OS X'))
       $webcal=preg_replace('/^http:/','webcal:',$webcal);
-  echo "\t    <a id='ec3_publish' href='$webcal'"
+  $nav .= "\t    <a id='ec3_publish' href='$webcal'"
      . " title='" . __('Subscribe to iCalendar.','ec3') ."'>\n"
      . "\t     <img src='$ec3->myfiles/publish.gif' alt='iCalendar' />\n"
      . "\t    </a>\n";
-  echo "\t</td>\n";
+  $nav .= "\t</td>\n";
 
   // Next
   $next=$date->plus_months($num_months);
-  echo "\t<td id='next'><a id='ec3_next' href='" . $next->month_link() . "'"
+  $nav .= "\t<td id='next'><a id='ec3_next' href='" . $next->month_link() . "'"
      . '>' . $next->month_abbrev() . "&nbsp;&raquo;</a></td>\n";
 
-  echo "</tr></tbody></table>\n";
+  $nav .= "</tr></tbody></table>\n";
+  return $nav;
 }
 
 
@@ -266,7 +267,9 @@ function ec3_get_calendar_month($date,$calendar_days,$thead)
   $pad=7-$col;
   if($pad>1)
       echo "<td colspan='$pad' class='pad' style='vertical-align:bottom'>"
-      . "<a href='http://wordpress.org/extend/plugins/event-calendar/'"
+        // This link is to enable us to gather stats about how many users
+        // there are for each version of EC.
+      . "<a href='http://wpcal.firetree.net/?ec3_version=$ec3->version'"
       . " title='Event Calendar $ec3->version'"
       . ($ec3->hide_logo? " style='display:none'>": ">")
       . "<span class='ec3_ec'><span>EC</span></span></a></td>";
@@ -301,7 +304,7 @@ function ec3_get_calendar()
 
   // Display navigation panel.
   if(0==$ec3->navigation)
-    ec3_get_calendar_nav($this_month,$ec3->num_months);
+    echo ec3_get_calendar_nav($this_month,$ec3->num_months);
   
   // Get entries
   $end_month=$this_month->plus_months($ec3->num_months);
@@ -322,7 +325,7 @@ function ec3_get_calendar()
 
   // Display navigation panel.
   if(1==$ec3->navigation)
-    ec3_get_calendar_nav(new ec3_Date(),$ec3->num_months);
+    echo ec3_get_calendar_nav(new ec3_Date(),$ec3->num_months);
 
   echo "</div>\n";
 
