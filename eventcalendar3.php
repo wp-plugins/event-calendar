@@ -298,7 +298,7 @@ function ec3_filter_post_limits(&$limits)
 {
   global $ec3;
   if( $ec3->query->is_feed &&
-      $ec3->query->feed=='ec3xml' &&
+      $ec3->query->query['feed']=='ec3xml' &&
       $ec3->query->is_date )
   {
     // No limits!! Might be a but risky if the date has many many many posts...
