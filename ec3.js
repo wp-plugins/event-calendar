@@ -460,7 +460,7 @@ function ec3()
       var td=document.getElementById(days[i].getAttribute('id'));
       /*for the big calendar, we want to simply add the appropriate html and skip the rest of this*/
       if (ec3_bigcalendar == 1) {
-       td.innerHTML = td.innerHTML + ec3_decode64(days[i].getAttribute('innerhtml')) + days[i].getAttribute('titles') + ec3_decode64(days[i].getAttribute('innerend'));
+       td.innerHTML = td.innerHTML + ec3_decode64(days[i].getAttribute('innerhtml'));
       }
       else { /*For the regular small calendar*/
       /*Fix major regression due to CDM HTML changes*/

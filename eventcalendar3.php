@@ -353,15 +353,12 @@ function ec3_filter_query_vars_xml()
        {
 	 $my_innerhtml = '';
 	 $my_innerEnd = '';
-		// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
 		$alt_class = 1;	// This will alternate between 1 and 0.
-		// END CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
         foreach ($day->events as $key=>$val) {
-			// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
 			$alt_class = $alt_class ? 0 : 1;	// Alternate the class
 			$my_innerhtml .= '<p class="ec3_event_day_evt ec3_alt_class_'.$alt_class.'">';
-			$my_innerhtml .= '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">';
-		$my_innerEnd .= '</a>:<br/>' . $val->time . '</p>';
+			$my_innerhtml .= '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title;
+			$my_innerhtml .= '</a>' . $val->time . '</p>';
 
         }
         //The innerhtml is now set, so display the day tag.
@@ -369,7 +366,7 @@ function ec3_filter_query_vars_xml()
          $date->day_num=$dc[3];
          $titles=apply_filters ( 'the_title', $val->title );
          echo "<day id='$day_id' is_event='$day->is_event'"
-         .    " titles='$titles' link='" . $date->day_link() . "' innerhtml='" . base64_encode($my_innerhtml) . "' innerend='" . base64_encode($my_innerEnd) . "'/>\n";
+         .    " titles='$titles' link='" . $date->day_link() . "' innerhtml='" . base64_encode($my_innerhtml) . "' innerend=' '/>\n";
 		   
        }
       }
