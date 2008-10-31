@@ -37,6 +37,8 @@ class ec3_ec3xml extends ec3_BasicCalendar
     $result ="<day id='$day_id' date='$date' link='$day_link'";
     if(!empty($this->dayobj->titles))
       $result.=" titles='".implode(', ',$this->dayobj->titles)."'";
+    if($this->dayobj->has_events())
+      $result.=" is_event='1'";
     if(empty($daystr))
       $result .= "/>\n";
     else
@@ -135,8 +137,7 @@ $calobj->add_events($wp_query);
 $calobj->add_posts($wp_query);
 
 ?>
-<calendar>
-<?php echo $calobj->generate() ?>
+<calendar><?php echo $calobj->generate() ?>
 <details>
 <?php echo implode('',$calobj->details) ?>
 </details>
