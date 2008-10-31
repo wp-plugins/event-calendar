@@ -359,7 +359,7 @@ function ec3_filter_query_vars_xml()
 			$my_innerhtml .= '<p class="ec3_event_day_evt ec3_alt_class_'.$alt_class.'">'
 				. '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' 
 				. $val->title
-				. '</a><div class="ec3_bc_time">' . $val->time . '</div></p>';
+				. ' - ' . $val->time . '</p>';
 
         }
         //The innerhtml is now set, so display the day tag.
