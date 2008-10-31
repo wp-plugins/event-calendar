@@ -77,11 +77,10 @@ class ec3_Date
    *  wp-includes/template-functions-general.php (get_calendar function). */
   function _from_date()
   {
-    global
-      $m,
-      $monthnum,
-      $wpdb,
-      $year;
+    global $wpdb;
+    $m = get_query_var('m');
+    $year = get_query_var('year');
+    $monthnum = get_query_var('monthnum');
 
     if (isset($_GET['w'])) {
         $w = ''.intval($_GET['w']);
