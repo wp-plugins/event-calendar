@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Event Calendar
-Version: 3.1.2.bigcal.1
+Version: 3.1.2.bigcal.2
 Plugin URI: http://wpcal.firetree.net
 Description: Manage future events as an online calendar. Display upcoming events in a dynamic calendar, on a listings page, or as a list in the sidebar. You can subscribe to the calendar from iCal (OSX) or Sunbird. Change settings on the <a href="options-general.php?page=ec3_admin">Event Calendar Options</a> screen. <strong>This version supports a "BIG CALENDAR" by putting [ECBigCalendar] in the text on a post or page.</strong>
 Author: Alex Tingle
