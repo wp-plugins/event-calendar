@@ -341,18 +341,18 @@ function ec3_get_calendar_month($date,$calendar_days,$thead,$ec3_calendarType)
     //Show full links in big calendar table
     if ((array_key_exists($day_id,$calendar_days)) && ($ec3_calendarType == 1)) {
     //This is a big calendar, so show all events in the table.
-	// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
 	$alt_class = 1;	// This will alternate between 1 and 0.
-	// END CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
-  
      foreach ($calendar_days[$day_id]->events as $key=>$val) {
-		// BEGIN CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
 		$alt_class = $alt_class ? 0 : 1;	// Alternate the class
      	echo '<p class="ec3_event_day_evt ec3_alt_class_'.$alt_class.'">';
-    	echo '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title . '</a> - ' . $val->time. '</p>';
-//    	echo '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title . '</a> - ' . $val->time . '<hr/>';
-//     	echo '</p>';
-		// END CDM -Oct. 14, 2007 -Added alternating classes to allow event separation to be controlled by CSS, and removed the <hr />
+    	echo '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' . $val->title . '</a>';
+    	if(!$ec3->hide_event_box){
+				echo  ' - ' . $val->time . '</p>';
+			}
+		else {
+			  	echo '</p>';
+		  	}
+
      }
     }
     echo '</td>';

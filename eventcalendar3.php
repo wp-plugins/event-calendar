@@ -316,6 +316,7 @@ function ec3_filter_query_vars($wpvarstoreset)
  *  active calendar JavaScript. */
 function ec3_filter_query_vars_xml()
 {
+  global $ec3;
   $components=explode('_',$_GET['ec3_xml']);
   if ((count($components)==2) || (count($components)==3) || (count($components)==4)) //Valid either of these three ways (Matthew)
   {
@@ -358,8 +359,13 @@ function ec3_filter_query_vars_xml()
 			$alt_class = $alt_class ? 0 : 1;	// Alternate the class
 			$my_innerhtml .= '<p class="ec3_event_day_evt ec3_alt_class_'.$alt_class.'">'
 				. '<a class="ec3_big_calendar_link" href="' . get_permalink($val->id) . '">' 
-				. $val->title
-				. ' - ' . $val->time . '</p>';
+				. $val->title;
+			  if(!$ec3->hide_event_box){
+				$my_innerhtml .=  ' - ' . $val->time . '</p>';
+			}
+			  else {
+			  	$my_innerhtml .= '</p>';
+		  	}
 
         }
         //The innerhtml is now set, so display the day tag.
