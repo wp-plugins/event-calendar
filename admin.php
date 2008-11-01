@@ -136,7 +136,7 @@ class ec3_Admin
         </p>
        </td>
       </tr> 
-     <tbody>
+     </tbody>
     </table>
 
     <?php
