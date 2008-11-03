@@ -313,10 +313,13 @@ function ec3_filter_query_vars($wpvarstoreset)
   // Backwards compatibility with URLs from old versions of EC.
   if(isset($_GET['ec3_xml']))
   {
-    ec3_filter_query_vars_xml();
-    // Will be this...
-    //ec3_do_feed_ec3xml();
-    //exit(0);
+    $d = explode('_',$_GET['ec3_xml']);
+    if(count($d)==2)
+    {
+      query_posts('nopaging=1&year='.intval($d[0]).'&monthnum='.intval($d[1]));
+      ec3_do_feed_ec3xml();
+      exit(0);
+    }
   }
   if(isset($_GET['ec3_ical']) || isset($_GET['ec3_vcal']))
   {
@@ -338,41 +341,6 @@ function ec3_filter_query_vars($wpvarstoreset)
   if(isset($_GET['m']) && isset($_GET['cat']))
     remove_action('template_redirect','redirect_canonical');
   return $wpvarstoreset;
-}
-
-
-/** If the parameter ec3_xml is set, then brutally hijack the page and replace
- *  it with XML calendar data. This is used by XmlHttpRequests from the 
- *  active calendar JavaScript. */
-function ec3_filter_query_vars_xml()
-{
-  $components=explode('_',$_GET['ec3_xml']);
-  if(count($components)==2)
-  {
-    $date=new ec3_Date(intval($components[0]),intval($components[1]));
-    $end=$date->next_month();
-    $calendar_days=ec3_util_calendar_days($date->month_id(),$end->month_id());
-    @header('Content-type: text/xml');
-    echo '<?xml version="1.0" encoding="'.get_option('blog_charset')
-    .    '" standalone="yes"?>';
-    echo "<calendar><month id='".$date->month_id()."'>\n";
-    foreach($calendar_days as $day_id=>$day)
-    {
-      if('today'==$day_id)
-        $dc=explode('_', ec3_strftime(":_%Y_%m_%d") );
-      else
-        $dc=explode('_',$day_id);
-      if(count($dc)==4)
-      {
-        $date->day_num=$dc[3];
-        $titles=$day->get_titles();
-        echo "<day id='$day_id' is_event='$day->is_event'"
-        .    " titles='$titles' link='" . $date->day_link() . "'/>\n";
-      }
-    }
-    echo "</month></calendar>\n";
-    exit(0);
-  }
 }
 
 
