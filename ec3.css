@@ -140,7 +140,7 @@
 table.ec3_schedule {
  border-collapse:collapse;
  margin:0.5ex 1ex 0.5ex 0;
- border:solid 1px #800;
+ border:solid 2px #800;
  float:left;
 }
 
@@ -152,3 +152,5 @@ table.ec3_schedule td {
 td.ec3_start { text-align:right; }
 
 td.ec3_to    { text-align:center; }
+
+.ec3_past *  { text-decoration:line-through }

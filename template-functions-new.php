@@ -534,17 +534,22 @@ function ec3_get_schedule(
     $date_end  =ec3_get_end_date();
     $time_start=ec3_get_start_time();
     $time_end  =ec3_get_end_time();
+    if($ec3->event->active)
+      $active ='';
+    else
+      $active ='ec3_past';
 
     if($ec3->event->allday)
     {
       if($date_start!=$date_end)
       {
-        $result.=sprintf($format_range,$date_start,$date_end,__('to','ec3'));
+        $result.=
+          sprintf($format_range,$date_start,$date_end,__('to','ec3'),$active);
       }
       elseif($date_start!=$current)
       {
         $current=$date_start;
-        $result.=sprintf($format_single,$date_start);
+        $result.=sprintf($format_single,$date_start,$active);
       }
     }
     else
@@ -552,20 +557,26 @@ function ec3_get_schedule(
       if($date_start!=$date_end)
       {
         $current=$date_start;
-        $result.=sprintf($format_range,
-          "$date_start $time_start","$date_end $time_end",__('to','ec3'));
+        $result.=sprintf(
+            $format_range,
+            "$date_start $time_start",
+            "$date_end $time_end",
+            __('to','ec3'),
+            $active
+          );
       }
       else
       {
         if($date_start!=$current)
         {
           $current=$date_start;
-          $result.=sprintf($format_single,$date_start);
+          $result.=sprintf($format_single,$date_start,$active);
         }
         if($time_start==$time_end)
-          $result.=sprintf($format_single,$time_start);
+          $result.=sprintf($format_single,$time_start,$active);
         else
-          $result.=sprintf($format_range,$time_start,$time_end,__('to','ec3'));
+          $result.=
+            sprintf($format_range,$time_start,$time_end,__('to','ec3'),$active);
       }
     }
   }
