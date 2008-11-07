@@ -162,33 +162,44 @@ function ec3_filter_posts_where(&$where)
          );
 
        $where=preg_replace($re,'',$where);
-       if(ec3_is_event_category($ec3->query)):
+       if($ec3->is_listing):
          $where.=" AND ($where_start) ";
-         $ec3->order_by_start=true;
        else:
-         $where.=" AND (($where_post_date) OR ($where_start)) ";
+         $is_post='ec3_sch.post_id IS NULL';
+         $where.=" AND (($where_post_date AND $is_post) OR "
+                     . "($where_start AND NOT $is_post)) ";
        endif;
+       $ec3->order_by_start=true;
        $ec3->join_ec3_sch=true;
      endif;
 
   elseif($ec3->is_date_range):
 
-     $where_start=array();
+     $w=array();
      if( !empty($ec3->range_from) )
-       $where_start[]="end>='$ec3->range_from'";
+       $w[] = '%2$s' . ">='$ec3->range_from'";
      if( !empty($ec3->range_before) )
-       $where_start[]="start<='$ec3->range_before'";
+       $w[] = '%1$s' . "<='$ec3->range_before'";
 
-     if($where_start):
-       $where_start=implode(' AND ',$where_start);
-       $where.=" AND ($where_start AND ec3_sch.post_id IS NOT NULL) ";
+     if(!empty($w)):
+       $ws = implode(' AND ',$w);
+       $where_start = sprintf($ws,'ec3_sch.start','ec3_sch.end');
+       if($ec3->is_listing):
+         $where.=" AND ($where_start) ";
+       else:
+         $pd = "$wpdb->posts.post_date";
+         $where_post_date = sprintf($ws,$pd,$pd);
+         $is_post = 'ec3_sch.post_id IS NULL';
+         $where.=" AND (($where_post_date AND $is_post) OR "
+                     . "($where_start AND NOT $is_post)) ";
+       endif;
        $ec3->order_by_start=true;
        $ec3->join_ec3_sch=true;
      endif;
 
   elseif($ec3->advanced):
 
-      if(ec3_is_event_category($ec3->query)):
+      if($ec3->is_listing):
 
           // Hide inactive events
           $where.=" AND ec3_sch.post_id IS NOT NULL ";
@@ -204,7 +215,7 @@ function ec3_filter_posts_where(&$where)
                        ."ec3_sch.end>='$ec3->today')";
           $ec3->join_ec3_sch=true;
 
-      elseif(!$ec3->query->is_category):
+      else:
 
           // Hide all events
           $where.=" AND ec3_sch.post_id IS NULL ";
@@ -254,14 +265,14 @@ function ec3_filter_posts_orderby(&$orderby)
     if(preg_match($regexp,$orderby,$match))
     {
       if($match[1] && $match[1]==' DESC')
-        $orderby=preg_replace($regexp,'ec3_sch.start',$orderby);
+        $orderby=preg_replace($regexp,'ec3_start',$orderby);
       else
-        $orderby=preg_replace($regexp,'ec3_sch.start DESC',$orderby);
+        $orderby=preg_replace($regexp,'ec3_start DESC',$orderby);
     }
     else
     {
       // Someone's been playing around with the orderby - just overwrite it.
-      $orderby='ec3_sch.start';
+      $orderby='ec3_start';
     }
   }
   return $orderby;
@@ -276,8 +287,6 @@ function ec3_filter_posts_groupby(&$groupby)
   {
     if(empty($groupby))
         $groupby="{$wpdb->posts}.ID";
-    if($ec3->is_listing)
-        $groupby.=',ec3_sch.sched_id';
   }
   return $groupby;
 }
@@ -286,9 +295,13 @@ function ec3_filter_posts_groupby(&$groupby)
 /** Add a sched_id field, if we want a listing. */
 function ec3_filter_posts_fields(&$fields)
 {
-  global $ec3;
-  if($ec3->is_listing && ($ec3->join_ec3_sch || $ec3->order_by_start))
-    $fields.=',ec3_sch.sched_id';
+  global $ec3,$wpdb;
+  if($ec3->join_ec3_sch || $ec3->order_by_start)
+  {
+    $fields .=
+      ", IF(ec3_sch.post_id IS NULL,$wpdb->posts.post_date,"
+      .                            "MIN(ec3_sch.start)) AS ec3_start ";
+  }
   return $fields;
 }
 
@@ -310,13 +323,17 @@ function ec3_filter_post_limits(&$limits)
 
 function ec3_filter_query_vars($wpvarstoreset)
 {
+  global $ec3;
   // Backwards compatibility with URLs from old versions of EC.
   if(isset($_GET['ec3_xml']))
   {
     $d = explode('_',$_GET['ec3_xml']);
     if(count($d)==2)
     {
-      query_posts('nopaging=1&year='.intval($d[0]).'&monthnum='.intval($d[1]));
+      $q = 'nopaging=1&year='.intval($d[0]).'&monthnum='.intval($d[1]);
+      if($ec3->show_only_events)
+        $q .= '&ec3_listing=yes';
+      query_posts($q);
       ec3_do_feed_ec3xml();
       exit(0);
     }
@@ -504,11 +521,9 @@ function ec3_filter_parse_query($wp_query)
   global $ec3;
   // query_posts() can be called multiple times. So reset all our variables.
   $ec3->reset_query($wp_query);
+  $ec3->is_listing = ec3_is_event_category($ec3->query);
+
   // Deal with EC3-specific parameters.
-  if( !empty($wp_query->query_vars['ec3_listing']) )
-  {
-    $ec3->is_listing=true;
-  }
   if( !empty($wp_query->query_vars['ec3_today']) )
   {
     // Force the value of 'm' to today's date.
@@ -518,53 +533,63 @@ function ec3_filter_parse_query($wp_query)
     $wp_query->is_month=true;
     $wp_query->is_year=true;
     $ec3->is_today=true;
-    return;
   }
-  if( !empty($wp_query->query_vars['ec3_days']) )
-  {
-    // Show the next N days.
-    $ec3->days=intval($wp_query->query_vars['ec3_days']);
-    $secs=$ec3->days*24*3600;
-    $wp_query->query_vars['ec3_after' ]=ec3_strftime('%Y-%m-%d');
-    $wp_query->query_vars['ec3_before']=ec3_strftime('%Y-%m-%d',time()+$secs);
-  }
-
-  // Get values (if any) for after ($a) & before ($b).
-  if( !empty($wp_query->query_vars['ec3_after']) )
-      $a=$wp_query->query_vars['ec3_after'];
-  else if( !empty($wp_query->query_vars['ec3_from']) )
-      $a=$wp_query->query_vars['ec3_from'];
   else
-      $a=NULL;
-
-  if( !empty($wp_query->query_vars['ec3_before']) )
-      $b=$wp_query->query_vars['ec3_before'];
-  else
-      $b=NULL;
-
-  if( $a=='today' )
-      $a=ec3_strftime('%Y-%m-%d');
-  if( $b=='today' )
-      $b=ec3_strftime('%Y-%m-%d');
-
-  $re='/\d\d\d\d[-_]\d?\d[-_]\d?\d/';
-  if( !empty($a) && preg_match($re,$a) ||
-      !empty($b) && preg_match($re,$b) )
   {
-    // Kill any other date parameters.
-    foreach(array('m','second','minute','hour','day','monthnum','year','w')
-            as $param)
+    if( !empty($wp_query->query_vars['ec3_days']) )
     {
-      unset($wp_query->query_vars[$param]);
+      // Show the next N days.
+      $ec3->days=intval($wp_query->query_vars['ec3_days']);
+      $secs=$ec3->days*24*3600;
+      $wp_query->query_vars['ec3_after' ]=ec3_strftime('%Y-%m-%d');
+      $wp_query->query_vars['ec3_before']=ec3_strftime('%Y-%m-%d',time()+$secs);
     }
-    $wp_query->is_date=false;
-    $wp_query->is_time=false;
-    $wp_query->is_day=false;
-    $wp_query->is_month=false;
-    $wp_query->is_year=false;
-    $ec3->is_date_range=true;
-    $ec3->range_from  =$a;
-    $ec3->range_before=$b;
+
+    // Get values (if any) for after ($a) & before ($b).
+    if( !empty($wp_query->query_vars['ec3_after']) )
+        $a=$wp_query->query_vars['ec3_after'];
+    else if( !empty($wp_query->query_vars['ec3_from']) )
+        $a=$wp_query->query_vars['ec3_from'];
+    else
+        $a=NULL;
+
+    if( !empty($wp_query->query_vars['ec3_before']) )
+        $b=$wp_query->query_vars['ec3_before'];
+    else
+        $b=NULL;
+
+    if( $a=='today' )
+        $a=ec3_strftime('%Y-%m-%d');
+    if( $b=='today' )
+        $b=ec3_strftime('%Y-%m-%d');
+
+    $re='/\d\d\d\d[-_]\d?\d[-_]\d?\d/';
+    if( !empty($a) && preg_match($re,$a) ||
+        !empty($b) && preg_match($re,$b) )
+    {
+      // Kill any other date parameters.
+      foreach(array('m','second','minute','hour','day','monthnum','year','w')
+              as $param)
+      {
+        unset($wp_query->query_vars[$param]);
+      }
+      $wp_query->is_date=false;
+      $wp_query->is_time=false;
+      $wp_query->is_day=false;
+      $wp_query->is_month=false;
+      $wp_query->is_year=false;
+      $ec3->is_date_range=true;
+      $ec3->range_from  =$a;
+      $ec3->range_before=$b;
+      $ec3->is_listing = true;
+    }
+  } // end if (today)
+
+  if( !empty($wp_query->query_vars['ec3_listing']) )
+  {
+    // Over-ride the default is_listing.
+    $islst = $wp_query->query_vars['ec3_listing'];
+    $ec3->is_listing = ( 0 == strcasecmp($islst,'yes') );
   }
 }
 

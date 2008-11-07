@@ -141,15 +141,18 @@ class ec3_BasicCalendar
     return $this->_days[$mysqldate];
   }
   
-  function add_posts(&$query)
+  function add_posts(&$query,$include_event_posts=false)
   {
     foreach($query->posts as $p)
     {
-      $day =& $this->_get_day( substr($p->post_date,0,10) );
-      $day->add_post($p);
+      if($include_event_posts || empty($p->ec3_schedule))
+      {
+        $day =& $this->_get_day( substr($p->post_date,0,10) );
+        $day->add_post($p);
+      }
     }
   }
-  
+
   function add_events(&$query)
   {
     foreach($query->posts as $p)
@@ -159,15 +162,17 @@ class ec3_BasicCalendar
       $begin_datetime = $this->begin_dateobj->to_mysqldate();
       foreach($p->ec3_schedule as $event)
       {
-        $dob     = ec3_mysql2date( max($event->start,$begin_datetime) );
-        $end_dob = ec3_mysql2date( $event->end );
-        while( $dob->less_than($this->limit_dateobj) )
+        $dob       = ec3_mysql2date( max($event->start,$begin_datetime) );
+        // Find $limit_dob - the day after the end of this event.
+        $limit_dob = ec3_mysql2date( $event->end );
+        $limit_dob->increment_day();
+        if($this->limit_dateobj->less_than($limit_dob))
+          $limit_dob = $this->limit_dateobj;
+        // Loop over all the days of this event.
+        for( ; $dob->less_than($limit_dob); $dob->increment_day() )
         {
           $day =& $this->_get_day($dob->to_mysqldate());
           $day->add_event($event);
-          if( $dob->equals($end_dob) )
-            break;
-          $dob->increment_day();
         }
       }
     }

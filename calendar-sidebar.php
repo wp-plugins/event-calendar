@@ -144,13 +144,17 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     if(0==$ec3->navigation)
       $result .= ec3_get_calendar_nav($this->begin_dateobj,$ec3->num_months);
 
+    $q = 'ec3_after='  .$this->begin_dateobj->to_mysqldate()
+       . '&ec3_before='.$this->limit_dateobj->to_mysqldate()
+       . '&nopaging=1';
+    if(!$ec3->show_only_events)
+        $q .= '&ec3_listing=no';
     $query = new WP_Query();
-    $query->query( 'ec3_after='.$this->begin_dateobj->to_mysqldate()
-                 .'&ec3_before='.$this->limit_dateobj->to_mysqldate()
-                 .'&nopaging=1' );
+    $query->query($q);
 
     $this->add_events($query);
-  //  $this->add_posts($wp_query);
+    if(!$ec3->is_listing)
+      $this->add_posts($query,!$ec3->advanced);
     $result .= parent::generate();
 
     // Display navigation panel.

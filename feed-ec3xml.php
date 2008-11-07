@@ -131,10 +131,11 @@ remove_filter('the_content','ec3_filter_the_content',20);
 remove_filter('get_the_excerpt', 'ec3_get_the_excerpt');
 add_filter('get_the_excerpt', 'wp_trim_excerpt');
 
-global $wp_query;
+global $ec3,$wp_query;
 $calobj = new ec3_ec3xml();
 $calobj->add_events($wp_query);
-$calobj->add_posts($wp_query);
+if(!$ec3->is_listing)
+  $calobj->add_posts($wp_query,!$ec3->advanced);
 
 ?>
 <calendar><?php echo $calobj->generate() ?>
