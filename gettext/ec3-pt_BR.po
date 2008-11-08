@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-11 18:18+0100\n"
+"POT-Creation-Date: 2008-11-08 18:33+0000\n"
 "PO-Revision-Date: 2006-12-13 17:41-0300\n"
 "Last-Translator: spark <djspark@gmail.com>\n"
 "Language-Team: SYDI.NET\n"
@@ -15,56 +15,75 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.php:80
+#: admin.php:110 admin.php:433 patch/admin_0.1.php:78
 msgid "Event Editor"
 msgstr "Editor de Eventos"
 
-#: admin.php:87
+#: admin.php:151 patch/admin_0.1.php:83
 msgid "Start"
 msgstr "Início"
 
-#: admin.php:88
+#: admin.php:152 patch/admin_0.1.php:84
 msgid "End"
 msgstr "Término"
 
-#: admin.php:89
+#: admin.php:153 patch/admin_0.1.php:85
 msgid "All Day"
 msgstr "O dia todo"
 
-#: admin.php:90
+#: admin.php:154 patch/admin_0.1.php:86
 msgid "Repeat"
 msgstr "Repetir"
 
-#: admin.php:111
+#: admin.php:175 patch/admin_0.1.php:107
 msgid "Add a new event"
 msgstr "Novo Evento"
 
-#: admin.php:161
+#: admin.php:221 patch/admin_0.1.php:155
 msgid "Delete this event"
 msgstr "Apagar evento"
 
-#: admin.php:287
-msgid "Error upgrading database for EventCalendar plugin."
-msgstr "Erro ao atualizar banco de dados para o plugin EventCalendar"
-
-#: admin.php:312
+#: admin.php:354 patch/admin_0.1.php:306
 #, php-format
 msgid "Upgraded database to EventCalendar Version %s"
 msgstr "Banco de dados atualizado para o EventCalendar versão %s"
 
-#: admin.php:316
+#: admin.php:359 patch/admin_0.1.php:281
+msgid "Error upgrading database for EventCalendar plugin."
+msgstr "Erro ao atualizar banco de dados para o plugin EventCalendar"
+
+#: admin.php:368 patch/admin_0.1.php:310
 msgid "Table already existed"
 msgstr "Tabela já existe"
 
-#: admin.php:344 admin.php:354 admin.php:399
+#: admin.php:373
+#, php-format
+msgid "Created table %s"
+msgstr ""
+
+#: admin.php:398
+#, php-format
+msgid "Added SEQUENCE column to table %s"
+msgstr ""
+
+#: admin.php:419 admin.php:486 patch/admin_0.1.php:338 patch/admin_0.1.php:348
+#: patch/admin_0.1.php:393
 msgid "Event Calendar Options"
 msgstr "Opções do EventCalendar"
 
-#: admin.php:403
+#: admin.php:490
+msgid "Easter Egg"
+msgstr ""
+
+#: admin.php:492 upgrade-posts.php:107
+msgid "Upgrade Event Posts"
+msgstr ""
+
+#: admin.php:499 patch/admin_0.1.php:397
 msgid "Event category"
 msgstr "Categoria dos eventos"
 
-#: admin.php:413
+#: admin.php:509 patch/admin_0.1.php:407
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -72,31 +91,31 @@ msgstr ""
 "Artigos serão colocados nesta categoria para você. Não a deixe como "
 "categoria 'default'."
 
-#: admin.php:419
+#: admin.php:515 patch/admin_0.1.php:413
 msgid "Show schedule within posts"
 msgstr "Mostrar agenda dentro dos posts"
 
-#: admin.php:423
+#: admin.php:519 patch/admin_0.1.php:417
 msgid "Show Schedule"
 msgstr "Mostrar agenda"
 
-#: admin.php:426
+#: admin.php:522 patch/admin_0.1.php:420
 msgid "Hide Schedule"
 msgstr "Esconder agenda"
 
-#: admin.php:433
+#: admin.php:529 patch/admin_0.1.php:427
 msgid "Show events as blog entries"
 msgstr "Mostrar eventos como artigos no blog"
 
-#: admin.php:437
+#: admin.php:533 patch/admin_0.1.php:431
 msgid "Events are Normal Posts"
 msgstr "Eventos são artigos normais"
 
-#: admin.php:440
+#: admin.php:536 patch/admin_0.1.php:434
 msgid "Keep Events Separate"
 msgstr "Manter Eventos Separados"
 
-#: admin.php:444
+#: admin.php:540 patch/admin_0.1.php:438
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -105,15 +124,15 @@ msgstr ""
 "eventos futuros, por ordem de data. Eventos não aparecerão na listagem de "
 "artigos na home"
 
-#: admin.php:450 admin.php:462
+#: admin.php:546 admin.php:558 patch/admin_0.1.php:444 patch/admin_0.1.php:456
 msgid "Timezone"
 msgstr "Zona de Tempo"
 
-#: admin.php:454
+#: admin.php:550 patch/admin_0.1.php:448
 msgid "unknown"
 msgstr "desconhecido"
 
-#: admin.php:458
+#: admin.php:554 patch/admin_0.1.php:452
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -121,71 +140,71 @@ msgstr ""
 "Você não pode mudar sua zona de tempo. Desligue o 'safe mode' do PHP ou "
 "atualize-o para a versão PHP5"
 
-#: admin.php:474
+#: admin.php:570 patch/admin_0.1.php:468
 msgid "Calendar Display"
 msgstr "Mostrar Calendário"
 
-#: admin.php:479
+#: admin.php:575 patch/admin_0.1.php:473
 msgid "Number of months"
 msgstr "Número de meses"
 
-#: admin.php:486
+#: admin.php:582 patch/admin_0.1.php:480
 msgid "Show all categories in calendar"
 msgstr "Mostrar todas as categorias no calendáario"
 
-#: admin.php:490
+#: admin.php:586 patch/admin_0.1.php:484
 msgid "Only Show Events"
 msgstr "Mostrar apenas Eventos"
 
-#: admin.php:493
+#: admin.php:589 patch/admin_0.1.php:487
 msgid "Show All Posts"
 msgstr "Mostrar todos os Artigos"
 
-#: admin.php:500
+#: admin.php:596 patch/admin_0.1.php:494
 msgid "Show day names as"
 msgstr "Mostrar nome do dia como"
 
-#: admin.php:504
+#: admin.php:600 patch/admin_0.1.php:498
 msgid "Single Letter"
 msgstr "Uma Letra"
 
-#: admin.php:507
+#: admin.php:603 patch/admin_0.1.php:501
 msgid "3-Letter Abbreviation"
 msgstr "Abreviação com 3 Letras"
 
-#: admin.php:510
+#: admin.php:606 patch/admin_0.1.php:504
 msgid "Full Day Name"
 msgstr "Nome completo"
 
-#: admin.php:517
+#: admin.php:613 patch/admin_0.1.php:511
 msgid "Show Event Calendar logo"
 msgstr "Mostrar Logo do EventCalendar"
 
-#: admin.php:521
+#: admin.php:617 patch/admin_0.1.php:515
 msgid "Show Logo"
 msgstr "Mostrar Logo"
 
-#: admin.php:524
+#: admin.php:620 patch/admin_0.1.php:518
 msgid "Hide Logo"
 msgstr "Esconder Logo"
 
-#: admin.php:531
+#: admin.php:627 patch/admin_0.1.php:525
 msgid "Position of navigation links"
 msgstr "Posicionamento dos links de navegação"
 
-#: admin.php:535
+#: admin.php:631 patch/admin_0.1.php:529
 msgid "Above Calendar"
 msgstr "Acima do Calendário"
 
-#: admin.php:538
+#: admin.php:634 patch/admin_0.1.php:532
 msgid "Below Calendar"
 msgstr "Abaixo do Calendário"
 
-#: admin.php:541
+#: admin.php:637 patch/admin_0.1.php:535
 msgid "Hidden"
 msgstr "Escondido"
 
-#: admin.php:545
+#: admin.php:641 patch/admin_0.1.php:539
 msgid ""
 "The navigation links are more usable when they are above the calendar, but "
 "you might prefer them below or hidden for aesthetic reasons."
@@ -193,70 +212,84 @@ msgstr ""
 "Os links de navegação são mais úteis quando estão acima do calendário, mas "
 "você pode preferi-los abaixo ou mesmo escondidos, por razões estéticas"
 
-#: admin.php:551
+#: admin.php:647 patch/admin_0.1.php:545
 msgid "Popup event lists"
 msgstr "Lista de Eventos em Popup"
 
-#: admin.php:555
+#: admin.php:651 patch/admin_0.1.php:549
 msgid "Show Popups"
 msgstr "Mostrar Popups"
 
-#: admin.php:558
+#: admin.php:654 patch/admin_0.1.php:552
 msgid "Hide Popups"
 msgstr "Esconder Popups"
 
-#: admin.php:562
+#: admin.php:658 patch/admin_0.1.php:556
 msgid "You might want to disable popups if you use Nicetitles."
 msgstr "Você pode querer desabilitar popups se usar Títulos Curtos"
 
-#: admin.php:571
-msgid "Update Options"
-msgstr ""
-
-#: admin.php:575
-msgid "EXAMPLE SIDEBAR CODE:"
-msgstr "Codigo de exemplo para o sidebar.php"
-
-#: template-functions-new.php:64 template-functions.php:155
-#: template-functions.php:435
-msgid "all day"
-msgstr "o dia todo"
-
-#: template-functions-new.php:240 template-functions-new.php:318
-#: template-functions.php:351 widget.php:155 widget.php:159
-#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+#: legacy.php:16 template-functions-new.php:471 widget.php:91 widget.php:212
+#: widget.php:219 K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Próximos Eventos"
 
-#: template-functions-new.php:310 template-functions-new.php:362
-#: template-functions.php:456
+#: legacy.php:100 legacy.php:369 template-functions-new.php:139
+msgid "all day"
+msgstr "o dia todo"
+
+#: legacy.php:121 template-functions-new.php:537 widget.php:133
 msgid "No events."
 msgstr "Nenhum Evento"
 
-#: template-functions-new.php:393 template-functions-new.php:407
-#: template-functions-new.php:419 template-functions.php:493
-#: template-functions.php:507 template-functions.php:519
+#: legacy.php:154 legacy.php:168 legacy.php:180 template-functions-new.php:572
+#: template-functions-new.php:589 template-functions-new.php:604
 msgid "to"
 msgstr "até"
+
+#: legacy.php:227 template-functions-new.php:616 widget.php:40 widget.php:198
+#: widget.php:205 K2/ec3_sidebar_module.php:31
+msgid "Event Calendar"
+msgstr "Calendário de Eventos"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
 msgstr "Você deve escolher uma categoria de eventos."
 
-#: template-functions.php:32 widget.php:83 widget.php:146
+#: template-functions.php:32 widget.php:75 widget.php:181
 #: K2/ec3_sidebar_module.php:64
 msgid "Go to Event Calendar Options"
 msgstr "Vá para as opções do EventCalendar"
 
-#: template-functions.php:91
+#: template-functions.php:83
 msgid "Subscribe to iCalendar."
 msgstr "Assine o iCalendar"
 
-#: template-functions.php:271 widget.php:91 widget.php:95
-#: K2/ec3_sidebar_module.php:31
-msgid "Event Calendar"
-msgstr "Calendário de Eventos"
+#: upgrade-posts.php:22
+msgid "Post upgraded."
+msgstr ""
 
-#: widget.php:139
+#: upgrade-posts.php:23
+#, php-format
+msgid "%d posts upgraded."
+msgstr ""
+
+#: widget.php:172
+#, fuzzy
 msgid "Number of events:"
-msgstr "Número de eventos"
+msgstr "Número de meses"
+
+#: widget.php:201
+msgid "Display upcoming events in a dynamic calendar."
+msgstr ""
+
+#: widget.php:215
+msgid "Display upcoming events as a list."
+msgstr ""
+
+#: patch/admin_0.1.php:569
+msgid "EXAMPLE SIDEBAR CODE:"
+msgstr "Codigo de exemplo para o sidebar.php"
+
+#, fuzzy
+#~ msgid "&#035; of events:"
+#~ msgstr "Número de eventos"

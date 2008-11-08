@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ec3 3.1.1 sl 1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-10-11 18:12+0100\n"
+"POT-Creation-Date: 2008-10-25 12:29+0100\n"
 "PO-Revision-Date: 2008-10-11 01:19+0100\n"
 "Last-Translator: Damjan Gerli <damjan@damjan.net>\n"
 "Language-Team: \n"
@@ -21,56 +21,75 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
 
-#: admin.php:80
+#: admin.php:110 admin.php:432 patch/admin_0.1.php:78
 msgid "Event Editor"
 msgstr "Urejevalec dogodkov"
 
-#: admin.php:87
+#: admin.php:151 patch/admin_0.1.php:83
 msgid "Start"
 msgstr "začetek"
 
-#: admin.php:88
+#: admin.php:152 patch/admin_0.1.php:84
 msgid "End"
 msgstr "konec"
 
-#: admin.php:89
+#: admin.php:153 patch/admin_0.1.php:85
 msgid "All Day"
 msgstr "ves dan"
 
-#: admin.php:90
+#: admin.php:154 patch/admin_0.1.php:86
 msgid "Repeat"
 msgstr "ponovi"
 
-#: admin.php:111
+#: admin.php:175 patch/admin_0.1.php:107
 msgid "Add a new event"
 msgstr "Dodaj nov dogodek"
 
-#: admin.php:161
+#: admin.php:221 patch/admin_0.1.php:155
 msgid "Delete this event"
 msgstr "Izbriši ta dogodek"
 
-#: admin.php:287
-msgid "Error upgrading database for EventCalendar plugin."
-msgstr "Napaka pri nadgradnji podatkovne baze za vtičnik EventCalendar."
-
-#: admin.php:312
+#: admin.php:353 patch/admin_0.1.php:306
 #, php-format
 msgid "Upgraded database to EventCalendar Version %s"
 msgstr "Nadgrajena podatkovna baza za EventCalendar vezija %s"
 
-#: admin.php:316
+#: admin.php:358 patch/admin_0.1.php:281
+msgid "Error upgrading database for EventCalendar plugin."
+msgstr "Napaka pri nadgradnji podatkovne baze za vtičnik EventCalendar."
+
+#: admin.php:367 patch/admin_0.1.php:310
 msgid "Table already existed"
 msgstr "Tabela že obstaja"
 
-#: admin.php:344 admin.php:354 admin.php:399
+#: admin.php:372
+#, php-format
+msgid "Created table %s"
+msgstr ""
+
+#: admin.php:397
+#, php-format
+msgid "Added SEQUENCE column to table %s"
+msgstr ""
+
+#: admin.php:418 admin.php:485 patch/admin_0.1.php:338 patch/admin_0.1.php:348
+#: patch/admin_0.1.php:393
 msgid "Event Calendar Options"
 msgstr "Nastavitve za Event Calendar"
 
-#: admin.php:403
+#: admin.php:489
+msgid "Easter Egg"
+msgstr ""
+
+#: admin.php:491 upgrade-posts.php:107
+msgid "Upgrade Event Posts"
+msgstr ""
+
+#: admin.php:498 patch/admin_0.1.php:397
 msgid "Event category"
 msgstr "Kategorija dogodka"
 
-#: admin.php:413
+#: admin.php:508 patch/admin_0.1.php:407
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -78,31 +97,31 @@ msgstr ""
 "Prispevki dogodkov bodo za vas postavljeni v to kategorijo. Ne določite te "
 "kategorije kot privzete za prispevke."
 
-#: admin.php:419
+#: admin.php:514 patch/admin_0.1.php:413
 msgid "Show schedule within posts"
 msgstr "Pokaži urnik med prispevki"
 
-#: admin.php:423
+#: admin.php:518 patch/admin_0.1.php:417
 msgid "Show Schedule"
 msgstr "pokaži urnik"
 
-#: admin.php:426
+#: admin.php:521 patch/admin_0.1.php:420
 msgid "Hide Schedule"
 msgstr "skrij urnik"
 
-#: admin.php:433
+#: admin.php:528 patch/admin_0.1.php:427
 msgid "Show events as blog entries"
 msgstr "Pokaži dogodke kot vnose spletnika"
 
-#: admin.php:437
+#: admin.php:532 patch/admin_0.1.php:431
 msgid "Events are Normal Posts"
 msgstr "dogodki so običajni prispevki"
 
-#: admin.php:440
+#: admin.php:535 patch/admin_0.1.php:434
 msgid "Keep Events Separate"
 msgstr "obdrži dogodke ločene"
 
-#: admin.php:444
+#: admin.php:539 patch/admin_0.1.php:438
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -110,15 +129,15 @@ msgstr ""
 "Obdrži dogodke ločene: stran kategorija dogodka prikaže bodoče dogodke po "
 "datumu. Dogodki se ne izpišejo na glavno stran."
 
-#: admin.php:450 admin.php:462
+#: admin.php:545 admin.php:557 patch/admin_0.1.php:444 patch/admin_0.1.php:456
 msgid "Timezone"
 msgstr "Časovni pas"
 
-#: admin.php:454
+#: admin.php:549 patch/admin_0.1.php:448
 msgid "unknown"
 msgstr "neznan"
 
-#: admin.php:458
+#: admin.php:553 patch/admin_0.1.php:452
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -126,71 +145,71 @@ msgstr ""
 "Ne morete spremeniti časovnega pasa. Izklopite 'varen način' v PHP-ju ali ga "
 "nadgradite s PHP5."
 
-#: admin.php:474
+#: admin.php:569 patch/admin_0.1.php:468
 msgid "Calendar Display"
 msgstr "Pokaži koledar"
 
-#: admin.php:479
+#: admin.php:574 patch/admin_0.1.php:473
 msgid "Number of months"
 msgstr "Število mesecev"
 
-#: admin.php:486
+#: admin.php:581 patch/admin_0.1.php:480
 msgid "Show all categories in calendar"
 msgstr "V koledarju pokaži vse kategorije"
 
-#: admin.php:490
+#: admin.php:585 patch/admin_0.1.php:484
 msgid "Only Show Events"
 msgstr "pokaži samo dogodke"
 
-#: admin.php:493
+#: admin.php:588 patch/admin_0.1.php:487
 msgid "Show All Posts"
 msgstr "pokaži vse prispevke"
 
-#: admin.php:500
+#: admin.php:595 patch/admin_0.1.php:494
 msgid "Show day names as"
 msgstr "Pokaži imena dnevov kot"
 
-#: admin.php:504
+#: admin.php:599 patch/admin_0.1.php:498
 msgid "Single Letter"
 msgstr "posamezno črko"
 
-#: admin.php:507
+#: admin.php:602 patch/admin_0.1.php:501
 msgid "3-Letter Abbreviation"
 msgstr "okrajšavo na 3 črke"
 
-#: admin.php:510
+#: admin.php:605 patch/admin_0.1.php:504
 msgid "Full Day Name"
 msgstr "dolgo ime dneva"
 
-#: admin.php:517
+#: admin.php:612 patch/admin_0.1.php:511
 msgid "Show Event Calendar logo"
 msgstr "Pokaži logotip Event Calendar-ja"
 
-#: admin.php:521
+#: admin.php:616 patch/admin_0.1.php:515
 msgid "Show Logo"
 msgstr "pokaži logotip"
 
-#: admin.php:524
+#: admin.php:619 patch/admin_0.1.php:518
 msgid "Hide Logo"
 msgstr "skrij logotip"
 
-#: admin.php:531
+#: admin.php:626 patch/admin_0.1.php:525
 msgid "Position of navigation links"
 msgstr "Navigacijske povezave naj bodo"
 
-#: admin.php:535
+#: admin.php:630 patch/admin_0.1.php:529
 msgid "Above Calendar"
 msgstr "nad koledarjem"
 
-#: admin.php:538
+#: admin.php:633 patch/admin_0.1.php:532
 msgid "Below Calendar"
 msgstr "pod koledarjem"
 
-#: admin.php:541
+#: admin.php:636 patch/admin_0.1.php:535
 msgid "Hidden"
 msgstr "skrite"
 
-#: admin.php:545
+#: admin.php:640 patch/admin_0.1.php:539
 msgid ""
 "The navigation links are more usable when they are above the calendar, but "
 "you might prefer them below or hidden for aesthetic reasons."
@@ -198,45 +217,39 @@ msgstr ""
 "Navigacijske povezave so bolj uporabne če so nad koledarjem, vendar jih "
 "morda zaradi estetičnih razlogov želite pod koledarjem ali celo skrite."
 
-#: admin.php:551
+#: admin.php:646 patch/admin_0.1.php:545
 msgid "Popup event lists"
 msgstr "Pojavno okno liste dogodkov"
 
-#: admin.php:555
+#: admin.php:650 patch/admin_0.1.php:549
 msgid "Show Popups"
 msgstr "pokaži pojavna okna"
 
-#: admin.php:558
+#: admin.php:653 patch/admin_0.1.php:552
 msgid "Hide Popups"
 msgstr "skrij pojavna okna"
 
-#: admin.php:562
+#: admin.php:657 patch/admin_0.1.php:556
 msgid "You might want to disable popups if you use Nicetitles."
 msgstr "Mogoče bi hoteli onemogočiti pojavna okna če uporabljate Nicetitles."
 
-#: admin.php:575
-msgid "EXAMPLE SIDEBAR CODE:"
-msgstr "PRIMER KODE STRANSKE PASICE:"
-
-#: template-functions-new.php:64 template-functions.php:155
-#: template-functions.php:435
-msgid "all day"
-msgstr "ves dan"
-
-#: template-functions-new.php:240 template-functions-new.php:318
-#: template-functions.php:351 widget.php:155 widget.php:159
-#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+#: legacy.php:16 template-functions-new.php:398 template-functions-new.php:472
+#: widget.php:165 widget.php:172 K2/ec3_sidebar_module.php:71
+#: K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Prihodnji dogodki"
 
-#: template-functions-new.php:310 template-functions-new.php:362
-#: template-functions.php:456
+#: legacy.php:100 template-functions-new.php:91 template-functions.php:166
+msgid "all day"
+msgstr "ves dan"
+
+#: legacy.php:121 template-functions-new.php:464
+#: template-functions-new.php:513
 msgid "No events."
 msgstr "Ni dogodkov."
 
-#: template-functions-new.php:393 template-functions-new.php:407
-#: template-functions-new.php:419 template-functions.php:493
-#: template-functions.php:507 template-functions.php:519
+#: legacy.php:154 legacy.php:168 legacy.php:180 template-functions-new.php:542
+#: template-functions-new.php:556 template-functions-new.php:568
 msgid "to"
 msgstr "do"
 
@@ -244,7 +257,7 @@ msgstr "do"
 msgid "You must choose an event category."
 msgstr "Izbrati moraš kategorijo za dogodke."
 
-#: template-functions.php:32 widget.php:83 widget.php:146
+#: template-functions.php:32 widget.php:69 widget.php:134
 #: K2/ec3_sidebar_module.php:64
 msgid "Go to Event Calendar Options"
 msgstr "Pojdi na Nastavitve za Event Calendar"
@@ -253,23 +266,49 @@ msgstr "Pojdi na Nastavitve za Event Calendar"
 msgid "Subscribe to iCalendar."
 msgstr "Naroči se na iCalendar."
 
-#: template-functions.php:271 widget.php:91 widget.php:95
+#: template-functions.php:284 widget.php:151 widget.php:158
 #: K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Koledar dogodkov"
 
-#: widget.php:139
+#: upgrade-posts.php:22
+msgid "Post upgraded."
+msgstr ""
+
+#: upgrade-posts.php:23
+#, php-format
+msgid "%d posts upgraded."
+msgstr ""
+
+#: widget.php:125
+#, fuzzy
 msgid "Number of events:"
-msgstr "Število dogodkov:"
+msgstr "Število mesecev"
+
+#: widget.php:154
+msgid "Display upcoming events in a dynamic calendar."
+msgstr ""
+
+#: widget.php:168
+msgid "Display upcoming events as a list."
+msgstr ""
+
+#: patch/admin_0.1.php:569
+msgid "EXAMPLE SIDEBAR CODE:"
+msgstr "PRIMER KODE STRANSKE PASICE:"
+
+#~ msgid "Update Options"
+#~ msgstr "Shrani spremembe"
+
+#, fuzzy
+#~ msgid "&#035; of events:"
+#~ msgstr "Število dogodkov:"
 
 #~ msgid "Options saved."
 #~ msgstr "Spremembe so bile shranjene."
 
 #~ msgid "- Select -"
 #~ msgstr "- Izberi -"
-
-#~ msgid "Update Options"
-#~ msgstr "Shrani spremembe"
 
 #~ msgid "View posts for %1$s %2$s"
 #~ msgstr "Poglej prispevke za %1$s %2$s"
