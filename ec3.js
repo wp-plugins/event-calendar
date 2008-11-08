@@ -56,7 +56,7 @@ var ec3 = {
     {
       var cal = new ec3.Calendar(cal_id);
       ec3.do_onload( function(){cal.init();} );
-      ec3.calendars.push(cal);
+      ec3.calendars[cal_id] = cal;
       return cal;
     },
 
@@ -479,13 +479,12 @@ ec3.Calendar.prototype = {
       var days_xml=xml.getElementsByTagName('day');
       if(!days_xml)
         return;
-      var details_xml=xml.getElementById('details');
       for(var i=0, len=days_xml.length; i<len; i++)
       {
         var td=this.getElementById(days_xml[i].getAttribute('id'));
         if(td && td.firstChild && td.firstChild.nodeType==ec3.TEXT_NODE)
         {
-          this.make_day(td,days_xml[i],details_xml);
+          this.make_day(td,days_xml[i],xml);
         }
       }
       if(typeof ec3_Popup != 'undefined')
@@ -522,7 +521,7 @@ ec3.Calendar.prototype = {
    *           </event>
    *       </day>
    *
-   *   details_xml - an XML element containg the details about posts.
+   *   xml - the whole XML document. Use it to find details about posts.
    *         detail@title contains the post's title.
    *     Examples:
    *       <details>
@@ -536,7 +535,7 @@ ec3.Calendar.prototype = {
    *           </detail>
    *       </details>
    */
-  make_day : function(td,day_xml,details_xml)
+  make_day : function(td,day_xml,xml)
     {
       ec3.add_class(td,'ec3_postday');
       // Save the TD's text node for later.
