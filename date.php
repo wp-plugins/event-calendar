@@ -190,11 +190,11 @@ class ec3_Date
       $daylink = str_replace('%day%', zeroise(intval($day), 2), $daylink);
       $daylink = apply_filters('day_link', get_option('home') . user_trailingslashit($daylink, 'day'), $year, $month, $day);
       if($ec3->show_only_events)
-        $daylink .= '?cat=' . $ec3->event_category;
+        $daylink .= '?ec3_listing=yes';
     } else {
       $daylink=apply_filters('day_link', get_option('home') . '/?m=' . $year . zeroise($month, 2) . zeroise($day, 2), $year, $month, $day);
       if($ec3->show_only_events)
-        $daylink .= '&amp;cat=' . $ec3->event_category;
+        $daylink .= '&amp;ec3_listing=yes';
     }
     return $daylink;
   }
@@ -226,11 +226,11 @@ class ec3_Date
       $monthlink = str_replace('%monthnum%', zeroise(intval($month), 2), $monthlink);
       $monthlink = apply_filters('month_link', get_option('home') . user_trailingslashit($monthlink, 'month'), $year, $month);
       if($ec3->show_only_events)
-        $monthlink .= '?cat=' . $ec3->event_category;
+        $monthlink .= '?ec3_listing=yes';
     } else {
       $monthlink = apply_filters('month_link', get_option('home') . '/?m=' . $year . zeroise($month, 2), $year, $month);
       if($ec3->show_only_events)
-        $monthlink .= '&amp;cat=' . $ec3->event_category;
+        $monthlink .= '&amp;ec3_listing=yes';
     }
     return $monthlink;
   }

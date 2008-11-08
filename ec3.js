@@ -144,10 +144,10 @@ ec3.Calendar.prototype = {
       if(prev && next)
       {
         // Check for cat limit in month link
-        var xCat=new RegExp('&cat=[0-9]+$');
+        var xCat=new RegExp('[&?]ec3_listing=yes$');
         var match=xCat.exec(prev.href);
         if(match)
-          this.catClause=match[0];
+          this.is_listing=true;
         // Replace links
         var self = this;
         prev.onclick = function(){self.go_prev(); return false;}
@@ -194,8 +194,8 @@ ec3.Calendar.prototype = {
 	  {
 	    c.href=ec3.home+'/?m='+year_num+month_num;
 	  }
-          if(this.catClause)
-             c.href+=this.catClause; // Copy cat' limit from original month link.
+          if(this.is_listing)
+             c.href+='&ec3_listing=yes';
           c.title=ec3.viewpostsfor;
           c.title=c.title.replace(/%1\$s/,ec3.month_of_year[month_num0]);
           c.title=c.title.replace(/%2\$s/,year_num);
