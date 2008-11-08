@@ -161,7 +161,7 @@ function ec3_filter_posts_where(&$where)
          );
 
        $where=preg_replace($re,'',$where);
-       if($ec3->is_listing):
+       if(ec3_is_listing()):
          $where.=" AND ($where_start) ";
        else:
          $is_post='ec3_sch.post_id IS NULL';
@@ -183,7 +183,7 @@ function ec3_filter_posts_where(&$where)
      if(!empty($w)):
        $ws = implode(' AND ',$w);
        $where_start = sprintf($ws,'ec3_sch.start','ec3_sch.end');
-       if($ec3->is_listing):
+       if(ec3_is_listing()):
          $where.=" AND ($where_start) ";
        else:
          $pd = "$wpdb->posts.post_date";
@@ -198,7 +198,7 @@ function ec3_filter_posts_where(&$where)
 
   elseif($ec3->advanced):
 
-      if($ec3->is_listing):
+      if(ec3_is_listing()):
 
           // Hide inactive events
           $where.=" AND ec3_sch.post_id IS NOT NULL ";
@@ -224,20 +224,6 @@ function ec3_filter_posts_where(&$where)
   endif;
 
   return $where;
-}
-
-/** Returns TRUE if $ec3->query is an event category query. */
-function ec3_is_event_category(&$query)
-{
-  global $ec3;
-  // This bit nabbed from is_category()
-  if($query->is_category)
-  {
-    $cat_obj = $query->get_queried_object();
-    if($cat_obj->term_id == $ec3->event_category)
-      return true;
-  }
-  return false;
 }
 
 /** */
@@ -406,7 +392,6 @@ function ec3_filter_parse_query($wp_query)
   global $ec3;
   // query_posts() can be called multiple times. So reset all our variables.
   $ec3->reset_query($wp_query);
-  $ec3->is_listing = ec3_is_event_category($ec3->query);
 
   // Deal with EC3-specific parameters.
   if( !empty($wp_query->query_vars['ec3_today']) )
@@ -466,15 +451,14 @@ function ec3_filter_parse_query($wp_query)
       $ec3->is_date_range=true;
       $ec3->range_from  =$a;
       $ec3->range_before=$b;
-      $ec3->is_listing = true;
+      $ec3->is_listing = 'YES';
     }
   } // end if (today)
 
   if( !empty($wp_query->query_vars['ec3_listing']) )
   {
     // Over-ride the default is_listing.
-    $islst = $wp_query->query_vars['ec3_listing'];
-    $ec3->is_listing = ( 0 == strcasecmp($islst,'yes') );
+    $ec3->is_listing = strtoupper($wp_query->query_vars['ec3_listing']);
   }
 }
 

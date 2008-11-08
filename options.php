@@ -49,7 +49,7 @@ class ec3_Options
 
   // Settings used to flags activity between posts_where and other filters:
   var $query=false; ///< Set by reset_query()
-  var $is_listing=false;
+  var $is_listing=''; ///< Valid: ''|'YES'|'NO'
   var $is_date_range=false;
   var $is_today=false;
   var $days=false;
@@ -128,7 +128,7 @@ class ec3_Options
   {
     $this->query =& $query;
 
-    $this->is_listing=false;
+    $this->is_listing='';
     $this->is_date_range=false;
     $this->is_today=false;
     $this->days=false;

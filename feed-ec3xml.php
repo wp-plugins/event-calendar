@@ -148,7 +148,7 @@ add_filter('get_the_excerpt', 'wp_trim_excerpt');
 global $ec3,$wp_query;
 $calobj = new ec3_ec3xml();
 $calobj->add_events($wp_query);
-if(!$ec3->is_listing)
+if(!ec3_is_listing())
   $calobj->add_posts($wp_query,!$ec3->advanced);
 
 ?>
