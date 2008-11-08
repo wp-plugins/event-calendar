@@ -35,7 +35,7 @@
 }
 
 #wp-calendar table td:hover,
-#wp-calendar table #today {
+#wp-calendar table td.ec3_today {
  padding:0px;
  border:solid 1px #999;
 }

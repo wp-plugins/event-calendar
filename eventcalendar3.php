@@ -28,7 +28,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 require_once(dirname(__FILE__).'/options.php');
 require_once(dirname(__FILE__).'/date.php');
-require_once(dirname(__FILE__).'/day.php');
 require_once(dirname(__FILE__).'/template-functions.php');
 require_once(dirname(__FILE__).'/template-functions-new.php');
 require_once(dirname(__FILE__).'/admin.php');
@@ -340,10 +339,8 @@ function ec3_filter_query_vars($wpvarstoreset)
   }
   if(isset($_GET['ec3_ical']) || isset($_GET['ec3_vcal']))
   {
-    ec3_filter_query_vars_ical();
-    // Will be this...
-    //ec3_do_feed_ical();
-    //exit(0);
+    ec3_do_feed_ical();
+    exit(0);
   }
   if(isset($_GET['ec3_dump']))
     ec3_filter_query_vars_dump();
@@ -358,118 +355,6 @@ function ec3_filter_query_vars($wpvarstoreset)
   if(isset($_GET['m']) && isset($_GET['cat']))
     remove_action('template_redirect','redirect_canonical');
   return $wpvarstoreset;
-}
-
-
-/** If the parameter ec3_ical is set, then brutally hijack the page and replace
- *  it with iCalendar data.
- * (Includes fixes contributed by Matthias Tarasiewicz & Marc Schumann.)*/
-function ec3_filter_query_vars_ical($wpvarstoreset=NULL)
-{
-  //
-  // Generate the iCalendar
-
-  $name=preg_replace('/([\\,;])/','\\\\$1',get_bloginfo_rss('name'));
-  $filename=preg_replace('/[^0-9a-zA-Z]/','',$name).'.ics';
-
-  header("Content-Type: text/calendar; charset=" . get_option('blog_charset'));
-  header("Content-Disposition: inline; filename=$filename");
-  header('Expires: Wed, 11 Jan 1984 05:00:00 GMT');
-  header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-  header('Cache-Control: no-cache, must-revalidate, max-age=0');
-  header('Pragma: no-cache');
-
-  echo "BEGIN:VCALENDAR\r\n";
-  echo "VERSION:2.0\r\n";
-  echo "X-WR-CALNAME:$name\r\n";
-
-  global $ec3,$wpdb;
-
-  $calendar_entries = $wpdb->get_results(
-    "SELECT
-         post_id,
-         sched_id,
-         post_title,
-         post_excerpt,
-         DATE_FORMAT(start,IF(allday,'%Y%m%d','%Y-%m-%d %H:%i')) AS dt_start,
-         IF( allday,
-             DATE_FORMAT(DATE_ADD(end, INTERVAL 1 DAY),'%Y%m%d'),
-             DATE_FORMAT(end,'%Y-%m-%d %H:%i')
-           ) AS dt_end,
-         $ec3->wp_user_nicename AS user_nicename,
-         IF(allday,'TRANSPARENT','OPAQUE') AS transp,
-         allday
-       FROM $wpdb->posts p
-       LEFT  JOIN $wpdb->users   u ON p.post_author=u.ID
-       INNER JOIN $ec3->schedule s ON p.id=s.post_id
-       WHERE post_status='publish'
-       ORDER BY start"
-  );
-
-  if($calendar_entries)
-    foreach($calendar_entries as $entry)
-    {
-      // ?? Should add line folding at 75 octets at some time as per RFC 2445.
-      $summary=preg_replace('/([\\,;])/','\\\\$1',$entry->post_title);
-      $permalink=get_permalink($entry->post_id);
-
-      echo "BEGIN:VEVENT\r\n";
-      echo "SUMMARY:$summary\r\n";
-      echo "URL;VALUE=URI:$permalink\r\n";
-      echo "UID:$entry->sched_id-$permalink\r\n";
-      $description='';
-      if(strlen($entry->post_excerpt)>0)
-      {
-        // I can't get iCal to understand iCalendar encoding.
-        // So just strip out newlines here:
-        $description=preg_replace('/[ \r\n]+/',' ',$entry->post_excerpt.' ');
-        $description=preg_replace('/([\\,;])/','\\\\$1',$description);
-      }
-      $description.='['.sprintf(__('by: %s'),$entry->user_nicename).']';
-      echo "DESCRIPTION:$description\r\n";
-      echo "TRANSP:$entry->transp\r\n"; // for availability.
-      if($entry->allday)
-      {
-        echo "DTSTART;VALUE=DATE:$entry->dt_start\r\n";
-        echo "DTEND;VALUE=DATE:$entry->dt_end\r\n";
-      }
-      else
-      {
-        // Convert timestamps to UTC
-        echo sprintf("DTSTART;VALUE=DATE-TIME:%s\r\n",ec3_to_utc($entry->dt_start));
-        echo sprintf("DTEND;VALUE=DATE-TIME:%s\r\n",ec3_to_utc($entry->dt_end));
-      }
-
-      // Alex: I'm not sure about this code. I think the new ical feed
-      // might offer a better way of integrating with other plugins.
-      
-      // Furthermore, escaping needs to be broken out into a function.
-
-      // Location
-      $location=get_post_meta($entry->post_id,'location',true);
-      $location=apply_filters('ical_location',$location);
-      if(!empty($location))
-      {
-        $location=preg_replace('/[ \r\n]+/',' ',$location);
-        $location=preg_replace('/([\\,;])/','\\\\$1',$location);
- 	echo "LOCATION:$location\r\n";
-      }
-
-      // GEO
-      $geo=get_post_meta($entry->post_id,'geo',true);
-      $geo=apply_filters('ical_geo',$geo);
-      if(!empty($geo))
-      {
-        $geo=preg_replace('/[ \r\n]+/',' ',$geo);
-        $geo=preg_replace('/([\\,;])/','\\\\$1',$geo);
-	echo "GEO:$geo\r\n";
-      }
-
-      echo "END:VEVENT\r\n";
-    }
-
-  echo "END:VCALENDAR\r\n";
-  exit(0);
 }
 
 

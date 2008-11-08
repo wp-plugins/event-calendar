@@ -54,7 +54,7 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     // Make a table for this month.
     $title = sprintf(
       __('View posts for %1$s %2$s'),$this->dateobj->month_name(),$this->dateobj->year_num);
-    $result =  '<table id="' . $this->dateobj->month_id() . '">'."\n"
+    $result =  '<table id="'.$this->id.'-'.$this->dateobj->month_id().'">'."\n"
       . '<caption>'
       . '<a href="' . $this->dateobj->month_link() . '" title="' . $title . '">'
       . $this->dateobj->month_name() . ' ' . $this->dateobj->year_num . "</a>"
@@ -90,18 +90,19 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
   /** dayobj - ec3_CalendarDay object, may be empty. */
   function wrap_day($daystr)
   {
-    $td_attr = ' id="'.$this->dateobj->day_id().'"';
+    $day_id = $this->dateobj->day_id();
+    $td_attr = ' id="'.$this->id.'-'.$day_id.'"';
+    $td_classes = array();
+    if($day_id=='today')
+      $td_classes[] = 'ec3_today';
     if(!empty($this->dayobj))
     {
+      $td_classes[] = 'ec3_postday';
       $a_attr = ' href="'.$this->dateobj->day_link().'" title="'.$daystr.'"';
       if($this->dayobj->has_events())
       {
-        $td_attr .= ' class="ec3_postday ec3_eventday"';
+        $td_classes[] = 'ec3_eventday';
         $a_attr  .= ' class="eventday"';
-      }
-      else
-      {
-        $td_attr .= ' class="ec3_postday"';
       }
       $daystr = "<a$a_attr>" . $this->dateobj->day_num . '</a>';
     }
@@ -109,6 +110,8 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     {
       $daystr = $this->dateobj->day_num;
     }
+    if(!empty($td_classes))
+      $td_attr .= ' class="' . implode(' ',$td_classes) . '"';
     return "<td$td_attr>$daystr</td>";
   }
 
@@ -141,8 +144,9 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     $result = "<div id='$this->id'>\n";
 
     // Display navigation panel.
+    $nav=ec3_get_calendar_nav($this->begin_dateobj,$ec3->num_months,$this->id);
     if(0==$ec3->navigation)
-      $result .= ec3_get_calendar_nav($this->begin_dateobj,$ec3->num_months);
+      $result .= $nav;
 
     $q = 'ec3_after='  .$this->begin_dateobj->to_mysqldate()
        . '&ec3_before='.$this->limit_dateobj->to_mysqldate()
@@ -159,13 +163,19 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
 
     // Display navigation panel.
     if(1==$ec3->navigation)
-      $result .= ec3_get_calendar_nav($this->begin_dateobj,$ec3->num_months);
+      $result .= $nav;
 
     $result .= "</div>\n";
 
-    if(!$ec3->disable_popups)
+    if(!$ec3->disable_popups && empty($ec3->done_popups_javascript))
+    {
+      $ec3->done_popups_javascript=true;
       $result .= "\t<script type='text/javascript' src='"
       .    $ec3->myfiles . "/popup.js'></script>\n";
+    }
+    $result .= "\t<script type='text/javascript'><!--\n"
+      .        "\t  ec3.new_calendar('$cal_id');\n"
+      .        "\t--></script>\n";
     return $result;
   }
 

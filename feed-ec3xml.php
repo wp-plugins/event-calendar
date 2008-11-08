@@ -139,7 +139,7 @@ if(!$ec3->is_listing)
 
 ?>
 <calendar><?php echo $calobj->generate() ?>
-<details>
+<details id="details">
 <?php echo implode('',$calobj->details) ?>
 </details>
 </calendar>

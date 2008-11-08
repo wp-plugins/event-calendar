@@ -6,11 +6,8 @@
 function ec3_Popup()
 {
 
-  WindowOnload( function()
+  ec3.do_onload( function()
   {
-    var calendars=ec3.get_calendars();
-    if(!calendars)
-      return;
     // Pre-load images.
     ec3.imgShadow0=new Image(8,32);
     ec3.imgShadow1=new Image(500,16);
@@ -43,10 +40,6 @@ function ec3_Popup()
     td.id='ec3_shadow1';
 
     document.body.appendChild(ec3_Popup.popup);
-
-    // Add event handlers to the calendars.
-    for(var i=0; i<calendars.length; i++)
-      add_tbody( ec3.get_child_by_tag_name(calendars[i],'tbody') );
   } );
 
   function add_tbody(tbody)
