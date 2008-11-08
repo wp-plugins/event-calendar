@@ -7,36 +7,52 @@ function ec3_is_event()
   return( !empty($post->ec3_schedule) );
 }
 
-/** Returns TRUE if $ec3->query is an event category query. */
-function ec3_is_event_category()
+/** Returns TRUE if $query is an event category query. */
+function ec3_is_event_category_q(&$query)
 {
   global $ec3;
   // This bit nabbed from is_category()
-  if($ec3->query->is_category)
+  if($query->is_category)
   {
-    $cat_obj = $ec3->query->get_queried_object();
+    $cat_obj = $query->get_queried_object();
     if($cat_obj->term_id == $ec3->event_category)
       return true;
   }
   return false;
 }
 
-/** Determines if the current $ec3->query is a listing.
- *  Either is_listing=YES, or this is advanced mode and the query
+/** Returns TRUE if $ec3->query is an event category query. */
+function ec3_is_event_category()
+{
+  global $ec3;
+  return ec3_is_event_category_q($ec3->query);
+}
+
+/** Determines if $query is a listing.
+ *  Either $query->ec3_listing=YES, or this is advanced mode and the query
  *  is for the event category. */
+function ec3_is_listing_q(&$query)
+{
+  global $ec3;
+  if($query->ec3_listing=='YES')
+  {
+    return true;
+  }
+  elseif($ec3->advanced &&
+         empty($query->ec3_listing) &&
+         ec3_is_event_category_q($query))
+  {
+    return true;
+  }
+  // $query->ec3_listing=='NO', or this isn't an advanced category query.
+  return false;
+}
+
+/** Determines if the current $ec3->query is a listing. */
 function ec3_is_listing()
 {
   global $ec3;
-  if($ec3->is_listing=='YES')
-  {
-    return true;
-  }
-  elseif($ec3->advanced && empty($ec3->is_listing) && ec3_is_event_category())
-  {
-    return true;
-  }
-  // is_listing=='NO', or this isn't an advanced category query.
-  return false;
+  return ec3_is_listing_q($ec3->query);
 }
 
 /** Comparison function for events' start times.
@@ -286,7 +302,7 @@ function ec3_iter_all_events_q(&$query)
           }
       }
 
-  elseif($ec3->advanced &&(ec3_is_listing() || $query->is_search)):
+  elseif($ec3->advanced &&(ec3_is_listing_q($query) || $query->is_search)):
 
       // Hide inactive events
       while($query->have_posts())

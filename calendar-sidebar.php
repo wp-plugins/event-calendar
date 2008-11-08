@@ -157,7 +157,7 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     $query->query($q);
 
     $this->add_events($query);
-    if(!ec3_is_listing())
+    if(!ec3_is_listing_q($query))
       $this->add_posts($query,!$ec3->advanced);
     $result .= parent::generate();
 

@@ -451,14 +451,14 @@ function ec3_filter_parse_query($wp_query)
       $ec3->is_date_range=true;
       $ec3->range_from  =$a;
       $ec3->range_before=$b;
-      $ec3->is_listing = 'YES';
+      $wp_query->ec3_listing = 'YES';
     }
   } // end if (today)
 
   if( !empty($wp_query->query_vars['ec3_listing']) )
   {
-    // Over-ride the default is_listing.
-    $ec3->is_listing = strtoupper($wp_query->query_vars['ec3_listing']);
+    // Over-ride the default $wp_query->ec3_listing.
+    $wp_query->ec3_listing = strtoupper($wp_query->query_vars['ec3_listing']);
   }
 }
 
