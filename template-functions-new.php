@@ -254,23 +254,47 @@ function ec3_iter_all_events_q(&$query)
           $ec3->events[] = $s;
       }
 
-  elseif($query->query_vars['m'] && strlen($query->query_vars['m'])>=4):
+  elseif($query->is_date && !$query->is_time):
 
       // Only emit events that occur on the given day (or month or year).
-      if(strlen($query->query_vars['m'])>=8)
+      // There two alternate ways to specify a date, the 'm' parameter...
+      if($query->query_vars['m'])
       {
-        $m=substr($query->query_vars['m'],0,8);
+        if(strlen($query->query_vars['m'])>=8)
+        {
+          $m=substr($query->query_vars['m'],0,8);
+          $fmt='Ymd';
+        }
+        elseif(strlen($query->query_vars['m'])>=6)
+        {
+          $m=substr($query->query_vars['m'],0,6);
+          $fmt='Ym';
+        }
+        else
+        {
+          $m=substr($query->query_vars['m'],0,4);
+          $fmt='Y';
+        }
+      }
+      else // ...or the 'year', 'monthnum' and 'day' parameters...
+      {
+        $m=date('Ymd'); // Start with today.
         $fmt='Ymd';
-      }
-      elseif(strlen($query->query_vars['m'])>=6)
-      {
-        $m=substr($query->query_vars['m'],0,6);
-        $fmt='Ym';
-      }
-      else
-      {
-        $m=substr($query->query_vars['m'],0,4);
-        $fmt='Y';
+        if($query->query_vars['year'])
+        {
+          $m=''.zeroise($query->query_vars['year'],4).substr($m,4,2);
+          $fmt='Y';
+        }
+        if($query->query_vars['monthnum'])
+        {
+          $m=substr($m,0,4).zeroise($query->query_vars['monthnum'],2);
+          $fmt='Ym';
+        }
+        if($query->query_vars['day'])
+        {
+          $m=substr($m,0,6).zeroise($query->query_vars['day'],2);
+          $fmt='Ymd';
+        }
       }
 
       while($query->have_posts())
