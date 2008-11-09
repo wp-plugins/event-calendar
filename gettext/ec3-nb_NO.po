@@ -17,7 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: admin.php:67 admin.php:393
-#, fuzzy
 msgid "Event Editor"
 msgstr "Tidspunkt-editor"
 
@@ -81,7 +80,6 @@ msgid ""
 msgstr ""
 
 #: admin.php:475
-#, fuzzy
 msgid "Show schedule within posts"
 msgstr "Vis hendelsesboks i innleggene"
 

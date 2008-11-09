@@ -19,7 +19,6 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: admin.php:67 admin.php:393
-#, fuzzy
 msgid "Event Editor"
 msgstr "Gebeurtenis bewerker"
 
@@ -86,7 +85,6 @@ msgstr ""
 "standaard berichten categorie."
 
 #: admin.php:475
-#, fuzzy
 msgid "Show schedule within posts"
 msgstr "Geef een gebeurtenis kader weer bij de berichten"
 

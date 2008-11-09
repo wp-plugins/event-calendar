@@ -18,7 +18,6 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 
 #: admin.php:67 admin.php:393
-#, fuzzy
 msgid "Event Editor"
 msgstr "Terminplan"
 
@@ -84,7 +83,6 @@ msgid ""
 msgstr ""
 
 #: admin.php:475
-#, fuzzy
 msgid "Show schedule within posts"
 msgstr "Zeige Termin-Box in Beiträgen"
 
