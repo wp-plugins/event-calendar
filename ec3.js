@@ -104,6 +104,28 @@ var ec3 = {
         element.className+=' '+new_class_name;
       else
         element.className=new_class_name;
+    },
+
+  /** Utility function, not used in the default Javascript.
+   *  Given an XML document, it finds the details for post 'post_id'.
+   *  We need to do this because getElementById() doesn't work reliably
+   *  in XML documents loaded by XMLHttpRequest.
+   */
+  find_detail : function(post_id,xml)
+    {
+      // Cache the lookup table in the xml object.
+      if(!xml.ec3_details)
+      {
+        xml.ec3_details={};
+        var details=xml.getElementsByTagName('detail');
+        for(var i=0, len=details.length; i<len; i++)
+        {
+          var pid=details[i].getAttribute('id');
+          if(pid)
+            xml.ec3_details[pid] = details[i];
+        }
+      }
+      return xml.ec3_details[post_id];
     }
 
 } // end namespace ec3

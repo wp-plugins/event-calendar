@@ -33,17 +33,17 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
   /** Disable popups? DEFAULT=0 */
   var $disable_popups;
 
-  // MEMBER VARIABLES
 
-  /** Universal table header. */
-  var $_thead;
-
-  function ec3_SidebarCalendar($datetime=false,$options=false)
+  function ec3_SidebarCalendar($options=false,$datetime=false)
   {
     // Set appearance options from the $options array, if it's been provided.
     // Otherwise set the defaults from the old, global WP options.
     if(empty($options))
       $options=array();
+
+    // The default id for sidebar calendars is 'wp-calendar'
+    if(!array_key_exists('id',$options))
+      $options['id'] = 'wp-calendar';
 
     if(array_key_exists('day_length',$options))
       $this->day_length = $options['day_length'];
@@ -67,18 +67,15 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     // END OPTIONS
 
     // Initialise the parent class.
-    $this->ec3_BasicCalendar($datetime,$options);
-    
-    // Initialise the rest of this class.
-    $this->init_thead();
+    $this->ec3_BasicCalendar($options,$datetime);
   }
 
 
-  /** Initialise $this->_thead, the table header (same for every month). */
-  function init_thead()
+  /** Generate the table header (same for every month). */
+  function _get_thead()
   {
     global $weekday,$weekday_abbrev,$weekday_initial;
-    $this->_thead="<thead><tr>\n";
+    $thead="<thead><tr>\n";
     $start_of_week =intval( get_option('start_of_week') );
     for($i=0; $i<7; $i++)
     {
@@ -89,13 +86,14 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
           $display_day_name=$weekday_initial[$full_day_name];
       else
           $display_day_name=$full_day_name;
-      $this->_thead.="\t<th abbr='$full_day_name' scope='col' title='$full_day_name'>"
+      $thead.="\t<th abbr='$full_day_name' scope='col' title='$full_day_name'>"
              . "$display_day_name</th>\n";
     }
-    $this->_thead.="</tr></thead>\n";
+    $thead.="</tr></thead>\n";
+    return $thead;
   }
 
-  /** Returns the event calendar navigation controls. */
+  /** Generate the event calendar navigation controls. */
   function _get_nav()
   {
     global $ec3;
@@ -240,10 +238,13 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     return $safe_title;
   }
 
-  function generate($cal_id)
+  function generate()
   {
     global $ec3;
-    $this->id = $cal_id;
+    
+    // Set-up $this->_thead, so that it's ready for $this->wrap_month().
+    $this->_thead = $this->_get_thead();
+
     $result = "<div id='$this->id'>\n";
 
     // Display navigation panel.
@@ -282,7 +283,7 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
       $options='';
 
     $result .= "\t<script type='text/javascript'><!--\n"
-      .        "\t  ec3.new_calendar('$cal_id'$options);\n"
+      .        "\t  ec3.new_calendar('$this->id'$options);\n"
       .        "\t--></script>\n";
     return $result;
   }

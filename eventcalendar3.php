@@ -34,6 +34,7 @@ require_once(dirname(__FILE__).'/admin.php');
 require_once(dirname(__FILE__).'/tz.php');
 require_once(dirname(__FILE__).'/widget-calendar.php');
 require_once(dirname(__FILE__).'/widget-list.php');
+require_once(dirname(__FILE__).'/calendar-big.php');
 
 
 $ec3_today_id=str_replace('_0','_',ec3_strftime("ec3_%Y_%m_%d"));

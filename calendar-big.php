@@ -28,10 +28,10 @@ require_once(dirname(__FILE__).'/calendar-sidebar.php');
 /** Renders a big calendar. */
 class ec3_BigCalendar extends ec3_SidebarCalendar
 {
-  function ec3_BigCalendar($datetime=0,$options=false)
+  function ec3_BigCalendar($options=false,$datetime=0)
   {
     // Initialise the parent class.
-    $this->ec3_SidebarCalendar($datetime,$options);
+    $this->ec3_SidebarCalendar($options,$datetime);
   }
   
   /** dayobj - ec3_CalendarDay object, may be empty. */
@@ -86,11 +86,11 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
     return $safe_title;
   }
 
-  function generate($cal_id)
+  function generate()
   {
     $result = parent::generate();
     $result .= "\t<script type='text/javascript'><!--
-	  ec3.calendars['$cal_id'].make_day = function(td,day_xml,xml)
+	  ec3.calendars['$this->id'].make_day = function(td,day_xml,xml)
 	  {
 	    ec3.add_class(td,'ec3_postday');
 	    // Save the TD's text node for later.
@@ -114,18 +114,52 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
 	      var div=document.createElement('div');
 	      for(var i=0, len=events.length; i<len; i++)
 	      {
-		var detail=xml.getElementById(events[i].getAttribute('post_id'));
-		var p=document.createElement('p');
-		p.innerHTML='<a href=\"'+ detail.getAttribute('link') +'\">'
-		 + detail.getAttribute('title') + '</a>';
-		div.appendChild(p);
+		var detail=ec3.find_detail(events[i].getAttribute('post_id'),xml);
+		if(detail)
+		{
+		  var p=document.createElement('p');
+		  p.innerHTML='<a href=\"'+ detail.getAttribute('link') +'\">'
+		   + detail.getAttribute('title') + '</a>';
+		  div.appendChild(p);
+		}
 	      }
 	      td.appendChild(div);
 	    }
 	  }
 	--></script>\n";
+
+    // If we were in a loop, re-set the global $post.
+    global $wp_query,$post;
+    if($wp_query->in_the_loop)
+    {
+      $post = $wp_query->next_post();
+      setup_postdata($post);
+    }
     return $result;
   }
 
 };
 
+
+function ec3_filter_the_content_bigcal(&$post_content)
+{
+  if(is_page())
+  {
+    $placeholder = '[EC3BigCalendar]';
+    $pos=strpos($post_content,$placeholder);
+    if($pos!==FALSE)
+    {
+      $options=array();
+      $options['id']='ec3_big_cal';
+      $options['num_months']=1;
+      $calobj = new ec3_BigCalendar($options);
+      $calcode = $calobj->generate();
+      $post_content = str_replace($placeholder,$calcode,$post_content);
+    }
+  }
+  return $post_content;
+}
+
+add_filter('the_content','ec3_filter_the_content_bigcal');
+
+?>

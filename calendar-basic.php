@@ -99,6 +99,8 @@ class ec3_BasicCalendar
 {
   // OPTIONS
 
+  /** The unique ID for this calendar. DEFAULT='ec3_basic_calendar' */
+  var $id;
   /** Number to months displayed by get_calendar(). DEFAULT=1 */
   var $num_months;
   /** Show only events in calendar. DEFAULT=false */
@@ -124,14 +126,18 @@ class ec3_BasicCalendar
    *  current ec3_Date object (if any). */
   var $dateobj;
 
-  /** $month_date is a string of the form "YYYY-MM..."
-   *  $num_months is the number of months covered by the calendar.*/
-  function ec3_BasicCalendar($month_date=false,$options=false)
+  /** $month_date is a string of the form "YYYY-MM..." */
+  function ec3_BasicCalendar($options=false,$month_date=false)
   {
     // Set options from the $options array, if it's been provided.
     // Otherwise set the defaults from the old, global WP options.
     if(empty($options))
       $options=array();
+
+    if(array_key_exists('id',$options))
+      $this->id = strip_tags(stripslashes($options['id']));
+    else
+      $this->id ='ec3_basic_calendar';
 
     if(array_key_exists('num_months',$options))
       $this->num_months = $options['num_months'];

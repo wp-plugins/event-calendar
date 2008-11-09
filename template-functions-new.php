@@ -430,11 +430,11 @@ class ec3_EventIterator
   /** Set the global $ec3->event to match this iterator's index. */
   function current()
   {
-    global $ec3,$post;
+    global $ec3,$id,$post;
     if( $this->_idx < $this->_limit )
     {
       $ec3->event = $ec3->events[$this->_idx];
-      if($post->ID != $ec3->event->post_id)
+      if($post->ID != $ec3->event->post_id || $id != $ec3->event->post_id)
       {
         $post = get_post($ec3->event->post_id);
         setup_postdata($post);
@@ -611,13 +611,13 @@ function ec3_get_schedule(
 
 /** Template function, for backwards compatibility.
  *  Call this from your template to insert the Sidebar Event Calendar. */
-function ec3_get_calendar($cal_id='wp-calendar')
+function ec3_get_calendar($options)
 {
   if(!ec3_check_installed(__('Event Calendar','ec3')))
     return;
   require_once(dirname(__FILE__).'/calendar-sidebar.php');
   $calobj = new ec3_SidebarCalendar();
-  echo $calobj->generate($cal_id);
+  echo $calobj->generate($options);
 }
 
 

@@ -30,8 +30,8 @@ function ec3_widget_cal($args)
   {
     require_once(dirname(__FILE__).'/calendar-sidebar.php');
     global $ec3;
-    $calobj = new ec3_SidebarCalendar(0,$options);
-    echo $calobj->generate('wp-calendar');
+    $calobj = new ec3_SidebarCalendar($options);
+    echo $calobj->generate();
   }
   echo $after_widget;
 }
@@ -58,7 +58,7 @@ function ec3_widget_cal_control()
   }
   require_once(dirname(__FILE__).'/calendar-sidebar.php');
   $title = ec3_widget_title($options['title'],'Event Calendar');
-  $cal = new ec3_SidebarCalendar(0,$options); // Use this to get defaults.
+  $cal = new ec3_SidebarCalendar($options); // Use this to get defaults.
   ?>
   <p>
    <label for="ec3_cal_title">

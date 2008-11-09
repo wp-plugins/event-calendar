@@ -23,9 +23,9 @@ class ec3_ec3xml extends ec3_BasicCalendar
 {
   var $details = array();
 
-  function ec3_ec3xml($datetime=0,$options=false)
+  function ec3_ec3xml($options=false,$datetime=0)
   {
-    $this->ec3_BasicCalendar($datetime,$options);
+    $this->ec3_BasicCalendar($options,$datetime);
   }
 
   function wrap_month($monthstr)
@@ -93,7 +93,7 @@ class ec3_ec3xml extends ec3_BasicCalendar
   {
     global $id;
     $this->_add_detail();
-    $result = " <post post_id='$id' />\n";
+    $result = " <post post_id='pid_$id' />\n";
     return $result;
   }
     
