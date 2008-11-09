@@ -56,11 +56,11 @@ function ec3_widget_cal_control()
   {
     $newoptions['title']=strip_tags(stripslashes($_POST["ec3_cal_title"]));
     $newoptions['num_months']      =abs(intval($_POST["ec3_cal_num_months"]));
-    $newoptions['show_only_events']=intval($_POST["ec3_cal_show_only_events"]);
     $newoptions['day_length']      =abs(intval($_POST["ec3_cal_day_length"]));
-    $newoptions['hide_logo']       =intval($_POST["ec3_cal_hide_logo"]);
     $newoptions['navigation']      =intval($_POST["ec3_cal_navigation"]);
-    $newoptions['disable_popups']  =intval($_POST["ec3_cal_disable_popups"]);
+    $newoptions['show_only_events']=!empty($_POST["ec3_cal_show_only_events"]);
+    $newoptions['hide_logo']       =empty($_POST["ec3_cal_show_logo"]);
+    $newoptions['disable_popups']  =empty($_POST["ec3_cal_show_popups"]);
   }
   if( $options != $newoptions ) 
   {
@@ -86,19 +86,6 @@ function ec3_widget_cal_control()
    </label>
   </p>
   <p>
-   <label for="ec3_cal_show_only_events">
-    <?php _e('Show all categories in calendar','ec3') ?>:<br />
-    <select name="ec3_cal_show_only_events">
-     <option value='1'<?php if($cal->show_only_events) echo " selected='selected'" ?> >
-      <?php _e('Only Show Events','ec3'); ?>
-     </option>
-     <option value='0'<?php if(!$cal->show_only_events) echo " selected='selected'" ?> >
-      <?php _e('Show All Posts','ec3'); ?>
-     </option>
-    </select>
-   </label>
-  </p>
-  <p>
    <label for="ec3_cal_day_length">
     <?php _e('Show day names as','ec3') ?>:<br />
     <select name="ec3_cal_day_length">
@@ -115,20 +102,8 @@ function ec3_widget_cal_control()
    </label>
   </p>
   <p>
-   <label for="ec3_cal_hide_logo">
-    <?php _e('Show Event Calendar logo','ec3') ?>:<br />
-    <select name="ec3_cal_hide_logo">
-     <option value='0'<?php if(!$cal->hide_logo) echo " selected='selected'" ?> >
-      <?php _e('Show Logo','ec3'); ?>
-     </option>
-     <option value='1'<?php if($cal->hide_logo) echo " selected='selected'" ?> >
-      <?php _e('Hide Logo','ec3'); ?>
-     </option>
-    </select>
-   </label>
-  </p>
-  <p>
-   <label for="ec3_cal_navigation">
+   <label for="ec3_cal_navigation"
+    title="<?php _e('The navigation links are more usable when they are above the calendar, but you might prefer them below or hidden for aesthetic reasons.','ec3') ?>">
     <?php _e('Position of navigation links','ec3') ?>:<br />
     <select name="ec3_navigation">
      <option value='0'<?php if(0==!$cal->navigation) echo " selected='selected'" ?> >
@@ -141,25 +116,28 @@ function ec3_widget_cal_control()
       <?php _e('Hidden','ec3'); ?>
      </option>
     </select>
-    <br /><em>
-     <?php _e('The navigation links are more usable when they are above the calendar, but you might prefer them below or hidden for aesthetic reasons.','ec3'); ?>
-    </em> 
    </label>
   </p>
   <p>
-   <label for="ec3_cal_disable_popups">
-    <?php _e('Popup event lists','ec3') ?>:<br />
-    <select name="ec3_cal_disable_popups">
-     <option value='0'<?php if(!$cal->disable_popups) echo " selected='selected'" ?> >
-      <?php _e('Show Popups','ec3'); ?>
-     </option>
-     <option value='1'<?php if($cal->disable_popups) echo " selected='selected'" ?> >
-      <?php _e('Hide Popups','ec3'); ?>
-     </option>
-    </select>
-    <br /><em>
-     <?php _e('You might want to disable popups if you use Nicetitles.','ec3'); ?>
-    </em>
+   <label for="ec3_cal_show_only_events">
+    <input type="checkbox" value="1" id="ec3_cal_show_only_events" name="ec3_cal_show_only_events"
+     <?php if($cal->show_only_events) echo " checked='checked'" ?>  />
+    <?php _e('Only Show Events','ec3') ?>.
+   </label>
+  </p>
+  <p>
+   <label for="ec3_cal_show_logo">
+    <input type="checkbox" value="1" id="ec3_cal_show_logo" name="ec3_cal_show_logo"
+     <?php if(!$cal->hide_logo) echo " checked='checked'" ?>  />
+    <?php _e('Show Event Calendar logo','ec3') ?>.
+   </label>
+  </p>
+  <p>
+   <label for="ec3_cal_show_popups"
+    title="<?php _e('You might want to disable popups if you use Nicetitles.','ec3'); ?>">
+    <input type="checkbox" value="1" id="ec3_cal_show_popups" name="ec3_cal_show_popups"
+     <?php if(!$cal->disable_popups) echo " checked='checked'" ?>  />
+    <?php _e('Popup event lists','ec3') ?>.
    </label>
   </p>
 
