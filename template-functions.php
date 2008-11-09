@@ -38,63 +38,6 @@ function ec3_check_installed($title)
 }
 
 
-/** Returns the event calendar navigation controls. */
-function ec3_get_calendar_nav($date,$num_months,$cal_id=false)
-{
-  global $ec3;
-  $idprev = '';
-  $idnext = '';
-  if(empty($cal_id))
-  {
-    $ec3previd    = "ec3_prev";
-    $ec3nextid    = "ec3_next";
-    $ec3spinnerid = "ec3_spinner";
-    $ec3publishid = "ec3_publish";
-  }
-  else
-  {
-    $ec3previd    = "$cal_id-ec3_prev";
-    $ec3nextid    = "$cal_id-ec3_next";
-    $ec3spinnerid = "$cal_id-ec3_spinner";
-    $ec3publishid = "$cal_id-ec3_publish";
-    if($cal_id=='wp-calendar')
-    {
-      // For compatibility with standard wp-calendar.
-      $idprev = " id='prev'";
-      $idnext = " id='next'";
-    }
-  }
-  $nav = "<table class='nav'><tbody><tr>\n";
-
-  // Previous
-  $prev=$date->prev_month();
-  $nav .= "\t<td$idprev><a id='$ec3previd' href='" . $prev->month_link() . "'"
-     . '>&laquo;&nbsp;' . $prev->month_abbrev() . "</a></td>\n";
-
-  $nav .= "\t<td><img id='$ec3spinnerid' style='display:none' src='" 
-     . $ec3->myfiles . "/ec_load.gif' alt='spinner' />\n";
-  // iCalendar link.
-  $webcal=get_feed_link('ical');
-  // Macintosh always understands webcal:// protocol.
-  // It's hard to guess on other platforms, so stick to http://
-  if(strstr($_SERVER['HTTP_USER_AGENT'],'Mac OS X'))
-      $webcal=preg_replace('/^http:/','webcal:',$webcal);
-  $nav .= "\t    <a id='$ec3publishid' href='$webcal'"
-     . " title='" . __('Subscribe to iCalendar.','ec3') ."'>\n"
-     . "\t     <img src='$ec3->myfiles/publish.gif' alt='iCalendar' />\n"
-     . "\t    </a>\n";
-  $nav .= "\t</td>\n";
-
-  // Next
-  $next=$date->plus_months($num_months);
-  $nav .= "\t<td$idnext><a id='$ec3nextid' href='" . $next->month_link() . "'"
-     . '>' . $next->month_abbrev() . "&nbsp;&raquo;</a></td>\n";
-
-  $nav .= "</tr></tbody></table>\n";
-  return $nav;
-}
-
-
 /** Substitutes placeholders like '%key%' in $format with 'value' from $data
  *  array. */
 function ec3_format_str($format,$data)

@@ -310,19 +310,6 @@ function ec3_filter_query_vars($wpvarstoreset)
 {
   global $ec3;
   // Backwards compatibility with URLs from old versions of EC.
-  if(isset($_GET['ec3_xml']))
-  {
-    $d = explode('_',$_GET['ec3_xml']);
-    if(count($d)==2)
-    {
-      $q = 'nopaging=1&year='.intval($d[0]).'&monthnum='.intval($d[1]);
-      if($ec3->show_only_events)
-        $q .= '&ec3_listing=yes';
-      query_posts($q);
-      ec3_do_feed_ec3xml();
-      exit(0);
-    }
-  }
   if(isset($_GET['ec3_ical']) || isset($_GET['ec3_vcal']))
   {
     ec3_do_feed_ical();

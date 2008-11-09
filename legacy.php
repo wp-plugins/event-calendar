@@ -211,7 +211,7 @@ function ec3_filter_query_vars_xml_old()
         $date->day_num=$dc[3];
         $titles=$day->get_titles();
         echo "<day id='$day_id' is_event='$day->is_event'"
-        .    " titles='$titles' link='" . $date->day_link() . "'/>\n";
+        .    " titles='$titles' link='" . $date->day_link($ec3->show_only_events) . "'/>\n";
       }
     }
     echo "</month></calendar>\n";
@@ -411,7 +411,7 @@ function ec3_get_calendar_month($date,$calendar_days,$thead)
   $title=
     sprintf(__('View posts for %1$s %2$s'),$date->month_name(),$date->year_num);
   echo "<table id='" . $date->month_id() . "'>\n<caption>"
-    . '<a href="' . $date->month_link() . '" title="' . $title . '">'
+    . '<a href="' . $date->month_link($ec3->show_only_events) . '" title="' . $title . '">'
     . $date->month_name() . ' ' . $date->year_num . "</a></caption>\n";
   echo $thead;
 
@@ -447,7 +447,7 @@ function ec3_get_calendar_month($date,$calendar_days,$thead)
       if($calendar_days[$day_id]->is_event)
           echo ' ec3_eventday';
       echo '">';
-      echo '<a href="' . $date->day_link()
+      echo '<a href="' . $date->day_link($ec3->show_only_events)
          . '" title="' . $calendar_days[$day_id]->get_titles() . '"';
       if($calendar_days[$day_id]->is_event)
           echo ' class="eventday"';

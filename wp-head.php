@@ -9,7 +9,6 @@
 	ec3.month_abbrev=new Array('<?php echo implode("','",$month_abbrev); ?>');
 	ec3.myfiles='<?php echo $ec3->myfiles; ?>';
 	ec3.home='<?php echo get_option('home'); ?>';
-	ec3.hide_logo=<?php echo $ec3->hide_logo; ?>;
 	ec3.viewpostsfor="<?php echo __('View posts for %1$s %2$s'); ?>";
 	// --></script>
 
@@ -17,11 +16,9 @@
 	<style type='text/css' media='screen'>
 	@import url(<?php echo $ec3->myfiles; ?>/ec3.css);
 	.ec3_ec{ background-image:url(<?php echo $ec3->myfiles; ?>/ec.png) !IMPORTANT }
-<?php if(!$ec3->disable_popups): ?>
 	#ec3_shadow0{ background-image:url(<?php echo $ec3->myfiles; ?>/shadow0.png) !IMPORTANT }
 	#ec3_shadow1{ background-image:url(<?php echo $ec3->myfiles; ?>/shadow1.png) !IMPORTANT }
 	#ec3_shadow2{ background-image:url(<?php echo $ec3->myfiles; ?>/shadow2.png) !IMPORTANT }
-<?php endif ?>
 	</style>
 
 <!--[if IE]>
@@ -30,12 +27,10 @@
 	 background-image:none;
 	 filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo $ec3->myfiles; ?>/ec.png');
 	}
-<?php if(!$ec3->disable_popups): ?>
 	#ec3_shadow0, ec3_shadow1, ec3_shadow2{ background-image:none }
 	#ec3_shadow0 div{ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo $ec3->myfiles; ?>/shadow0.png',sizingMethod='scale') }
 	#ec3_shadow1    { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo $ec3->myfiles; ?>/shadow1.png',sizingMethod='crop') }
 	#ec3_shadow2 div{ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo $ec3->myfiles; ?>/shadow2.png',sizingMethod='scale') }
-<?php endif ?>
 	</style>
 <![endif]-->
 

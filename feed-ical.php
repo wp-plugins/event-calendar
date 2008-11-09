@@ -23,8 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   $name=preg_replace('/([\\,;])/','\\\\$1',get_bloginfo_rss('name'));
   $filename=preg_replace('/[^0-9a-zA-Z]/','',$name).'.ics';
 
-  header('Content-Type: text/plain; charset=' . get_option('blog_charset'));
-//  header('Content-Type: text/calendar; charset=' . get_option('blog_charset'));
+  header('Content-Type: text/calendar; charset=' . get_option('blog_charset'));
   header('Content-Disposition: inline; filename=' . $filename);
   header('Expires: Wed, 11 Jan 1984 05:00:00 GMT');
   header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');

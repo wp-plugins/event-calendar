@@ -64,22 +64,10 @@ class ec3_Options
 
   /** Which category is used for events? DEFAULT=0 */
   var $event_category;
-  /** Show only events in calendar. DEFAULT=false */
-  var $show_only_events;
-  /** Number to months displayed by get_calendar(). DEFAULT=1 */
-  var $num_months;
-  /** Should day names be abbreviated to 1 or 3 letters? DEFAULT=1 */
-  var $day_length;
-  /** Hide the 'EC' logo on calendar displays? DEFAULT=0 */
-  var $hide_logo;
   /** Display event box within post. DEFAULT=0 */
   var $hide_event_box;
   /** Use advanced post behaviour? DEFAULT=0 */
   var $advanced;
-  /** Position navigation links or hide them. DEFAULT=0 */
-  var $navigation;
-  /** Disable popups? DEFAULT=0 */
-  var $disable_popups;
   /** Local timezone. */
   var $tz;
 
@@ -112,14 +100,8 @@ class ec3_Options
     }
 
     $this->read_event_category();
-    $this->read_show_only_events();
-    $this->read_num_months();
-    $this->read_day_length();
-    $this->read_hide_logo();
     $this->read_hide_event_box();
     $this->read_advanced();
-    $this->read_navigation();
-    $this->read_disable_popups();
     $this->read_tz();
   }
   
@@ -143,26 +125,6 @@ class ec3_Options
   {
     $this->event_category=intval( get_option('ec3_event_category') );
   }
-  function read_show_only_events()
-  {
-    $this->show_only_events=intval(get_option('ec3_show_only_events'));
-  }
-  function read_num_months()
-  {
-    $this->num_months =abs(intval(get_option('ec3_num_months')));
-    if(!$this->num_months)
-        $this->num_months=1;
-  }
-  function read_day_length()
-  {
-    $this->day_length=intval(get_option('ec3_day_length'));
-    if($this->day_length==0)
-        $this->day_length=1;
-  }
-  function read_hide_logo()
-  {
-    $this->hide_logo=intval(get_option('ec3_hide_logo'));
-  }
   function read_hide_event_box()
   {
     $this->hide_event_box=intval(get_option('ec3_hide_event_box'));
@@ -173,14 +135,6 @@ class ec3_Options
     // Sometimes we want to play around with the value of advanced.
     // 'advanced_setting' ALWAYS holds the REAL value.
     $this->advanced_setting=$this->advanced;
-  }
-  function read_navigation()
-  {
-    $this->navigation=intval(get_option('ec3_navigation'));
-  }
-  function read_disable_popups()
-  {
-    $this->disable_popups=intval(get_option('ec3_disable_popups'));
   }
   function read_tz()
   {
@@ -206,38 +160,6 @@ class ec3_Options
       $this->read_event_category();
     }
   }
-  function set_show_only_events($val)
-  {
-    if($this->show_only_events!=$val)
-    {
-      update_option('ec3_show_only_events',$val);
-      $this->read_show_only_events();
-    }
-  }
-  function set_num_months($val)
-  {
-    if($this->num_months!=$val)
-    {
-      update_option('ec3_num_months',$val);
-      $this->read_num_months();
-    }
-  }
-  function set_day_length($val)
-  {
-    if($this->day_length!=$val)
-    {
-      update_option('ec3_day_length',$val);
-      $this->read_day_length();
-    }
-  }
-  function set_hide_logo($val)
-  {
-    if($this->hide_logo!=$val)
-    {
-      update_option('ec3_hide_logo',$val);
-      $this->read_hide_logo();
-    }
-  }
   function set_hide_event_box($val)
   {
     if($this->hide_event_box!=$val)
@@ -254,22 +176,6 @@ class ec3_Options
     }
     // read_advanced() does some special magic, so we always call it.
     $this->read_advanced();
-  }
-  function set_navigation($val)
-  {
-    if($this->navigation!=$val)
-    {
-      update_option('ec3_navigation',$val);
-      $this->read_navigation();
-    }
-  }
-  function set_disable_popups($val)
-  {
-    if($this->disable_popups!=$val)
-    {
-      update_option('ec3_disable_popups',$val);
-      $this->read_disable_popups();
-    }
   }
   function set_tz($val)
   {

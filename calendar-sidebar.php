@@ -22,32 +22,135 @@ require_once(dirname(__FILE__).'/calendar-basic.php');
 /** Renders a sidebar calendar. */
 class ec3_SidebarCalendar extends ec3_BasicCalendar
 {
+  // OPTIONS
+
+  /** Should day names be abbreviated to 1 or 3 letters? DEFAULT=1 */
+  var $day_length;
+  /** Hide the 'EC' logo on calendar displays? DEFAULT=0 */
+  var $hide_logo;
+  /** Position navigation links or hide them. DEFAULT=0 */
+  var $navigation;
+  /** Disable popups? DEFAULT=0 */
+  var $disable_popups;
+
+  // MEMBER VARIABLES
+
   /** Universal table header. */
-  var $thead;
+  var $_thead;
 
-  function ec3_SidebarCalendar($datetime=0,$num=1)
+  function ec3_SidebarCalendar($datetime=false,$options=false)
   {
-    // Initialise the parent class.
-    $this->ec3_BasicCalendar($datetime,$num);
+    // Set appearance options from the $options array, if it's been provided.
+    // Otherwise set the defaults from the old, global WP options.
+    if(empty($options))
+      $options=array();
 
-    // Make the table header (same for every month).
-    global $ec3,$weekday,$weekday_abbrev,$weekday_initial;
-    $this->thead="<thead><tr>\n";
+    if(array_key_exists('day_length',$options))
+      $this->day_length = $options['day_length'];
+    else
+      $this->day_length =max(1,abs(intval(get_option('ec3_day_length'))));
+
+    if(array_key_exists('hide_logo',$options))
+      $this->hide_logo = $options['hide_logo'];
+    else
+      $this->hide_logo=intval(get_option('ec3_hide_logo'));
+
+    if(array_key_exists('navigation',$options))
+      $this->navigation = $options['navigation'];
+    else
+      $this->navigation=intval(get_option('ec3_navigation'));
+
+    if(array_key_exists('disable_popups',$options))
+      $this->disable_popups = $options['disable_popups'];
+    else
+      $this->disable_popups=intval(get_option('ec3_disable_popups'));
+    // END OPTIONS
+
+    // Initialise the parent class.
+    $this->ec3_BasicCalendar($datetime,$options);
+    
+    // Initialise the rest of this class.
+    $this->init_thead();
+  }
+
+
+  /** Initialise $this->_thead, the table header (same for every month). */
+  function init_thead()
+  {
+    global $weekday,$weekday_abbrev,$weekday_initial;
+    $this->_thead="<thead><tr>\n";
     $start_of_week =intval( get_option('start_of_week') );
     for($i=0; $i<7; $i++)
     {
       $full_day_name=$weekday[ ($i+$start_of_week) % 7 ];
-      if(3==$ec3->day_length)
+      if(3==$this->day_length)
           $display_day_name=$weekday_abbrev[$full_day_name];
-      elseif($ec3->day_length<3)
+      elseif($this->day_length<3)
           $display_day_name=$weekday_initial[$full_day_name];
       else
           $display_day_name=$full_day_name;
-      $this->thead.="\t<th abbr='$full_day_name' scope='col' title='$full_day_name'>"
+      $this->_thead.="\t<th abbr='$full_day_name' scope='col' title='$full_day_name'>"
              . "$display_day_name</th>\n";
     }
-    $this->thead.="</tr></thead>\n";
+    $this->_thead.="</tr></thead>\n";
   }
+
+  /** Returns the event calendar navigation controls. */
+  function _get_nav()
+  {
+    global $ec3;
+    $idprev = '';
+    $idnext = '';
+    if(empty($this->id))
+    {
+      $ec3previd    = "ec3_prev";
+      $ec3nextid    = "ec3_next";
+      $ec3spinnerid = "ec3_spinner";
+      $ec3publishid = "ec3_publish";
+    }
+    else
+    {
+      $ec3previd    = "$this->id-ec3_prev";
+      $ec3nextid    = "$this->id-ec3_next";
+      $ec3spinnerid = "$this->id-ec3_spinner";
+      $ec3publishid = "$this->id-ec3_publish";
+      if($this->id=='wp-calendar')
+      {
+        // For compatibility with standard wp-calendar.
+        $idprev = " id='prev'";
+        $idnext = " id='next'";
+      }
+    }
+    $nav = "<table class='nav'><tbody><tr>\n";
+
+    // Previous
+    $prev=$this->begin_dateobj->prev_month();
+    $nav .= "\t<td$idprev><a id='$ec3previd' href='" . $prev->month_link($this->show_only_events) . "'"
+       . '>&laquo;&nbsp;' . $prev->month_abbrev() . "</a></td>\n";
+
+    $nav .= "\t<td><img id='$ec3spinnerid' style='display:none' src='" 
+       . $ec3->myfiles . "/ec_load.gif' alt='spinner' />\n";
+    // iCalendar link.
+    $webcal=get_feed_link('ical');
+    // Macintosh always understands webcal:// protocol.
+    // It's hard to guess on other platforms, so stick to http://
+    if(strstr($_SERVER['HTTP_USER_AGENT'],'Mac OS X'))
+        $webcal=preg_replace('/^http:/','webcal:',$webcal);
+    $nav .= "\t    <a id='$ec3publishid' href='$webcal'"
+       . " title='" . __('Subscribe to iCalendar.','ec3') ."'>\n"
+       . "\t     <img src='$ec3->myfiles/publish.gif' alt='iCalendar' />\n"
+       . "\t    </a>\n";
+    $nav .= "\t</td>\n";
+
+    // Next
+    $next=$this->limit_dateobj;
+    $nav .= "\t<td$idnext><a id='$ec3nextid' href='" . $next->month_link($this->show_only_events) . "'"
+       . '>' . $next->month_abbrev() . "&nbsp;&raquo;</a></td>\n";
+
+    $nav .= "</tr></tbody></table>\n";
+    return $nav;
+  }
+
 
   function wrap_month($monthstr)
   {
@@ -56,10 +159,10 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
       __('View posts for %1$s %2$s'),$this->dateobj->month_name(),$this->dateobj->year_num);
     $result =  '<table id="'.$this->id.'-'.$this->dateobj->month_id().'">'."\n"
       . '<caption>'
-      . '<a href="' . $this->dateobj->month_link() . '" title="' . $title . '">'
+      . '<a href="' . $this->dateobj->month_link($this->show_only_events) . '" title="' . $title . '">'
       . $this->dateobj->month_name() . ' ' . $this->dateobj->year_num . "</a>"
       . "</caption>\n"
-      . $this->thead
+      . $this->_thead
       . "<tbody>\n" . $monthstr . "</tbody>\n</table>\n";
     return $result;
   }
@@ -78,7 +181,7 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
         "<td colspan='$num_days' class='pad' style='vertical-align:bottom'>"
         . "<a href='http://wpcal.firetree.net/?ec3_version=$ec3->version'"
         . " title='Event Calendar $ec3->version'"
-        . ($ec3->hide_logo? " style='display:none'>": ">")
+        . ($this->hide_logo? " style='display:none'>": ">")
         . "<span class='ec3_ec'><span>EC</span></span></a></td>";
     }
     else
@@ -98,7 +201,7 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     if(!empty($this->dayobj))
     {
       $td_classes[] = 'ec3_postday';
-      $a_attr = ' href="'.$this->dateobj->day_link().'" title="'.$daystr.'"';
+      $a_attr = ' href="'.$this->dateobj->day_link($this->show_only_events).'" title="'.$daystr.'"';
       if($this->dayobj->has_events())
       {
         $td_classes[] = 'ec3_eventday';
@@ -144,14 +247,13 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     $result = "<div id='$this->id'>\n";
 
     // Display navigation panel.
-    $nav=ec3_get_calendar_nav($this->begin_dateobj,$ec3->num_months,$this->id);
-    if(0==$ec3->navigation)
-      $result .= $nav;
+    if(0==$this->navigation)
+      $result .= $this->_get_nav();
 
     $q = 'ec3_after='  .$this->begin_dateobj->to_mysqldate()
        . '&ec3_before='.$this->limit_dateobj->to_mysqldate()
        . '&nopaging=1';
-    if(!$ec3->show_only_events)
+    if(!$this->show_only_events)
         $q .= '&ec3_listing=no';
     $query = new WP_Query();
     $query->query($q);
@@ -162,19 +264,25 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     $result .= parent::generate();
 
     // Display navigation panel.
-    if(1==$ec3->navigation)
-      $result .= $nav;
+    if(1==$this->navigation)
+      $result .= $this->_get_nav();
 
     $result .= "</div>\n";
 
-    if(!$ec3->disable_popups && empty($ec3->done_popups_javascript))
+    if(!$this->disable_popups && empty($ec3->done_popups_javascript))
     {
       $ec3->done_popups_javascript=true;
       $result .= "\t<script type='text/javascript' src='"
       .    $ec3->myfiles . "/popup.js'></script>\n";
     }
+
+    if($this->hide_logo)
+      $options=',{hide_logo:true}';
+    else
+      $options='';
+
     $result .= "\t<script type='text/javascript'><!--\n"
-      .        "\t  ec3.new_calendar('$cal_id');\n"
+      .        "\t  ec3.new_calendar('$cal_id'$options);\n"
       .        "\t--></script>\n";
     return $result;
   }

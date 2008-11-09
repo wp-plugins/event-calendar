@@ -23,9 +23,9 @@ class ec3_ec3xml extends ec3_BasicCalendar
 {
   var $details = array();
 
-  function ec3_ec3xml($datetime=0,$num=1)
+  function ec3_ec3xml($datetime=0,$options=false)
   {
-    $this->ec3_BasicCalendar($datetime,$num);
+    $this->ec3_BasicCalendar($datetime,$options);
   }
 
   function wrap_month($monthstr)
@@ -47,7 +47,7 @@ class ec3_ec3xml extends ec3_BasicCalendar
 
     $day_id   = $this->dateobj->day_id();
     $date     = $this->dateobj->to_mysqldate();
-    $day_link = $this->dateobj->day_link();
+    $day_link = $this->dateobj->day_link($this->show_only_events);
     $result ="<day id='$day_id' date='$date' link='$day_link'";
     if(!empty($this->dayobj->titles))
       $result.=" titles='".implode(', ',$this->dayobj->titles)."'";

@@ -28,10 +28,10 @@ require_once(dirname(__FILE__).'/calendar-sidebar.php');
 /** Renders a big calendar. */
 class ec3_BigCalendar extends ec3_SidebarCalendar
 {
-  function ec3_BigCalendar($datetime=0,$num=1)
+  function ec3_BigCalendar($datetime=0,$options=false)
   {
     // Initialise the parent class.
-    $this->ec3_SidebarCalendar($datetime,$num);
+    $this->ec3_SidebarCalendar($datetime,$options);
   }
   
   /** dayobj - ec3_CalendarDay object, may be empty. */
@@ -45,7 +45,7 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
     if(!empty($this->dayobj))
     {
       $td_classes[] = 'ec3_postday';
-      $a_attr = ' href="'.$this->dateobj->day_link().'" title="'.$daystr.'"';
+      $a_attr = ' href="'.$this->dateobj->day_link($this->show_only_events).'" title="'.$daystr.'"';
       if($this->dayobj->has_events())
       {
         $td_classes[] = 'ec3_eventday';

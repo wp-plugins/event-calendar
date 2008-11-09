@@ -41,7 +41,7 @@ function ec3_widget_cal($args)
   {
     require_once(dirname(__FILE__).'/calendar-sidebar.php');
     global $ec3;
-    $calobj = new ec3_SidebarCalendar(0,$ec3->num_months);
+    $calobj = new ec3_SidebarCalendar(0,$options);
     echo $calobj->generate('wp-calendar');
   }
   echo $after_widget;
@@ -52,27 +52,115 @@ function ec3_widget_cal($args)
 function ec3_widget_cal_control() 
 {
   $options = $newoptions = get_option('ec3_widget_cal');
-  if ( $_POST["ec3_cal_submit"] ) 
+  if( $_POST["ec3_cal_submit"] ) 
   {
     $newoptions['title']=strip_tags(stripslashes($_POST["ec3_cal_title"]));
+    $newoptions['num_months']      =abs(intval($_POST["ec3_cal_num_months"]));
+    $newoptions['show_only_events']=intval($_POST["ec3_cal_show_only_events"]);
+    $newoptions['day_length']      =abs(intval($_POST["ec3_cal_day_length"]));
+    $newoptions['hide_logo']       =intval($_POST["ec3_cal_hide_logo"]);
+    $newoptions['navigation']      =intval($_POST["ec3_cal_navigation"]);
+    $newoptions['disable_popups']  =intval($_POST["ec3_cal_disable_popups"]);
   }
-  if ( $options != $newoptions ) 
+  if( $options != $newoptions ) 
   {
     $options = $newoptions;
     update_option('ec3_widget_cal', $options);
   }
+  require_once(dirname(__FILE__).'/calendar-sidebar.php');
   $title = ec3_widget_title($options['title'],'Event Calendar');
+  $cal = new ec3_SidebarCalendar(0,$options); // Use this to get defaults.
   ?>
   <p>
    <label for="ec3_cal_title">
-    <?php _e('Title:'); ?>
+    <?php _e('Title:') ?><br />
     <input class="widefat" id="ec3_cal_title" name="ec3_cal_title"
      type="text" value="<?php echo htmlspecialchars($title,ENT_QUOTES); ?>" />
    </label>
   </p>
-
-  <p><a href="options-general.php?page=ec3_admin">
-    <?php _e('Go to Event Calendar Options','ec3') ?>.</a>
+  <p>
+   <label for="ec3_cal_num_months">
+    <?php _e('Number of months','ec3') ?>:<br />
+    <input class="widefat" id="ec3_cal_num_months" name="ec3_cal_num_months"
+     type="text" value="<?php echo $cal->num_months ?>" />
+   </label>
+  </p>
+  <p>
+   <label for="ec3_cal_show_only_events">
+    <?php _e('Show all categories in calendar','ec3') ?>:<br />
+    <select name="ec3_cal_show_only_events">
+     <option value='1'<?php if($cal->show_only_events) echo " selected='selected'" ?> >
+      <?php _e('Only Show Events','ec3'); ?>
+     </option>
+     <option value='0'<?php if(!$cal->show_only_events) echo " selected='selected'" ?> >
+      <?php _e('Show All Posts','ec3'); ?>
+     </option>
+    </select>
+   </label>
+  </p>
+  <p>
+   <label for="ec3_cal_day_length">
+    <?php _e('Show day names as','ec3') ?>:<br />
+    <select name="ec3_cal_day_length">
+     <option value='1'<?php if($cal->day_length<3) echo " selected='selected'" ?> >
+      <?php _e('Single Letter','ec3'); ?>
+     </option>
+     <option value='3'<?php if(3==$cal->day_length) echo " selected='selected'" ?> >
+      <?php _e('3-Letter Abbreviation','ec3'); ?>
+     </option>
+     <option value='9'<?php if($cal->day_length>3) echo " selected='selected'" ?> >
+      <?php _e('Full Day Name','ec3'); ?>
+     </option>
+    </select>
+   </label>
+  </p>
+  <p>
+   <label for="ec3_cal_hide_logo">
+    <?php _e('Show Event Calendar logo','ec3') ?>:<br />
+    <select name="ec3_cal_hide_logo">
+     <option value='0'<?php if(!$cal->hide_logo) echo " selected='selected'" ?> >
+      <?php _e('Show Logo','ec3'); ?>
+     </option>
+     <option value='1'<?php if($cal->hide_logo) echo " selected='selected'" ?> >
+      <?php _e('Hide Logo','ec3'); ?>
+     </option>
+    </select>
+   </label>
+  </p>
+  <p>
+   <label for="ec3_cal_navigation">
+    <?php _e('Position of navigation links','ec3') ?>:<br />
+    <select name="ec3_navigation">
+     <option value='0'<?php if(0==!$cal->navigation) echo " selected='selected'" ?> >
+      <?php _e('Above Calendar','ec3'); ?>
+     </option>
+     <option value='1'<?php if(1==$cal->navigation) echo " selected='selected'" ?> >
+      <?php _e('Below Calendar','ec3'); ?>
+     </option>
+     <option value='2'<?php if(2==$cal->navigation) echo " selected='selected'" ?> >
+      <?php _e('Hidden','ec3'); ?>
+     </option>
+    </select>
+    <br /><em>
+     <?php _e('The navigation links are more usable when they are above the calendar, but you might prefer them below or hidden for aesthetic reasons.','ec3'); ?>
+    </em> 
+   </label>
+  </p>
+  <p>
+   <label for="ec3_cal_disable_popups">
+    <?php _e('Popup event lists','ec3') ?>:<br />
+    <select name="ec3_cal_disable_popups">
+     <option value='0'<?php if(!$cal->disable_popups) echo " selected='selected'" ?> >
+      <?php _e('Show Popups','ec3'); ?>
+     </option>
+     <option value='1'<?php if($cal->disable_popups) echo " selected='selected'" ?> >
+      <?php _e('Hide Popups','ec3'); ?>
+     </option>
+    </select>
+    <br /><em>
+     <?php _e('You might want to disable popups if you use Nicetitles.','ec3'); ?>
+    </em>
+   </label>
   </p>
 
   <input type="hidden" name="ec3_cal_submit" value="1" />

@@ -238,13 +238,6 @@ class ec3_Admin
           return;
     }
 
-// this if was preventing authors from saving events, only editors and admins could.  RB
-//    if(function_exists('current_user_can'))
-//    {
-//      if(!current_user_can('edit_post',$post_id))
-//          return;
-//    }
-
     // Ensure that we only save each post once.
     if(isset($this->save_post_called) && $this->save_post_called[$post_ID])
         return;
@@ -458,22 +451,10 @@ class ec3_Admin
       echo '<div id="message" class="updated fade"><p><strong>';
       if(isset($_POST['ec3_event_category']))
           $ec3->set_event_category( intval($_POST['ec3_event_category']) );
-      if(isset($_POST['ec3_num_months']))
-          $ec3->set_num_months( intval($_POST['ec3_num_months']) );
-      if(isset($_POST['ec3_show_only_events']))
-          $ec3->set_show_only_events( intval($_POST['ec3_show_only_events']) );
-      if(isset($_POST['ec3_day_length']))
-          $ec3->set_day_length( intval($_POST['ec3_day_length']) );
-      if(isset($_POST['ec3_hide_logo']))
-          $ec3->set_hide_logo( intval($_POST['ec3_hide_logo']) );
       if(isset($_POST['ec3_hide_event_box']))
           $ec3->set_hide_event_box( intval($_POST['ec3_hide_event_box']) );
       if(isset($_POST['ec3_advanced']))
           $ec3->set_advanced( intval($_POST['ec3_advanced']) );
-      if(isset($_POST['ec3_navigation']))
-          $ec3->set_navigation( intval($_POST['ec3_navigation']) );
-      if(isset($_POST['ec3_disable_popups']))
-          $ec3->set_disable_popups( intval($_POST['ec3_disable_popups']) );
       if(isset($_POST['ec3_tz']))
           $ec3->set_tz( $_POST['ec3_tz'] );
       _e('Options saved.');
@@ -564,101 +545,6 @@ class ec3_Admin
        </td> 
       <?php endif; ?>
       </tr>
-
-     </table>
-
-     <h3><?php _e('Calendar Display','ec3'); ?></h3> 
-
-     <table class="form-table"> 
-
-      <tr valign="top"> 
-       <th width="33%" scope="row"><?php _e('Number of months','ec3'); ?>:</th> 
-       <td>
-        <input type="text" name="ec3_num_months" value="<?php echo $ec3->num_months; ?>" />
-       </td> 
-      </tr> 
-
-      <tr valign="top"> 
-       <th width="33%" scope="row"><?php _e('Show all categories in calendar','ec3'); ?>:</th> 
-       <td>
-        <select name="ec3_show_only_events">
-         <option value='1'<?php if($ec3->show_only_events) echo " selected='selected'" ?> >
-          <?php _e('Only Show Events','ec3'); ?>
-         </option>
-         <option value='0'<?php if(!$ec3->show_only_events) echo " selected='selected'" ?> >
-          <?php _e('Show All Posts','ec3'); ?>
-         </option>
-        </select>
-       </td> 
-      </tr> 
-
-      <tr valign="top"> 
-       <th width="33%" scope="row"><?php _e('Show day names as','ec3'); ?>:</th> 
-       <td>
-        <select name="ec3_day_length">
-         <option value='1'<?php if($ec3->day_length<3) echo " selected='selected'" ?> >
-          <?php _e('Single Letter','ec3'); ?>
-         </option>
-         <option value='3'<?php if(3==$ec3->day_length) echo " selected='selected'" ?> >
-          <?php _e('3-Letter Abbreviation','ec3'); ?>
-         </option>
-         <option value='9'<?php if($ec3->day_length>3) echo " selected='selected'" ?> >
-          <?php _e('Full Day Name','ec3'); ?>
-         </option>
-        </select>
-       </td> 
-      </tr> 
-
-      <tr valign="top"> 
-       <th width="33%" scope="row"><?php _e('Show Event Calendar logo','ec3'); ?>:</th> 
-       <td>
-        <select name="ec3_hide_logo">
-         <option value='0'<?php if(!$ec3->hide_logo) echo " selected='selected'" ?> >
-          <?php _e('Show Logo','ec3'); ?>
-         </option>
-         <option value='1'<?php if($ec3->hide_logo) echo " selected='selected'" ?> >
-          <?php _e('Hide Logo','ec3'); ?>
-         </option>
-        </select>
-       </td> 
-      </tr> 
-
-      <tr valign="top"> 
-       <th width="33%" scope="row"><?php _e('Position of navigation links','ec3'); ?>:</th> 
-       <td>
-        <select name="ec3_navigation">
-         <option value='0'<?php if(0==!$ec3->navigation) echo " selected='selected'" ?> >
-          <?php _e('Above Calendar','ec3'); ?>
-         </option>
-         <option value='1'<?php if(1==$ec3->navigation) echo " selected='selected'" ?> >
-          <?php _e('Below Calendar','ec3'); ?>
-         </option>
-         <option value='2'<?php if(2==$ec3->navigation) echo " selected='selected'" ?> >
-          <?php _e('Hidden','ec3'); ?>
-         </option>
-        </select>
-        <br /><em>
-         <?php _e('The navigation links are more usable when they are above the calendar, but you might prefer them below or hidden for aesthetic reasons.','ec3'); ?>
-        </em> 
-       </td> 
-      </tr> 
-
-      <tr valign="top">
-       <th width="33%" scope="row"><?php _e('Popup event lists','ec3'); ?>:</th> 
-       <td>
-        <select name="ec3_disable_popups">
-         <option value='0'<?php if(!$ec3->disable_popups) echo " selected='selected'" ?> >
-          <?php _e('Show Popups','ec3'); ?>
-         </option>
-         <option value='1'<?php if($ec3->disable_popups) echo " selected='selected'" ?> >
-          <?php _e('Hide Popups','ec3'); ?>
-         </option>
-        </select>
-        <br /><em>
-         <?php _e('You might want to disable popups if you use Nicetitles.','ec3'); ?>
-        </em>
-       </td> 
-      </tr> 
 
      </table>
 

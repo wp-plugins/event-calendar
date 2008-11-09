@@ -97,6 +97,15 @@ class ec3_CalendarDay
 /** Calendar class, used for rendering calendars. */
 class ec3_BasicCalendar
 {
+  // OPTIONS
+
+  /** Number to months displayed by get_calendar(). DEFAULT=1 */
+  var $num_months;
+  /** Show only events in calendar. DEFAULT=false */
+  var $show_only_events;
+
+  // MEMBER VARIABLES
+
   /** First date covered by this calendar (always 1st of the month).
    *  An ec3_Date object. */
   var $begin_dateobj;
@@ -117,8 +126,24 @@ class ec3_BasicCalendar
 
   /** $month_date is a string of the form "YYYY-MM..."
    *  $num_months is the number of months covered by the calendar.*/
-  function ec3_BasicCalendar($month_date=false,$num_months=1)
+  function ec3_BasicCalendar($month_date=false,$options=false)
   {
+    // Set options from the $options array, if it's been provided.
+    // Otherwise set the defaults from the old, global WP options.
+    if(empty($options))
+      $options=array();
+
+    if(array_key_exists('num_months',$options))
+      $this->num_months = $options['num_months'];
+    else
+      $this->num_months =max(1,abs(intval(get_option('ec3_num_months'))));
+
+    if(array_key_exists('show_only_events',$options))
+      $this->show_only_events = $options['show_only_events'];
+    else
+      $this->show_only_events=intval(get_option('ec3_show_only_events'));
+    // END OPTIONS
+
     if(empty($month_date))
     {
       $this->begin_dateobj = new ec3_Date(); // defaults to the current month
@@ -130,7 +155,7 @@ class ec3_BasicCalendar
       $month_num=intval($parts[1]);
       $this->begin_dateobj = new ec3_Date($year_num,$month_num,1);
     }
-    $this->limit_dateobj = $this->begin_dateobj->plus_months($num_months);
+    $this->limit_dateobj =$this->begin_dateobj->plus_months($this->num_months);
     $this->_days = array();
   }
   

@@ -8,7 +8,6 @@
 //   var ec3.month_abbrev
 //   var ec3.myfiles
 //   var ec3.home
-//   var ec3.hide_logo
 //   var ec3.viewpostsfor
 
 // namespace
@@ -51,10 +50,16 @@ var ec3 = {
       window.onload=function(){ if(prev)prev(); fn(); }
     },
 
-  /** Register a new calendar with id: cal_id. */
-  new_calendar : function(cal_id)
+  /** Register a new calendar with id: cal_id.
+   *  Valid options, set as an object are:
+   *    hide_logo = true|false
+   *  Eg. ec3.new_calendar('wp-calendar',{hide_logo:false});
+   */
+  new_calendar : function(cal_id,options)
     {
       var cal = new ec3.Calendar(cal_id);
+      if(options && options.hasOwnProperty('hide_logo'))
+        cal.hide_logo = options.hide_logo;
       ec3.do_onload( function(){cal.init();} );
       ec3.calendars[cal_id] = cal;
       return cal;
@@ -114,6 +119,8 @@ ec3.Calendar = function(cal_id)
 }
 
 ec3.Calendar.prototype = {
+
+  hide_logo : false,
 
   full_id : function(short_id)
     {
@@ -264,7 +271,7 @@ ec3.Calendar.prototype = {
       }
 
       // add the 'dog'
-      if((7-col)>1 && !ec3.hide_logo)
+      if((7-col)>1 && !this.hide_logo)
       {
         a=document.createElement('a');
         a.href='http://blog.firetree.net/?ec3_version='+ec3.version;
@@ -292,8 +299,10 @@ ec3.Calendar.prototype = {
         this.reqs.push(req);
         var self = this;
         req.onreadystatechange = function(){self.process_xml();};
-        req.open("GET",
-          ec3.home+'/?feed=ec3xml&year='+year_num+'&monthnum='+month_num,true);
+        var url=ec3.home+'/?feed=ec3xml&year='+year_num+'&monthnum='+month_num;
+        if(this.is_listing)
+           url+='&ec3_listing=yes';
+        req.open("GET",url,true);
         this.set_spinner(1);
         req.send(null);
       }

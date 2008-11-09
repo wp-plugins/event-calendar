@@ -615,11 +615,8 @@ function ec3_get_calendar($cal_id='wp-calendar')
 {
   if(!ec3_check_installed(__('Event Calendar','ec3')))
     return;
-
   require_once(dirname(__FILE__).'/calendar-sidebar.php');
-
-  global $ec3;
-  $calobj = new ec3_SidebarCalendar(0,$ec3->num_months);
+  $calobj = new ec3_SidebarCalendar();
   echo $calobj->generate($cal_id);
 }
 
