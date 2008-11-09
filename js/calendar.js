@@ -88,11 +88,6 @@ Calendar.is_ie = ( /msie/i.test(navigator.userAgent) &&
 		   !/opera/i.test(navigator.userAgent) );
 
 Calendar.is_ie5 = ( Calendar.is_ie && /msie 5\.0/i.test(navigator.userAgent) );
-if(Calendar.is_ie)
-{
-  Calendar.ie_version =
-    parseFloat(navigator.userAgent.replace(/.*msie ([0-9]+([.][0-9]+)?).*/i,"$1"));
-}
 
 /// detect Opera browser
 Calendar.is_opera = /opera/i.test(navigator.userAgent);
@@ -1394,9 +1389,9 @@ Calendar.prototype.showAtElement = function (el, opts) {
 		document.body.appendChild(cp);
 		var br = Calendar.getAbsolutePos(cp);
 		document.body.removeChild(cp);
-		if (Calendar.is_ie && Calendar.ie_version < 7) {
-			br.y += document.body.scrollTop;
-			br.x += document.body.scrollLeft;
+		if (Calendar.is_ie) {
+			br.y += document.documentElement.scrollTop || document.body.scrollTop;
+			br.x += document.documentElement.scrollLeft || document.body.scrollLeft;
 		} else {
 			br.y += window.scrollY;
 			br.x += window.scrollX;
