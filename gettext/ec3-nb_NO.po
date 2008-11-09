@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._pre15\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-08 18:33+0000\n"
+"POT-Creation-Date: 2008-11-09 17:51+0000\n"
 "PO-Revision-Date: 2006-10-05 23:33:22+0200\n"
 "Last-Translator: Realf Ording Helgesen\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.php:110 admin.php:433 patch/admin_0.1.php:78
-#, fuzzy
+#: admin.php:110 admin.php:426 patch/admin_0.1.php:78
 msgid "Event Editor"
 msgstr "Tidspunkt-editor"
 
@@ -45,78 +44,77 @@ msgstr ""
 msgid "Delete this event"
 msgstr ""
 
-#: admin.php:354 patch/admin_0.1.php:306
+#: admin.php:347 patch/admin_0.1.php:306
 #, php-format
 msgid "Upgraded database to EventCalendar Version %s"
 msgstr "Oppgraderte databasen til EventCalendar versjon %s"
 
-#: admin.php:359 patch/admin_0.1.php:281
+#: admin.php:352 patch/admin_0.1.php:281
 msgid "Error upgrading database for EventCalendar plugin."
 msgstr "Feil ved oppgradering av database for EventCalendar plugin"
 
-#: admin.php:368 patch/admin_0.1.php:310
+#: admin.php:361 patch/admin_0.1.php:310
 msgid "Table already existed"
 msgstr "Tabellen eksisterte allerede"
 
-#: admin.php:373
+#: admin.php:366
 #, php-format
 msgid "Created table %s"
 msgstr ""
 
-#: admin.php:398
+#: admin.php:391
 #, php-format
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:419 admin.php:486 patch/admin_0.1.php:338 patch/admin_0.1.php:348
+#: admin.php:412 admin.php:467 patch/admin_0.1.php:338 patch/admin_0.1.php:348
 #: patch/admin_0.1.php:393
 msgid "Event Calendar Options"
 msgstr "Event Calendar-innstillinger"
 
-#: admin.php:490
+#: admin.php:471
 msgid "Easter Egg"
 msgstr ""
 
-#: admin.php:492 upgrade-posts.php:107
+#: admin.php:473 upgrade-posts.php:107
 msgid "Upgrade Event Posts"
 msgstr ""
 
-#: admin.php:499 patch/admin_0.1.php:397
+#: admin.php:480 patch/admin_0.1.php:397
 msgid "Event category"
 msgstr "Hendelseskategori"
 
-#: admin.php:509 patch/admin_0.1.php:407
+#: admin.php:490 patch/admin_0.1.php:407
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
 msgstr ""
 
-#: admin.php:515 patch/admin_0.1.php:413
-#, fuzzy
+#: admin.php:496 patch/admin_0.1.php:413
 msgid "Show schedule within posts"
 msgstr "Vis hendelsesboks i innleggene"
 
-#: admin.php:519 patch/admin_0.1.php:417
+#: admin.php:500 patch/admin_0.1.php:417
 msgid "Show Schedule"
 msgstr "Vis"
 
-#: admin.php:522 patch/admin_0.1.php:420
+#: admin.php:503 patch/admin_0.1.php:420
 msgid "Hide Schedule"
 msgstr "Skjul"
 
-#: admin.php:529 patch/admin_0.1.php:427
+#: admin.php:510 patch/admin_0.1.php:427
 msgid "Show events as blog entries"
 msgstr "Vis hendelser som blog-innlegg"
 
-#: admin.php:533 patch/admin_0.1.php:431
+#: admin.php:514 patch/admin_0.1.php:431
 msgid "Events are Normal Posts"
 msgstr "Hendelser er normale innlegg"
 
-#: admin.php:536 patch/admin_0.1.php:434
+#: admin.php:517 patch/admin_0.1.php:434
 msgid "Keep Events Separate"
 msgstr "Hold hendelser separate"
 
-#: admin.php:540 patch/admin_0.1.php:438
+#: admin.php:521 patch/admin_0.1.php:438
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -124,128 +122,44 @@ msgstr ""
 "Hold hendelser adskilte: Event Calendar-siden viser fremtidige hendelser, "
 "sortert etter dato. Hendelser vises ikke på forsiden."
 
-#: admin.php:546 admin.php:558 patch/admin_0.1.php:444 patch/admin_0.1.php:456
+#: admin.php:527 admin.php:539 patch/admin_0.1.php:444 patch/admin_0.1.php:456
 msgid "Timezone"
 msgstr "Tidssone"
 
-#: admin.php:550 patch/admin_0.1.php:448
+#: admin.php:531 patch/admin_0.1.php:448
 msgid "unknown"
 msgstr ""
 
-#: admin.php:554 patch/admin_0.1.php:452
+#: admin.php:535 patch/admin_0.1.php:452
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
 msgstr ""
 
-#: admin.php:570 patch/admin_0.1.php:468
-msgid "Calendar Display"
-msgstr "Kalendervisning"
+#: calendar-sidebar.php:140
+msgid "Subscribe to iCalendar."
+msgstr "Abonner på iCalendar"
 
-#: admin.php:575 patch/admin_0.1.php:473
-msgid "Number of months"
-msgstr "Antall måneder"
-
-#: admin.php:582 patch/admin_0.1.php:480
-msgid "Show all categories in calendar"
-msgstr "Vis alle kategorier i kalender"
-
-#: admin.php:586 patch/admin_0.1.php:484
-msgid "Only Show Events"
-msgstr "Vis bare hendelser"
-
-#: admin.php:589 patch/admin_0.1.php:487
-msgid "Show All Posts"
-msgstr "Vis alle innlegg"
-
-#: admin.php:596 patch/admin_0.1.php:494
-msgid "Show day names as"
-msgstr "Vis navn på dager som"
-
-#: admin.php:600 patch/admin_0.1.php:498
-msgid "Single Letter"
-msgstr "Enkeltbokstav"
-
-#: admin.php:603 patch/admin_0.1.php:501
-msgid "3-Letter Abbreviation"
-msgstr "3-bokstavers forkortelse"
-
-#: admin.php:606 patch/admin_0.1.php:504
-msgid "Full Day Name"
-msgstr "Fullt navn på dag"
-
-#: admin.php:613 patch/admin_0.1.php:511
-msgid "Show Event Calendar logo"
-msgstr "Vis Event Calendar-logo"
-
-#: admin.php:617 patch/admin_0.1.php:515
-msgid "Show Logo"
-msgstr "Vis logo"
-
-#: admin.php:620 patch/admin_0.1.php:518
-msgid "Hide Logo"
-msgstr "Skjul logo"
-
-#: admin.php:627 patch/admin_0.1.php:525
-msgid "Position of navigation links"
-msgstr "Plassering av navigeringslinker"
-
-#: admin.php:631 patch/admin_0.1.php:529
-msgid "Above Calendar"
-msgstr "Over kalenderen"
-
-#: admin.php:634 patch/admin_0.1.php:532
-msgid "Below Calendar"
-msgstr "Under kalenderen"
-
-#: admin.php:637 patch/admin_0.1.php:535
-msgid "Hidden"
-msgstr "Skjult"
-
-#: admin.php:641 patch/admin_0.1.php:539
-msgid ""
-"The navigation links are more usable when they are above the calendar, but "
-"you might prefer them below or hidden for aesthetic reasons."
-msgstr ""
-"Navigasjonslinkene er mer brukbare når de er over kalenderen, men du vil "
-"kanskje foretrekke å ha dem under eller skjult av estetiske årsaker."
-
-#: admin.php:647 patch/admin_0.1.php:545
-msgid "Popup event lists"
-msgstr "Popup hendelseslister"
-
-#: admin.php:651 patch/admin_0.1.php:549
-msgid "Show Popups"
-msgstr "Vis popups"
-
-#: admin.php:654 patch/admin_0.1.php:552
-msgid "Hide Popups"
-msgstr "Skjul popups"
-
-#: admin.php:658 patch/admin_0.1.php:556
-msgid "You might want to disable popups if you use Nicetitles."
-msgstr "Dersom du bruker Nicetitles, vil du muligens slå av popups"
-
-#: legacy.php:16 template-functions-new.php:471 widget.php:91 widget.php:212
-#: widget.php:219 K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
-msgid "Upcoming Events"
-msgstr "Kommende hendelser"
-
-#: legacy.php:100 legacy.php:369 template-functions-new.php:139
+#: template-functions-new.php:139
 msgid "all day"
 msgstr "hele dagen"
 
-#: legacy.php:121 template-functions-new.php:537 widget.php:133
+#: template-functions-new.php:471 widget-list.php:29 widget-list.php:136
+#: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
+msgid "Upcoming Events"
+msgstr "Kommende hendelser"
+
+#: template-functions-new.php:537 widget-list.php:71
 msgid "No events."
 msgstr "Ingen hendelser."
 
-#: legacy.php:154 legacy.php:168 legacy.php:180 template-functions-new.php:572
-#: template-functions-new.php:589 template-functions-new.php:604
+#: template-functions-new.php:572 template-functions-new.php:589
+#: template-functions-new.php:604
 msgid "to"
 msgstr "til"
 
-#: legacy.php:227 template-functions-new.php:616 widget.php:40 widget.php:198
-#: widget.php:205 K2/ec3_sidebar_module.php:31
+#: template-functions-new.php:616 widget-calendar.php:29
+#: widget-calendar.php:146 K2/ec3_sidebar_module.php:31
 msgid "Event Calendar"
 msgstr "Event Calendar"
 
@@ -253,14 +167,9 @@ msgstr "Event Calendar"
 msgid "You must choose an event category."
 msgstr ""
 
-#: template-functions.php:32 widget.php:75 widget.php:181
-#: K2/ec3_sidebar_module.php:64
+#: template-functions.php:32 widget-list.php:119 K2/ec3_sidebar_module.php:64
 msgid "Go to Event Calendar Options"
 msgstr "Gå til Event Calendar-innstillinger"
-
-#: template-functions.php:83
-msgid "Subscribe to iCalendar."
-msgstr "Abonner på iCalendar"
 
 #: upgrade-posts.php:22
 msgid "Post upgraded."
@@ -271,18 +180,105 @@ msgstr ""
 msgid "%d posts upgraded."
 msgstr ""
 
-#: widget.php:172
-#, fuzzy
-msgid "Number of events:"
+#: widget-calendar.php:72 patch/admin_0.1.php:473
+msgid "Number of months"
 msgstr "Antall måneder"
 
-#: widget.php:201
+#: widget-calendar.php:79 patch/admin_0.1.php:494
+msgid "Show day names as"
+msgstr "Vis navn på dager som"
+
+#: widget-calendar.php:82 patch/admin_0.1.php:498
+msgid "Single Letter"
+msgstr "Enkeltbokstav"
+
+#: widget-calendar.php:85 patch/admin_0.1.php:501
+msgid "3-Letter Abbreviation"
+msgstr "3-bokstavers forkortelse"
+
+#: widget-calendar.php:88 patch/admin_0.1.php:504
+msgid "Full Day Name"
+msgstr "Fullt navn på dag"
+
+#: widget-calendar.php:95 patch/admin_0.1.php:539
+msgid ""
+"The navigation links are more usable when they are above the calendar, but "
+"you might prefer them below or hidden for aesthetic reasons."
+msgstr ""
+"Navigasjonslinkene er mer brukbare når de er over kalenderen, men du vil "
+"kanskje foretrekke å ha dem under eller skjult av estetiske årsaker."
+
+#: widget-calendar.php:96 patch/admin_0.1.php:525
+msgid "Position of navigation links"
+msgstr "Plassering av navigeringslinker"
+
+#: widget-calendar.php:99 patch/admin_0.1.php:529
+msgid "Above Calendar"
+msgstr "Over kalenderen"
+
+#: widget-calendar.php:102 patch/admin_0.1.php:532
+msgid "Below Calendar"
+msgstr "Under kalenderen"
+
+#: widget-calendar.php:105 patch/admin_0.1.php:535
+msgid "Hidden"
+msgstr "Skjult"
+
+#: widget-calendar.php:114 patch/admin_0.1.php:484
+msgid "Only Show Events"
+msgstr "Vis bare hendelser"
+
+#: widget-calendar.php:121 patch/admin_0.1.php:511
+msgid "Show Event Calendar logo"
+msgstr "Vis Event Calendar-logo"
+
+#: widget-calendar.php:126 patch/admin_0.1.php:556
+msgid "You might want to disable popups if you use Nicetitles."
+msgstr "Dersom du bruker Nicetitles, vil du muligens slå av popups"
+
+#: widget-calendar.php:129 patch/admin_0.1.php:545
+msgid "Popup event lists"
+msgstr "Popup hendelseslister"
+
+#: widget-calendar.php:149
 msgid "Display upcoming events in a dynamic calendar."
 msgstr ""
 
-#: widget.php:215
+#: widget-list.php:110
+msgid "Number of events"
+msgstr "Antall måneder"
+
+#: widget-list.php:139
 msgid "Display upcoming events as a list."
 msgstr ""
+
+#: patch/admin_0.1.php:468
+msgid "Calendar Display"
+msgstr "Kalendervisning"
+
+#: patch/admin_0.1.php:480
+msgid "Show all categories in calendar"
+msgstr "Vis alle kategorier i kalender"
+
+#: patch/admin_0.1.php:487
+msgid "Show All Posts"
+msgstr "Vis alle innlegg"
+
+#: patch/admin_0.1.php:515
+msgid "Show Logo"
+msgstr "Vis logo"
+
+#: patch/admin_0.1.php:518
+msgid "Hide Logo"
+msgstr "Skjul logo"
+
+#: patch/admin_0.1.php:549
+msgid "Show Popups"
+msgstr "Vis popups"
+
+#: patch/admin_0.1.php:552
+msgid "Hide Popups"
+msgstr "Skjul popups"
 
 #: patch/admin_0.1.php:569
 msgid "EXAMPLE SIDEBAR CODE:"
