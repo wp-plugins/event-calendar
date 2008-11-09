@@ -194,4 +194,14 @@ class ec3_Options
 $ec3=new ec3_Options();
 
 
+/** Utility function: Gets the (possibly translated) widget title, given the
+ *  value of the 'title' option. */
+function ec3_widget_title($title,$default)
+{
+  if ( empty($title) )
+      return __($default,'ec3');
+  else
+      return apply_filters('widget_title',$title);
+}
+
 ?>

@@ -32,6 +32,7 @@ require_once(dirname(__FILE__).'/template-functions.php');
 require_once(dirname(__FILE__).'/template-functions-new.php');
 require_once(dirname(__FILE__).'/admin.php');
 require_once(dirname(__FILE__).'/tz.php');
+require_once(dirname(__FILE__).'/widget-calendar.php');
 require_once(dirname(__FILE__).'/widget.php');
 
 
