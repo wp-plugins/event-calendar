@@ -107,7 +107,7 @@ function ec3_widget_list_control()
   </p>
   <p>
    <label for="ec3_limit" title="<?php echo $ec3_limit_title ?>">
-    <?php _e('Number of events:','ec3'); ?>
+    <?php _e('Number of events','ec3') ?>:
     <input class="widefat" style="width: 50px; text-align: center;"
      id="ec3_limit" name="ec3_limit" type="text"
      value="<?php echo $limit? $limit: '5'; ?>" />
@@ -139,10 +139,7 @@ function ec3_action_widgets_init_list()
           __('Display upcoming events as a list.','ec3')
               . ' (Event Calendar '. __('Plugin') .')' )
   );
-  register_widget_control(
-    array(__('Upcoming Events','ec3'),'widgets'),
-    'ec3_widget_list_control'
-  );
+  register_widget_control('upcoming-events','ec3_widget_list_control');
 }
 
 

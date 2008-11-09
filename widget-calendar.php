@@ -149,10 +149,7 @@ function ec3_action_widgets_init_cal()
           __( 'Display upcoming events in a dynamic calendar.','ec3')
               . ' (Event Calendar '. __('Plugin') .')' ) 
   );
-  register_widget_control(
-    array(__('Event Calendar','ec3'),'widgets'),
-    'ec3_widget_cal_control'
-  );
+  register_widget_control('event-calendar','ec3_widget_cal_control');
 }
 
 
