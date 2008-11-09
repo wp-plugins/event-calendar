@@ -1,4 +1,4 @@
-# Copyright (c) 2006, 2007  Alex Tingle.  $Revision: 278 $
+# Copyright (c) 2006-2008  Alex Tingle.
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,6 +21,6 @@
   s/YEAR THE PACKAGE.S COPYRIGHT HOLDER/2006, 2007  Alex Tingle/
   s/PACKAGE/wpcal/
   s/FIRST AUTHOR <EMAIL@ADDRESS>, YEAR./Alex Tingle <alex DOT ec3pot AT firetree.net>, 2005./
-  s/VERSION/3.1.3/
+  s/VERSION/3.1.4/
   s/CHARSET/UTF-8/
 }
