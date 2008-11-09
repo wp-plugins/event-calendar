@@ -51,20 +51,20 @@ function ec3_widget_cal($args)
 /** Event Calendar widget - control. */
 function ec3_widget_cal_control() 
 {
-  $options = $newoptions = get_option('ec3_widget_cal');
+  $options = $newopts = get_option('ec3_widget_cal');
   if( $_POST["ec3_cal_submit"] ) 
   {
-    $newoptions['title']=strip_tags(stripslashes($_POST["ec3_cal_title"]));
-    $newoptions['num_months']      =abs(intval($_POST["ec3_cal_num_months"]));
-    $newoptions['day_length']      =abs(intval($_POST["ec3_cal_day_length"]));
-    $newoptions['navigation']      =intval($_POST["ec3_cal_navigation"]);
-    $newoptions['show_only_events']=!empty($_POST["ec3_cal_show_only_events"]);
-    $newoptions['hide_logo']       =empty($_POST["ec3_cal_show_logo"]);
-    $newoptions['disable_popups']  =empty($_POST["ec3_cal_show_popups"]);
+    $newopts['title']=strip_tags(stripslashes($_POST["ec3_cal_title"]));
+    $newopts['num_months']      =max(1,intval($_POST["ec3_cal_num_months"]));
+    $newopts['day_length']      =abs(intval($_POST["ec3_cal_day_length"]));
+    $newopts['navigation']      =intval($_POST["ec3_cal_navigation"]);
+    $newopts['show_only_events']=!empty($_POST["ec3_cal_show_only_events"]);
+    $newopts['hide_logo']       =empty($_POST["ec3_cal_show_logo"]);
+    $newopts['disable_popups']  =empty($_POST["ec3_cal_show_popups"]);
   }
-  if( $options != $newoptions ) 
+  if( $options != $newopts ) 
   {
-    $options = $newoptions;
+    $options = $newopts;
     update_option('ec3_widget_cal', $options);
   }
   require_once(dirname(__FILE__).'/calendar-sidebar.php');
