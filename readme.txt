@@ -1,5 +1,5 @@
 === Event Calendar 3 ===
-Tags: calendar, event, vcalendar, icalendar, ical, ajax, widget, sidebar
+Tags: calendar, event, events, vcalendar, icalendar, ical, ajax, widget, sidebar
 Stable tag: 3.1.4
 Contributors: Alex Tingle
 Donate link: http://www.amazon.co.uk/gp/registry/1S44DP6XXOFIN
