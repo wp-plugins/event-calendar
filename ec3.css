@@ -18,7 +18,7 @@
   text-align:right;
 }
 
-.ec3_eventday a {
+#wp-calendar .ec3_eventday a {
  color:#a00 !IMPORTANT;
 }
 
@@ -154,3 +154,93 @@ td.ec3_start { text-align:right; }
 td.ec3_to    { text-align:center; }
 
 .ec3_past *  { text-decoration:line-through }
+
+/***
+ ***  Big Calendar
+ ***/
+
+
+div#ec3_big_cal {
+ border:solid 2px #eee;
+}
+
+#ec3_big_cal table {
+ border-collapse:collapse;
+ width:100%;
+ line-height:normal;
+}
+
+#ec3_big_cal table.nav {
+ width:50%;
+ margin-right:auto;
+ margin-left:auto;
+}
+
+#ec3_big_cal table.nav td {
+ border:none;
+ height:auto;
+ text-align:center;
+ font-size:1.5em;
+ font-weight:bold;
+}
+
+#ec3_big_cal table caption {
+ font-size:1.5em;
+ font-weight:bold;
+}
+
+#ec3_big_cal table th {
+ text-align:center;
+ font-size:smaller;
+ font-weight:normal;
+}
+
+#ec3_big_cal table td {
+ margin:0;
+ padding:0;
+ width:14.2%;
+ height:6em;
+ vertical-align:top;
+ text-align:left;
+ border:solid 1px #999;
+}
+
+#ec3_big_cal table td.ec3_today {
+ background-color:#eee;
+}
+
+td .ec3_daynum {
+ display:block;
+ margin:0;
+ padding:0;
+ width:100%;
+ text-align:right;
+ font-size:1em;
+}
+
+td.ec3_postday  a.ec3_daynum { color:#0066cc }
+td.ec3_eventday a.ec3_daynum { color:#a00 }
+             span.ec3_daynum { color:black }
+
+td.ec3_postday  a.ec3_daynum:hover { color:white; background-color:#0066cc }
+td.ec3_eventday a.ec3_daynum:hover { color:white; background-color:#a00 }
+
+#ec3_big_cal table td p {
+ font-size:smaller;
+ margin-top:0;
+ margin-bottom:0.1em;
+}
+
+#ec3_big_cal .ec3_post a {
+ color:#0066cc;
+}
+
+#ec3_big_cal .ec3_event a {
+ color:#a00;
+}
+
+#ec3_big_cal .pad {
+ border:none;
+ background-color:#eee;
+}
+

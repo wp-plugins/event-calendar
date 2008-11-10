@@ -38,52 +38,43 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
   function wrap_day($daystr)
   {
     $day_id = $this->dateobj->day_id();
-    $td_attr = ' id="'.$this->id.'-'.$day_id.'"';
+
     $td_classes = array();
     if($day_id=='today')
       $td_classes[] = 'ec3_today';
     if(!empty($this->dayobj))
     {
       $td_classes[] = 'ec3_postday';
-      $a_attr = ' href="'.$this->dateobj->day_link($this->show_only_events).'" title="'.$daystr.'"';
       if($this->dayobj->has_events())
-      {
         $td_classes[] = 'ec3_eventday';
-        $a_attr  .= ' class="eventday"';
-      }
-      $daynum = "<a$a_attr>" . $this->dateobj->day_num . '</a>';
     }
+
+    $td_id = $this->id.'-'.$day_id;
+    if(empty($td_classes))
+      $result = "\n\t  <td id='$td_id'>\n\t    ";
     else
-    {
-      $daynum = $this->dateobj->day_num;
-    }
-    if(!empty($td_classes))
-      $td_attr .= ' class="' . implode(' ',$td_classes) . '"';
-    return "<td$td_attr><h4>$daynum</h4><div>$daystr</div></td>";
+      $result = "\n\t  <td id='$td_id' class='".implode(' ',$td_classes)."'>\n\t    ";
+
+    if(empty($this->dayobj))
+      $result .= '<span class="ec3_daynum">'.$this->dateobj->day_num.'</span>';
+    else
+      $result .= '<a class="ec3_daynum" href="'
+                 . $this->dateobj->day_link($this->show_only_events)
+		 . '">'.$this->dateobj->day_num.'</a>';
+
+    $result .= "<div>$daystr</div>";
+    $result .= "</td>";
+    return $result;
   }
 
   function make_event(&$event)
   {
-    global $post;
-    // MORE GOES HERE
-    return $this->make_post($post) . ' @' . ec3_get_start_time();
+    return "\n\t    ".'<p class="ec3_event"><a title="@'.ec3_get_start_time().'" href="'.get_permalink().'">'.get_the_title().'</a></p>';
   }
 
   function make_post(&$post)
   {
-    $safe_title=strip_tags(get_the_title());
-    $safe_title=
-      str_replace(
-        array(',','@'),
-        ' ',
-        htmlspecialchars(
-          stripslashes($safe_title),
-          ENT_QUOTES,
-          get_option('blog_charset')
-        )
-      );
-    // MORE GOES HERE
-    return $safe_title;
+    return "\n\t    ".'<p class="ec3_post"><a href="'.get_permalink().'">'.get_the_title().'</a></p>';
   }
 
   function generate()
@@ -152,6 +143,7 @@ function ec3_filter_the_content_bigcal(&$post_content)
       $options=array();
       $options['id']='ec3_big_cal';
       $options['num_months']=1;
+      $options['day_length']=9;
       $calobj = new ec3_BigCalendar($options);
       $calcode = $calobj->generate();
       $post_content = str_replace($placeholder,$calcode,$post_content);
