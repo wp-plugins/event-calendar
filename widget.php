@@ -98,7 +98,7 @@ function ec3_widget_init()
   );
 
   register_widget_control(
-    array(__('Event Calendar','ec3'),'widgets'),
+    'event-calendar',
     'ec3_widget_cal_control'
   );
 
@@ -177,7 +177,7 @@ function ec3_widget_init()
   );
 
   register_widget_control(
-    array(__('Upcoming Events','ec3'),'widgets'),
+    'upcoming-events',
     'ec3_widget_list_control'
   );
 }
