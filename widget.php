@@ -29,6 +29,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+// ********                     */
+// * Set up CALENDAR sidebar    */
+// ********                     */
+
 function ec3_widget_init() 
 {
 
@@ -97,13 +101,15 @@ function ec3_widget_init()
               . ' (Event Calendar '. __('Plugin') .')' ) 
   );
 
-  register_widget_control(
-    array(__('Event Calendar','ec3'),'widgets'),
+register_widget_control(
+    'event-calendar',
     'ec3_widget_cal_control'
   );
-
-
-  /** Upcoming Events widget. */
+    
+/* ********                         */
+/* * Set up Upcoming Events widget. */
+/* ********                         */
+  
   function ec3_widget_list($args) 
   {
     extract($args);
@@ -177,9 +183,10 @@ function ec3_widget_init()
   );
 
   register_widget_control(
-    array(__('Upcoming Events','ec3'),'widgets'),
+    'event-calendar',
     'ec3_widget_list_control'
   );
+    
 }
 
 add_action('widgets_init', 'ec3_widget_init');

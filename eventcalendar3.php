@@ -599,7 +599,7 @@ function ec3_filter_the_content(&$post_content)
    if(strpos($post_content,'[EC3BigCalendar]')!==FALSE)
    {
 	    $calendar = ec3_get_calendar("ec3default",1);
-    	$ec_match_filter = '[[EC3BigCalendar]]';
+    	$ec_match_filter = '[EC3BigCalendar]';
     	$before_large_calendar = ec_strstr($post_content, $ec_match_filter, TRUE);
     	$after_large_calendar  = ec_strstr($post_content, $ec_match_filter, FALSE);
     	$return_this = $before_large_calendar . $calendar . $after_large_calendar;			
