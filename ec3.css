@@ -45,6 +45,8 @@
  display:block;
  float:right;
  border:none;
+ background-repeat:no-repeat;
+ background-position:bottom right;
  width:13px;
  height:9px;
 }
@@ -199,21 +201,23 @@ div#ec3_big_cal {
  margin:0;
  padding:0;
  width:14.2%;
- height:6em;
  vertical-align:top;
  text-align:left;
  border:solid 1px #999;
 }
 
 #ec3_big_cal table td.ec3_today {
- background-color:#eee;
+ background-color:#ffe;
 }
 
 td .ec3_daynum {
  display:block;
  margin:0;
+ margin-left:auto;
+ margin-right:auto;
  padding:0;
- width:100%;
+ padding-right:2px;
+ padding-bottom:1px;
  text-align:right;
  font-size:1em;
 }
@@ -224,6 +228,10 @@ td.ec3_eventday a.ec3_daynum { color:#a00 }
 
 td.ec3_postday  a.ec3_daynum:hover { color:white; background-color:#0066cc }
 td.ec3_eventday a.ec3_daynum:hover { color:white; background-color:#a00 }
+
+#ec3_big_cal table td div {
+ min-height:5em;
+}
 
 #ec3_big_cal table td p {
  font-size:smaller;
