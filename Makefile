@@ -1,4 +1,4 @@
-# Copyright (c) 2006, Alex Tingle.  $Revision: 184 $
+# Copyright (c) 2006, 2008, Alex Tingle.
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -16,14 +16,14 @@
 
 
 # Generates gettext translation file.
-# Just drop .po files into the gettext directory and make will do the rest.   
+# Just drop .po files into the languages directory and make will do the rest.   
 
 PHP_FILES := $(wildcard *.php) $(wildcard */*.php)
-PO_FILES := $(wildcard gettext/ec3-*.po)
+PO_FILES := $(wildcard languages/ec3-*.po)
 MO_FILES := $(patsubst %.po,%.mo,$(PO_FILES))
 
 # EventCalendar's PO template
-POT := gettext/ec3.pot
+POT := languages/ec3.pot
 
 # Working space - The shell command creates this directory.
 TEMPDIR := $(shell mktemp -t -d eventcalendar.XXXXXXXXXXXXX)
@@ -52,11 +52,11 @@ $(PO_FILES): %: $(POT)
 	msgmerge -U $@ $(POT)
 	touch $@
 
-$(POT): $(XPHP_FILES) gettext/pot.sed
+$(POT): $(XPHP_FILES) languages/pot.sed
 	@echo "XGETTEXT: $@"
 	cd $(TEMPDIR) && \
 	$(XGETTEXT) $(XGETTEXT_OPTIONS) -o- $(PHP_FILES) \
-	| sed -f $(CURDIR)/gettext/pot.sed \
+	| sed -f $(CURDIR)/languages/pot.sed \
 	> $(CURDIR)/$@
 
 .INTERMEDIATE: $(XPHP_FILES)
@@ -67,9 +67,6 @@ $(XPHP_FILES): $(TEMPDIR)/%: %
 	 -e "s/_[_e]\((.*,['\"]ec3['\"])\)/_x_\1/" \
 	 -e "s/__ngettext\((.*,['\"]ec3['\"])\)/_y_\1/" \
 	 $< > $@
-
-
-#	sed "s/_\(_|e|_ngettext\)\((.*,['\"]ec3['\"])\)/_x_\2/" $< > $@
 
 # Force the temporary directory to be deleted when everything is done.
 $(TEMPDIR)/delete:

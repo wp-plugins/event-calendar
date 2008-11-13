@@ -77,7 +77,7 @@ class ec3_Options
 
     $mydir=
       preg_replace('%^.*[/\\\\]([^/\\\\]+)[/\\\\]options.php$%','$1',__FILE__);
-    load_plugin_textdomain('ec3','wp-content/plugins/'.$mydir.'/gettext');
+    load_plugin_textdomain('ec3','wp-content/plugins/'.$mydir.'/languages');
 
     $this->myfiles=get_option('siteurl').'/wp-content/plugins/'.$mydir;
     $this->schedule=$table_prefix.$this->schedule; // table name
