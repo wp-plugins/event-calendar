@@ -4,6 +4,16 @@
  *  Otherwise it can be safely ignored. */
 function ec3_upgrade_posts()
 {
+  if(!function_exists('__ngettext'))
+  {
+    function __ngettext($single,$plural,$number,$domain='default')
+    {
+      if($number==1) return __($single,$domain);
+      else           return __($plural,$domain);
+    }
+  }
+
+
   global $ec3,$post,$wpdb;
   $ec3->advanced=false;
   $changed = ec3_upgrade_posts_apply();
@@ -19,8 +29,10 @@ function ec3_upgrade_posts()
   <?php if($changed): ?>
 
    <div id="message" class="updated fade"><p><strong>
-   <?php if($changed==1) _e('Post upgraded.','ec3') ?>
-   <?php if($changed>1) echo sprintf(__('%d posts upgraded.','ec3'),$changed) ?>
+   <?php
+     $msg = __ngettext('Post upgraded.','%d posts upgraded.',$changed,'ec3');
+     echo sprintf($msg,$changed);
+   ?>
    </strong></p></div>
 
   <?php endif ?>

@@ -36,6 +36,7 @@ XGETTEXT_OPTIONS := \
  --default-domain=ec3 \
  --language=php \
  --keyword=_x_ \
+ --keyword=_y_:1,2 \
  --from-code=UTF-8 \
  --msgid-bugs-address='eventcalendar@firetree.net' \
 
@@ -62,7 +63,13 @@ $(POT): $(XPHP_FILES) gettext/pot.sed
 $(XPHP_FILES): $(TEMPDIR)/%: %
 	@echo "SED_FILTER: $<"
 	mkdir -p $(@D)
-	sed "s/_[_e]\(([^)]*,['\"]ec3['\"])\)/_x_\1/" $< > $@
+	sed \
+	 -e "s/_[_e]\((.*,['\"]ec3['\"])\)/_x_\1/" \
+	 -e "s/__ngettext\((.*,['\"]ec3['\"])\)/_y_\1/" \
+	 $< > $@
+
+
+#	sed "s/_\(_|e|_ngettext\)\((.*,['\"]ec3['\"])\)/_x_\2/" $< > $@
 
 # Force the temporary directory to be deleted when everything is done.
 $(TEMPDIR)/delete:
