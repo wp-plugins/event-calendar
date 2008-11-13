@@ -145,7 +145,7 @@ var ec3 = {
   attr2bool : function(element,attrname)
     {
       var val;
-      if(element.getAttributeNode)
+      if(typeof element.getAttributeNode == 'function')
       {
         var n=element.getAttributeNode(attrname);
         return (n && n.specified && n.value=='1')? true: false;
