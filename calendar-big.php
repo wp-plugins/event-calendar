@@ -53,7 +53,8 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
     if(empty($td_classes))
       $result = "\n\t  <td id='$td_id'>\n\t    ";
     else
-      $result = "\n\t  <td id='$td_id' class='".implode(' ',$td_classes)."'>\n\t    ";
+      $result = "\n\t  <td id='$td_id' class='".implode(' ',$td_classes)
+                . "'>\n\t    ";
 
     if(empty($this->dayobj))
       $result .= '<span class="ec3_daynum">'.$this->dateobj->day_num.'</span>';
@@ -69,55 +70,34 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
 
   function make_event(&$event)
   {
-    return "\n\t    ".'<p class="ec3_event"><a title="@'.ec3_get_start_time().'" href="'.get_permalink().'">'.get_the_title().'</a></p>';
+    return "\n\t    "
+      . '<p class="ec3_event"><a title="'.ec3_get_start_time()
+      . '" href="'.get_permalink().'">'.get_the_title().'</a></p>';
   }
 
   function make_post(&$post)
   {
-    return "\n\t    ".'<p class="ec3_post"><a href="'.get_permalink().'">'.get_the_title().'</a></p>';
+    return "\n\t    "
+      . '<p class="ec3_post"><a href="'.get_permalink().'">'
+      . get_the_title().'</a></p>';
   }
 
   function generate()
   {
+    global $ec3;
     $result = parent::generate();
-    $result .= "\t<script type='text/javascript'><!--
-	  ec3.calendars['$this->id'].make_day = function(td,day_xml,xml)
-	  {
-	    ec3.add_class(td,'ec3_postday');
-	    // Save the TD's text node for later.
-	    var txt=td.removeChild(td.firstChild);
-	    // Make an A element
-	    var a=document.createElement('a');
-	    a.href=day_xml.getAttribute('link');
-	    if(day_xml.getAttribute('is_event'))
-	    {
-	      ec3.add_class(td,'ec3_eventday');
-	      a.className='eventday';
-	    }
-	    // Put the saves text node into the A.
-	    a.appendChild(txt);
-	    // Put the A into the TD.
-	    td.appendChild(a);
-	    // Now, make a DIV for the event details.
-	    var events=day_xml.getElementsByTagName('event');
-	    if(events)
-	    {
-	      var div=document.createElement('div');
-	      for(var i=0, len=events.length; i<len; i++)
-	      {
-		var detail=ec3.find_detail(events[i].getAttribute('post_id'),xml);
-		if(detail)
-		{
-		  var p=document.createElement('p');
-		  p.innerHTML='<a href=\"'+ detail.getAttribute('link') +'\">'
-		   + detail.getAttribute('title') + '</a>';
-		  div.appendChild(p);
-		}
-	      }
-	      td.appendChild(div);
-	    }
-	  }
-	--></script>\n";
+
+    if(empty($ec3->done_bigcal_javascript))
+    {
+      $ec3->done_bigcal_javascript=true;
+      $result .= "\t<script type='text/javascript' src='"
+      .    $ec3->myfiles . "/calendar-big.js'></script>\n";
+    }
+    $result .=
+        "\t<script type='text/javascript'><!--\n"
+      . "\t  ec3.calendars['$this->id'].new_day = ec3.big_cal.new_day;\n"
+      . "\t  ec3.calendars['$this->id'].update_day = ec3.big_cal.update_day;\n"
+      . "\t--></script>\n";
 
     // If we were in a loop, re-set the global $post.
     global $wp_query,$post;

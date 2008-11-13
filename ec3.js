@@ -10,7 +10,10 @@
 //   var ec3.home
 //   var ec3.viewpostsfor
 
-// namespace
+///////////////////////////////////////////////////////////////////////////////
+// namespace ec3
+///////////////////////////////////////////////////////////////////////////////
+
 var ec3 = {
   version:'3.2.dev-01',
 
@@ -20,6 +23,8 @@ var ec3 = {
 
   /** Global store for ec3.Calendar objects. */
   calendars : [],
+  
+  allday : 'all day',
 
   ELEMENT_NODE: 1,
   TEXT_NODE:    3,
@@ -97,43 +102,72 @@ var ec3 = {
         return 'ec3_'+year_num+'_'+month_num+'_'+day_num;
       }
     },
-    
+
+  /** Add new_class_name to element.className, but only if it's not
+   *  already listed there. */    
   add_class : function(element,new_class_name)
     {
-      if(element.className.length)
-        element.className+=' '+new_class_name;
-      else
+      if(element.className.length==0) // no current class
+      {
         element.className=new_class_name;
+      }
+      else if(-1 == element.className.indexOf(new_class_name)) // no match
+      {
+        element.className+=' '+new_class_name;
+      }
+      else // Possible match, check in more detail.
+      {
+        var classes=element.className.split(' ');
+        for(var i=0, len=classes.length; i<len; i++)
+          if(classes[len-i-1]==new_class_name)
+            return; // positive match.
+        element.className+=' '+new_class_name;
+      }
     },
 
-  /** Utility function, not used in the default Javascript.
-   *  Given an XML document, it finds the details for post 'post_id'.
-   *  We need to do this because getElementById() doesn't work reliably
-   *  in XML documents loaded by XMLHttpRequest.
-   */
-  find_detail : function(post_id,xml)
+  /** Converts an ISO datetime (YYY-MM-DD hh:mm:ss) into a Date object. */
+  parse_datetime : function(s)
     {
-      // Cache the lookup table in the xml object.
-      if(!xml.ec3_details)
+      if(s && s.length)
       {
-        xml.ec3_details={};
-        var details=xml.getElementsByTagName('detail');
-        for(var i=0, len=details.length; i<len; i++)
-        {
-          var pid=details[i].getAttribute('id');
-          if(pid)
-            xml.ec3_details[pid] = details[i];
-        }
+        var dt=s.split(' ');
+        var ymd=dt[0].split('-');
+        var hms=dt[1].split(':');
+        return new Date(
+            parseInt(ymd[0],10),parseInt(ymd[1],10)-1,parseInt(ymd[2],10),
+            parseInt(hms[0],10),parseInt(hms[1],10),  parseInt(hms[2],10)
+          );
       }
-      return xml.ec3_details[post_id];
+      return null;
+    },
+
+  /** Tests an XML attribute for value=='1'. */
+  attr2bool : function(element,attrname)
+    {
+      var val;
+      if(element.getAttributeNode)
+      {
+        var n=element.getAttributeNode(attrname);
+        return (n && n.specified && n.value=='1')? true: false;
+      }
+      else
+      {
+        var a=element.getAttribute(attrname);
+        return (a && a=='1')? true: false;
+      }
+    },
+
+  extend : function(dest,src)
+    {
+      for(k in src)
+        dest[k] = src[k];
     }
 
 } // end namespace ec3
-
-
 ec3.do_onload( function(){ec3.init();} );
 
 
+///////////////////////////////////////////////////////////////////////////////
 /** Calendar class. */
 ec3.Calendar = function(cal_id)
 {
@@ -273,11 +307,12 @@ ec3.Calendar.prototype = {
         }
         // insert day
         td=document.createElement('td');
-        td.appendChild(document.createTextNode(date.getDate()));
+        td.ec3_daynum=date.getDate();
         var short_id=ec3.calc_day_id(date.getDate(),month_num,year_num);
         td.id=this.full_id(short_id);
         if(short_id=='today')
           td.className='ec3_today';
+        this.new_day(td); // Extensions may over-ride this function.
         tr.appendChild(td);
         col++;
         day_count++;
@@ -488,7 +523,7 @@ ec3.Calendar.prototype = {
           {
             this.reqs[i]=0;
             if(req.status==200)
-              this.update_days(req.responseXML);
+              this.update_days( new ec3.xml.Calendar(req.responseXML) );
           }
           else
             busy=1;
@@ -505,85 +540,253 @@ ec3.Calendar.prototype = {
 
 
   /** Adds links to the calendar for each day listed in the XML. */
-  update_days : function(xml)
+  update_days : function(xcal)
     {
-      var days_xml=xml.getElementsByTagName('day');
-      if(!days_xml)
-        return;
-      for(var i=0, len=days_xml.length; i<len; i++)
+      for(var i=0, len=xcal.day.length; i<len; i++)
       {
-        var td=this.getElementById(days_xml[i].getAttribute('id'));
-        if(td && td.firstChild && td.firstChild.nodeType==ec3.TEXT_NODE)
+        var td=this.getElementById(xcal.day[i].id());
+        if(td && td.ec3_daynum)
         {
-          this.make_day(td,days_xml[i],xml);
+          this.update_day(td,xcal.day[i]);
         }
       }
       if(typeof ec3_Popup != 'undefined')
       {
-        var calendar_xml=xml.documentElement;
-        var month=
-          this.getElementById(calendar_xml.childNodes[0].getAttribute('id'));
+        var month=this.getElementById(xcal.id());
         if(month)
           ec3_Popup.add_tbody( ec3.get_child_by_tag_name(month,'tbody') );
       }
     },
 
-  /** Renders a single day into a TD element. This member function may be
-   *  over-ridden to change the way the day cell is rendered.
+  /** Makes a new day inside the given TD.
+   *  The day number is stored in td.ec3_daynum.
+   *  This member function may be over-ridden to change the way the day cell
+   *  is rendered.
+   */
+  new_day : function(td)
+    {
+      td.appendChild(document.createTextNode( td.ec3_daynum ));
+    },
+
+  /** Add events & posts to a single day into a TD element. This member function
+   *  may be over-ridden to change the way the day cell is rendered.
    *  Parameters:
    *
    *   td - the TD element into which the day should be written.
+   *        The day number is stored in td.ec3_daynum.
    *
-   *   day_xml - an XML element containing the day's posts and events.
-   *         day@titles contains a summary of all the day's titles.
-   *     Examples:
-   *       <day id='ec3_2008_11_4' date='2008-11-04'
-   *               link='http://theraven.local/2008/11/04/'
-   *               titles='Election Day'>
-   *           <post post_id='554' />
-   *       </day>
-   *       <day id='ec3_2008_11_5' date='2008-11-05'
-   *               link='http://theraven.local/2008/11/05/'
-   *               titles='WLUW 88.7 @10:00 pm'
-   *               is_event='1'>
-   *           <event post_id='pid_486' sched_id='sid_39'>
-   *               <start>2008-11-05 22:00:00</start>
-   *               <end>2008-11-05 23:00:00</end>
-   *           </event>
-   *       </day>
-   *
-   *   xml - the whole XML document. Use it to find details about posts.
-   *         detail@title contains the post's title.
-   *     Examples:
-   *       <details>
-   *           <detail id='pid_554' title='Election Day'
-   *                   link='http://theraven.local/2008/11/04/election-day/'>
-   *              <excerpt>...</excerpt>
-   *           </detail>
-   *           <detail id='pid_486' title='WLUW 88.7'
-   *                   link='http://theraven.local/2008/08/04/wluw-887-13/'>
-   *              <excerpt>...</excerpt>
-   *           </detail>
-   *       </details>
+   *   day - an ec3.xml.Day object containing the day's posts and events.
+   *         See below for documentation.
    */
-  make_day : function(td,day_xml,xml)
+  update_day : function(td,day)
     {
       ec3.add_class(td,'ec3_postday');
       // Save the TD's text node for later.
       var txt=td.removeChild(td.firstChild);
       // Make an A element
       var a=document.createElement('a');
-      a.href=day_xml.getAttribute('link');
-      a.title=day_xml.getAttribute('titles');
-      if(day_xml.getAttribute('is_event'))
+      a.href=day.link();
+      a.title=day.titles();
+      if(day.is_event())
       {
         ec3.add_class(td,'ec3_eventday');
         a.className='eventday';
       }
-      // Put the saves text node into the A.
+      // Put the saved text node into the A.
       a.appendChild(txt);
       // Finally, put the A into the TD.
       td.appendChild(a);
     }
 
 } // end ec3.Calendar.prototype
+
+
+///////////////////////////////////////////////////////////////////////////////
+// namespace ec3.xml
+///////////////////////////////////////////////////////////////////////////////
+
+ec3.xml = {
+
+  /** Global store from XML <detail> objects. */
+  details : []
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+/** xml.Calendar class - provides an easy to use interface to read the
+ *  XML loaded from ec3xml feeds. */
+ec3.xml.Calendar = function(element)
+{
+  this.element = element;
+  this.init();
+}
+ec3.xml.Calendar.prototype = {
+
+  day : [],
+
+  init : function()
+    {
+      var days=this.element.getElementsByTagName('day');
+      for(var i=0, len=days.length; i<len; i++)
+      {
+        this.day[i] = new ec3.xml.Day(this,days[i]);
+      }
+    },
+
+  /** Gets the /calendar/month@id */
+  id : function()
+    {
+      var months=this.element.getElementsByTagName('month');
+      if(months)
+        return months[0].getAttribute('id');
+      else
+        return '';
+    },
+
+  /** Utility function, not used in the default Javascript.
+   *  Given an XML document, it finds the details for post 'post_id'.
+   *  We need to do this because getElementById() doesn't work reliably
+   *  in XML documents loaded by XMLHttpRequest.
+   */
+  _detail : function(post_id)
+    {
+      if(!ec3.xml.details[post_id])
+      {
+        // Cache the details.
+        var details=this.element.getElementsByTagName('detail');
+        for(var i=0, len=details.length; i<len; i++)
+        {
+          var pid=details[i].getAttribute('id');
+          if(pid)
+            ec3.xml.details[pid] = details[i];
+        }
+      }
+      return ec3.xml.details[post_id];
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+/** xml.Day class - provides an easy to use interface to read <day> elements. */
+ec3.xml.Day = function(calendar,element)
+{
+  this.calendar = calendar;
+  this.element = element;
+}
+ec3.xml.Day.prototype = {
+
+  id      : function(){ return this.element.getAttribute('id');   },
+  link    : function(){ return this.element.getAttribute('link'); },
+  titles  : function(){ return this.element.getAttribute('titles'); },
+  is_event: function(){ return ec3.attr2bool(this.element,'is_event'); },
+
+  /** Obtains the day's date as a Javascript Date object. */
+  date : function()
+    {
+      var d=this.element.getAttribute('date').split('-');
+      return new Date(parseInt(d[0],10),parseInt(d[1],10)-1,parseInt(d[2],10));
+    },
+
+  _events : function(result)
+    {
+      var all=this.element.getElementsByTagName('event');
+      if(all)
+      {
+        for(var i=0, len=all.length; i<len; i++)
+          result.push( new ec3.xml.Event(this,all[i]) );
+      }
+      return result;
+    },
+
+  _posts : function(result)
+    {
+      var all=this.element.getElementsByTagName('post');
+      if(all)
+      {
+        for(var i=0, len=all.length; i<len; i++)
+          result.push( new ec3.xml.Post(this,all[i]) );
+      }
+      return result;
+    },
+
+  /** Obtains an array of ec3.xml.Event objects. */
+  events : function(result){ return this._events([]); },
+
+  /** Obtains an array of ec3.xml.Post objects. */
+  posts  : function(result){ return this._posts([]); },
+
+  /** Obtains an array of mixed ec3.xml.Post and ec3.xml.Event objects. */
+  posts_and_events : function()
+    {
+      var result = [];
+      result = this._posts(result);
+      result = this._events(result);
+      return result;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/** xml.Post class - provides an easy to use interface to read <post>
+ *  elements. */
+ec3.xml.Post = function(day,element)
+{
+  this.day = day;
+  this.element = element;
+}
+ec3.xml.Post.prototype = {
+
+  kind : 'post',
+
+  /** Returns a string intended to briefly summarise the post. */
+  brief : function() { return ''; },
+
+  // details
+ 
+  link   : function(){ return this._detail().getAttribute('link'); },
+  title  : function(){ return this._detail().getAttribute('title'); },
+  excerpt: function()
+    {
+      var excerpts=this._detail().getElementsByTagName('excerpt');
+      if(excerpts)
+        return excerpts[0].firstChild.data;
+      else
+        return '';
+    },
+  
+  _detail : function()
+    {
+      return this.day.calendar._detail( this.element.getAttribute('post_id') );
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+/** xml.Event class - provides an easy to use interface to read <event>
+ *  elements. */
+ec3.xml.Event = function(day,element)
+{
+  this.day = day;
+  this.element = element;
+}
+ec3.extend( ec3.xml.Event.prototype, ec3.xml.Post.prototype );
+ec3.extend( ec3.xml.Event.prototype, {
+
+  kind : 'event',
+
+  allday : function(){ return ec3.attr2bool(this.element,'allday'); },
+
+  /** Returns a string intended to briefly summarise the event. */
+  brief : function()
+    {
+      if(this.allday())
+        return ec3.allday;
+      var starts=this.element.getElementsByTagName('start');
+      if(starts && starts.length)
+      {
+        var date=ec3.parse_datetime(starts[0].firstChild.data);
+        var mins=date.getMinutes();
+        return ''+date.getHours()+(mins<10?':0':':')+mins;
+      }
+      return null;
+    }
+});
