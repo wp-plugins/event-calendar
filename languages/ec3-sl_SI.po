@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ec3 3.1.1 sl 1\n"
+"Project-Id-Version: ec3 v3.1.4 sl 1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-13 22:48+0000\n"
-"PO-Revision-Date: 2008-10-11 01:19+0100\n"
+"POT-Creation-Date: 2008-11-13 23:12+0000\n"
+"PO-Revision-Date: 2008-11-09 23:57+0100\n"
 "Last-Translator: Damjan Gerli <damjan@damjan.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -78,11 +78,11 @@ msgstr "Nastavitve za Event Calendar"
 
 #: admin.php:471
 msgid "Easter Egg"
-msgstr ""
+msgstr "Velikonočno jajce"
 
 #: admin.php:473 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
-msgstr ""
+msgstr "Posodobi prispevke dogodkov"
 
 #: admin.php:480
 msgid "Event category"
@@ -180,17 +180,18 @@ msgid "Go to Event Calendar Options"
 msgstr "Pojdi na Nastavitve za Event Calendar"
 
 #: upgrade-posts.php:33
-#, php-format
+#, fuzzy, php-format
 msgid "Post upgraded."
 msgid_plural "%d posts upgraded."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Prispevek posodobljen."
+msgstr[1] "Posodobljeni prispevki: %d."
+msgstr[2] "Posodobljeni prispevki: %d."
+msgstr[3] "Posodobljeni prispevki: %d."
 
 #: upgrade-posts.php:42
+#, fuzzy
 msgid "Upgrade Event Posts (from version 3.0)"
-msgstr ""
+msgstr "Posodobi prispevke dogodkov"
 
 #: widget-calendar.php:72
 msgid "Number of months"
@@ -254,15 +255,16 @@ msgstr "Pojavno okno liste dogodkov"
 
 #: widget-calendar.php:149
 msgid "Display upcoming events in a dynamic calendar."
-msgstr ""
+msgstr "Prikaži prihodnje dogodke v dinamičnem koledarju."
 
 #: widget-list.php:110
+#, fuzzy
 msgid "Number of events"
-msgstr "Število mesecev"
+msgstr "Število dogodkov:"
 
 #: widget-list.php:139
 msgid "Display upcoming events as a list."
-msgstr ""
+msgstr "Prikaži prihodnje dogodke kot seznam."
 
 #~ msgid "Calendar Display"
 #~ msgstr "Pokaži koledar"
@@ -285,27 +287,5 @@ msgstr ""
 #~ msgid "Hide Popups"
 #~ msgstr "skrij pojavna okna"
 
-#~ msgid "EXAMPLE SIDEBAR CODE:"
-#~ msgstr "PRIMER KODE STRANSKE PASICE:"
-
-#~ msgid "Update Options"
-#~ msgstr "Shrani spremembe"
-
-#, fuzzy
-#~ msgid "&#035; of events:"
-#~ msgstr "Število dogodkov:"
-
-#~ msgid "Options saved."
-#~ msgstr "Spremembe so bile shranjene."
-
-#~ msgid "- Select -"
-#~ msgstr "- Izberi -"
-
-#~ msgid "View posts for %1$s %2$s"
-#~ msgstr "Poglej prispevke za %1$s %2$s"
-
-#~ msgid "by: %s"
-#~ msgstr "avtor: %s"
-
-#~ msgid "Title:"
-#~ msgstr "Naslov:"
+#~ msgid "%d posts upgraded."
+#~ msgstr "Posodobljeni prispevki: %d."

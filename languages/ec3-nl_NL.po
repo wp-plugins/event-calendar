@@ -63,12 +63,12 @@ msgstr "Tabel bestaat reeds"
 #: admin.php:366
 #, php-format
 msgid "Created table %s"
-msgstr ""
+msgstr "Tabel %s gemaakt"
 
 #: admin.php:391
 #, php-format
 msgid "Added SEQUENCE column to table %s"
-msgstr ""
+msgstr "SEQUENCE kolom aan tabel %s toegevoegd"
 
 #: admin.php:412 admin.php:467
 msgid "Event Calendar Options"
@@ -251,7 +251,7 @@ msgstr "Popup gebeurtenis lijsten"
 
 #: widget-calendar.php:149
 msgid "Display upcoming events in a dynamic calendar."
-msgstr ""
+msgstr "Komende gebeurtenissen in een dynamische kalender weergeven."
 
 #: widget-list.php:110
 msgid "Number of events"
@@ -259,7 +259,7 @@ msgstr "Aantal maanden"
 
 #: widget-list.php:139
 msgid "Display upcoming events as a list."
-msgstr ""
+msgstr "Komende gebeurtenissen als een lijst weergeven."
 
 #~ msgid "Calendar Display"
 #~ msgstr "Kalender weergave"

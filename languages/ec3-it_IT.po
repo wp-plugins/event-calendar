@@ -183,7 +183,7 @@ msgstr "Vai alle opzioni di Event Calendar"
 msgid "Post upgraded."
 msgid_plural "%d posts upgraded."
 msgstr[0] "Articolo aggiornato."
-msgstr[1] "Articolo aggiornato."
+msgstr[1] "%d articoli aggiornati."
 
 #: upgrade-posts.php:42
 #, fuzzy
@@ -263,9 +263,6 @@ msgstr "Numero di eventi"
 #: widget-list.php:139
 msgid "Display upcoming events as a list."
 msgstr "Mostra i prossimi eventi come lista."
-
-#~ msgid "%d posts upgraded."
-#~ msgstr "%d articoli aggiornati."
 
 #~ msgid "Calendar Display"
 #~ msgstr "Display del calendario"
