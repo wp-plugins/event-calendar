@@ -177,7 +177,7 @@ msgstr "U moet een gebeurtenis categorie kiezen."
 
 #: template-functions.php:32 widget-list.php:119 K2/ec3_sidebar_module.php:64
 msgid "Go to Event Calendar Options"
-msgstr "Ga naar de Event Calendar optiesx"
+msgstr "Ga naar de Event Calendar opties"
 
 #: upgrade-posts.php:22
 msgid "Post upgraded."
