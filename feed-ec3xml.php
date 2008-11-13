@@ -73,7 +73,7 @@ class ec3_ec3xml extends ec3_BasicCalendar
     $result .= " sched_id='sid_$event->sched_id'";
     if($event->allday)
     {
-      $result .= " allday='0'>\n";
+      $result .= " allday='1'>\n";
     }
     else
     {
@@ -146,7 +146,10 @@ remove_filter('get_the_excerpt', 'ec3_get_the_excerpt');
 add_filter('get_the_excerpt', 'wp_trim_excerpt');
 
 global $ec3,$wp_query;
-$calobj = new ec3_ec3xml();
+$options=array();
+if($wp_query->is_month)
+  $options['num_months']=1;
+$calobj = new ec3_ec3xml($options);
 $calobj->add_events($wp_query);
 if(!ec3_is_listing_q($wp_query))
   $calobj->add_posts($wp_query,!$ec3->advanced);
