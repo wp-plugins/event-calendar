@@ -207,7 +207,7 @@ ec3.Calendar.prototype = {
       if(prev && next)
       {
         // Check for cat limit in month link
-        var xCat=new RegExp('[&?]ec3_listing=yes$');
+        var xCat=new RegExp('[&?]ec3_listing=[eE].*$');
         var match=xCat.exec(prev.href);
         if(match)
           this.is_listing=true;
@@ -258,7 +258,7 @@ ec3.Calendar.prototype = {
 	    c.href=ec3.home+'/?m='+year_num+month_num;
 	  }
           if(this.is_listing)
-             c.href+='&ec3_listing=yes';
+             c.href+='&ec3_listing=events';
           c.title=ec3.viewpostsfor;
           c.title=c.title.replace(/%1\$s/,ec3.month_of_year[month_num0]);
           c.title=c.title.replace(/%2\$s/,year_num);
@@ -358,7 +358,7 @@ ec3.Calendar.prototype = {
         req.onreadystatechange = function(){self.process_xml();};
         var url=ec3.home+'/?feed=ec3xml&year='+year_num+'&monthnum='+month_num;
         if(this.is_listing)
-           url+='&ec3_listing=yes';
+           url+='&ec3_listing=events';
         req.open("GET",url,true);
         this.set_spinner(1);
         req.send(null);

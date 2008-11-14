@@ -106,6 +106,49 @@ function ec3_action_admin_head()
 }
 
 
+/** In advanced mode, exclude events from the archive. */
+function ec3_filter_getarchives_where(&$where)
+{
+  global $ec3,$wpdb;
+  if($ec3->advanced)
+    $where.=" AND ec3_sch.post_id IS NULL ";
+  return $where;
+}
+
+
+/** In advanced mode, exclude events from the archive. */
+function ec3_filter_getarchives_join(&$join)
+{
+  global $ec3;
+  if($ec3->advanced)
+    $join.=" LEFT JOIN $ec3->schedule ec3_sch ON ec3_sch.post_id=id ";
+  return $join;
+}
+
+
+/** In advanced mode, exclude events from the archive,
+ *  Otherwise, disbale EC's normal query filtering, for archive links. */
+function ec3_filter_get_archives_link(&$link_html)
+{
+  global $ec3;
+  $re='/(<a[^>]* href=[\'"]|<option[^>]* value=[\'"])([^\'"]+)([\'"])/';
+  if(preg_match($re,$link_html,$match))
+  {
+    if($ec3->advanced)
+      $listing = 'posts';
+    else
+      $listing = 'disable';
+
+    if(strpos($match[2],'?')===FALSE)
+      $replace="\\1\\2?ec3_listing=$listing\\3";
+    else
+      $replace="\\1\\2&amp;ec3_listing=$listing\\3";
+    $link_html=preg_replace($re,$replace,$link_html); 
+  }
+  return $link_html;
+}
+
+
 /** Rewrite date restrictions if the query is day- or category- specific. */
 function ec3_filter_posts_where(&$where)
 {
@@ -118,7 +161,19 @@ function ec3_filter_posts_where(&$where)
   if($ec3->query->is_page || $ec3->query->is_single || $ec3->query->is_admin)
       return $where;
 
-  if($ec3->query->is_date):
+  $listing = ec3_get_listing();
+  
+  if($listing=='D'): // disable event calendar's query filtering.
+
+      return $where;
+
+  elseif($listing=='P'): // posts-only
+
+     // Hide all events (same as last branch)
+     $where.=" AND ec3_sch.post_id IS NULL ";
+     $ec3->join_ec3_sch=true;
+
+  elseif($ec3->query->is_date):
 
      // Transfer events' 'post_date' restrictions to 'start'
      $df='YEAR|MONTH|DAYOFMONTH|HOUR|MINUTE|SECOND|WEEK'; // date fields
@@ -163,9 +218,9 @@ function ec3_filter_posts_where(&$where)
          );
 
        $where=preg_replace($re,'',$where);
-       if(ec3_is_listing()):
+       if($listing=='E'):                                       // EVENTS only
          $where.=" AND ($where_start) ";
-       else:
+       else:                                                    // ALL
          $is_post='ec3_sch.post_id IS NULL';
          $where.=" AND (($where_post_date AND $is_post) OR "
                      . "($where_start AND NOT $is_post)) ";
@@ -185,9 +240,9 @@ function ec3_filter_posts_where(&$where)
      if(!empty($w)):
        $ws = implode(' AND ',$w);
        $where_start = sprintf($ws,'ec3_sch.start','ec3_sch.end');
-       if(ec3_is_listing()):
+       if($listing=='E'):                                       // EVENTS only
          $where.=" AND ($where_start) ";
-       else:
+       else:                                                    // ALL
          $pd = "$wpdb->posts.post_date";
          $where_post_date = sprintf($ws,$pd,$pd);
          $is_post = 'ec3_sch.post_id IS NULL';
@@ -200,7 +255,7 @@ function ec3_filter_posts_where(&$where)
 
   elseif($ec3->advanced):
 
-      if(ec3_is_listing()):
+      if($listing=='E'):                                       // EVENTS only
 
           // Hide inactive events
           $where.=" AND ec3_sch.post_id IS NOT NULL ";
@@ -440,7 +495,7 @@ function ec3_filter_parse_query($wp_query)
       $ec3->is_date_range=true;
       $ec3->range_from  =$a;
       $ec3->range_before=$b;
-      $wp_query->ec3_listing = 'YES';
+      $wp_query->ec3_listing = 'EVENTS';
     }
   } // end if (today)
 
@@ -506,6 +561,7 @@ if($ec3->event_category)
   add_filter('posts_fields', 'ec3_filter_posts_fields');
   add_filter('post_limits',  'ec3_filter_post_limits');
   add_filter('the_posts',    'ec3_filter_the_posts');
+  add_filter('get_archives_link','ec3_filter_get_archives_link');
   
   if(!$ec3->hide_event_box)
     add_filter('the_content','ec3_filter_the_content',20);
@@ -514,7 +570,12 @@ if($ec3->event_category)
   add_filter('get_the_excerpt', 'ec3_get_the_excerpt');
   
   if($ec3->advanced)
+  {
     add_filter('posts_orderby','ec3_filter_posts_orderby',11);
+    // In advanced mode, exclude events from the archive.
+    add_filter('getarchives_join', 'ec3_filter_getarchives_join');
+    add_filter('getarchives_where','ec3_filter_getarchives_where');
+  }
 }
 
 ?>

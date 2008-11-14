@@ -255,13 +255,22 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
        . '&ec3_before='.$this->limit_dateobj->to_mysqldate()
        . '&nopaging=1';
     if(!$this->show_only_events)
-        $q .= '&ec3_listing=no';
+        $q .= '&ec3_listing=all';
     $query = new WP_Query();
     $query->query($q);
 
-    $this->add_events($query);
-    if(!ec3_is_listing_q($query))
-      $this->add_posts($query,!$ec3->advanced);
+    switch(ec3_get_listing_q($query))
+    {
+      case 'E':
+        $this->add_events($query);
+        break;
+      case 'P':
+        $this->add_posts($query,!$ec3->advanced);
+        break;
+      default:
+        $this->add_events($query);
+        $this->add_posts($query,!$ec3->advanced);
+    }
     $result .= parent::generate();
 
     // Display navigation panel.

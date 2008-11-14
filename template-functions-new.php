@@ -28,31 +28,27 @@ function ec3_is_event_category()
   return ec3_is_event_category_q($ec3->query);
 }
 
-/** Determines if $query is a listing.
- *  Either $query->ec3_listing=YES, or this is advanced mode and the query
- *  is for the event category. */
-function ec3_is_listing_q(&$query)
+/** Determines the type of listing for $query - P(OST),E(VENT),A(LL),D(ISABLE).
+ *  When $query->ec3_listing the result is A or E, depending upon the query. */
+function ec3_get_listing_q(&$query)
 {
   global $ec3;
-  if($query->ec3_listing=='YES')
+  if(empty($query->ec3_listing))
   {
-    return true;
+    if($ec3->advanced && ec3_is_event_category_q($query))
+      return 'E';
+    else
+      return 'A';
   }
-  elseif($ec3->advanced &&
-         empty($query->ec3_listing) &&
-         ec3_is_event_category_q($query))
-  {
-    return true;
-  }
-  // $query->ec3_listing=='NO', or this isn't an advanced category query.
-  return false;
+  return substr($query->ec3_listing,0,1);
 }
 
-/** Determines if the current $ec3->query is a listing. */
-function ec3_is_listing()
+/** Determines the type of listing for $ec3->query - P(OST),E(VENT),A(LL).
+ *  When $query->ec3_listing the result is A or E, depending upon the query. */
+function ec3_get_listing()
 {
   global $ec3;
-  return ec3_is_listing_q($ec3->query);
+  return ec3_get_listing_q($ec3->query);
 }
 
 /** Comparison function for events' start times.
@@ -241,8 +237,9 @@ function ec3_iter_all_events_q(&$query)
   global $ec3, $post;
   unset($ec3->events);
   $ec3->events = array();
+  $listing = ec3_get_listing_q($query);
 
-  if($query->is_page || $query->is_single || $query->is_admin):
+  if($query->is_page || $query->is_single || $query->is_admin || $listing=='D'):
 
       // Emit all events.
       while($query->have_posts())
@@ -253,6 +250,10 @@ function ec3_iter_all_events_q(&$query)
         foreach($post->ec3_schedule as $s)
           $ec3->events[] = $s;
       }
+
+  elseif($listing=='P'): // posts-only
+
+      ; // Leave the $ec3->events array empty - list no events.
 
   elseif($query->is_date && !$query->is_time):
 
@@ -326,7 +327,7 @@ function ec3_iter_all_events_q(&$query)
           }
       }
 
-  elseif($ec3->advanced &&(ec3_is_listing_q($query) || $query->is_search)):
+  elseif($ec3->advanced &&( $listing=='E' || $query->is_search )):
 
       // Hide inactive events
       while($query->have_posts())

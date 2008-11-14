@@ -108,7 +108,14 @@ class ec3_Options
   function reset_query(&$query)
   {
     $this->query =& $query;
-    $this->query->ec3_listing=''; ///< Valid: ''|'YES'|'NO'
+
+    // Valid values for ec3_listing are...
+    // ''          - automatically choose default behaviour ('A' or 'E').
+    // 'E(VENTS)'  - only show events. Sort by start time.
+    // 'A(LL)'     - show both events and posts. Sort by start and post date.
+    // 'P(OSTS)'   - show only posts.
+    // 'D(ISABLE)' - disable Event Calendar's effects on the listing.
+    $this->query->ec3_listing=''; ///< Valid: ''|'E(VENTS)'|'A(LL)'|P(OSTS)
 
     $this->is_date_range=false;
     $this->is_today=false;

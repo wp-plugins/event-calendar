@@ -150,9 +150,18 @@ $options=array();
 if($wp_query->is_month)
   $options['num_months']=1;
 $calobj = new ec3_ec3xml($options);
-$calobj->add_events($wp_query);
-if(!ec3_is_listing_q($wp_query))
-  $calobj->add_posts($wp_query,!$ec3->advanced);
+switch(ec3_get_listing_q($wp_query))
+{
+  case 'E':
+    $calobj->add_events($wp_query);
+    break;
+  case 'P':
+    $calobj->add_posts($wp_query,!$ec3->advanced);
+    break;
+  default:
+    $calobj->add_events($wp_query);
+    $calobj->add_posts($wp_query,!$ec3->advanced);
+}
 
 ?>
 <calendar><?php echo $calobj->generate() ?>
