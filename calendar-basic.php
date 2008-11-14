@@ -316,6 +316,7 @@ class ec3_BasicCalendar
       $monthstr .= $this->wrap_week($weekstr);
       $result .= $this->wrap_month($monthstr);
     }
+    ec3_reset_wp_query();
     return $result;
   }
 

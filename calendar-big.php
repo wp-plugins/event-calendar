@@ -92,14 +92,6 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
       . "\t  ec3.calendars['$this->id'].new_day = ec3.big_cal.new_day;\n"
       . "\t  ec3.calendars['$this->id'].update_day = ec3.big_cal.update_day;\n"
       . "\t--></script>\n";
-
-    // If we were in a loop, re-set the global $post.
-    global $wp_query,$post;
-    if($wp_query->in_the_loop)
-    {
-      $post = $wp_query->next_post();
-      setup_postdata($post);
-    }
     return $result;
   }
 
@@ -110,7 +102,7 @@ function ec3_filter_the_content_bigcal(&$post_content)
 {
   if(is_page())
   {
-    $placeholder = '[EC3BigCalendar]';
+    $placeholder = '[EC3BigCalendar';
     $pos=strpos($post_content,$placeholder);
     if($pos!==FALSE)
     {
@@ -118,6 +110,16 @@ function ec3_filter_the_content_bigcal(&$post_content)
       $options['id']='ec3_big_cal';
       $options['num_months']=1;
       $options['day_length']=9;
+
+      if(preg_match('/\[EC3BigCalendar(:(\w+=\w+(&|&amp;))*(\w+=\w+))?]/',$post_content,$m))
+      {
+        if(!empty($m[1]))
+        {
+          $args = html_entity_decode($m[1]);
+          $options = wp_parse_args(substr($args,1),$options);
+        }
+        $placeholder = $m[0];
+      }
       $calobj = new ec3_BigCalendar($options);
       $calcode = $calobj->generate();
       $post_content = str_replace($placeholder,$calcode,$post_content);
