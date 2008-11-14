@@ -1,7 +1,7 @@
 TODO: Event Calendar 3.2
 ========================
 
- ? Fix XML entity rendering on Safari (works on IE/Firefox)
+ x Fix XML entity rendering on Safari (works on IE/Firefox)
 
  o Include an example of how to make events show up differently from other
    categories.
@@ -38,14 +38,14 @@ FUTURE
  
  o Consider upcoming.org integration.
 
- o Whole-page calendar.
+ x Whole-page calendar.
    Some people want a HUGE calendar, not in the sidebar. This doesn't
    work well if they have a sidebar calendar as well, because the calendar
    has a unique ID. Should probably allow a new id to be set in the
    ec3_get_calendar() template function.
    (See also, the next item...)
  
- o New template function to list event titles inside the calendar table.
+ x New template function to list event titles inside the calendar table.
    Like this: http://www.writingsalons.com/classes/index-12.php
    Make sure that all the links work properly, even w/o JavaScript.
 
@@ -58,14 +58,14 @@ FUTURE
    > does not get displayed, but is used to set the appropriate fields in the
    > event record. 
 
- o 'Calendar-Page'-formatting template. Alternative to ec3_the_schedule().
+ x 'Calendar-Page'-formatting template. Alternative to ec3_the_schedule().
    Suggested by Karl Kolk.
 
 Event List:
 
- o Option to show N days in advance, rather than N next events.
+ x Option to show N days in advance, rather than N next events.
 
- o Possibly: break the function into its component parts, and enable folks to
+ x Possibly: break the function into its component parts, and enable folks to
    generate the contents with their own loop - and then provide an example loop
    in get_events().
 
