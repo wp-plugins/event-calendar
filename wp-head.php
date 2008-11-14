@@ -1,6 +1,6 @@
 <?php global $ec3,$month,$month_abbrev ?>
 
-	<!-- Added by EventCalendar plugin. Version <?php echo $ec3->version; ?> -->
+	<!-- Added by Event-Calendar plugin. Version <?php echo $ec3->version; ?> -->
 	<script type='text/javascript' src='<?php echo $ec3->myfiles; ?>/xmlhttprequest.js'></script>
 	<script type='text/javascript' src='<?php echo $ec3->myfiles; ?>/ec3.js'></script>
 	<script type='text/javascript'><!--

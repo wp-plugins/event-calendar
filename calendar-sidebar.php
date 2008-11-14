@@ -178,7 +178,7 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
       return
         "<td colspan='$num_days' class='pad' style='vertical-align:bottom'>"
         . "<a href='http://wpcal.firetree.net/?ec3_version=$ec3->version'"
-        . " title='Event Calendar $ec3->version'"
+        . " title='Event-Calendar $ec3->version'"
         . ($this->hide_logo? " style='display:none'>": ">")
         . "<span class='ec3_ec'><span>EC</span></span></a></td>";
     }

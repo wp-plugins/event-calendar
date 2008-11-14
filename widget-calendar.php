@@ -26,7 +26,7 @@ function ec3_widget_cal($args)
   echo $before_widget . $before_title;
   echo ec3_widget_title($options['title'],'Event Calendar');
   echo $after_title;
-  if(ec3_check_installed(__('Event Calendar','ec3')))
+  if(ec3_check_installed('Event-Calendar'))
   {
     require_once(dirname(__FILE__).'/calendar-sidebar.php');
     global $ec3;
@@ -118,7 +118,7 @@ function ec3_widget_cal_control()
    <label for="ec3_cal_show_logo">
     <input type="checkbox" value="1" id="ec3_cal_show_logo" name="ec3_cal_show_logo"
      <?php if(!$cal->hide_logo) echo " checked='checked'" ?>  />
-    <?php _e('Show Event Calendar logo','ec3') ?>.
+    <?php echo sprintf(__('Show %s logo','ec3'),'Event-Calendar') ?>.
    </label>
   </p>
   <p>
@@ -147,7 +147,7 @@ function ec3_action_widgets_init_cal()
     'ec3_widget_cal', 
     array('description' =>
           __( 'Display upcoming events in a dynamic calendar.','ec3')
-              . ' (Event Calendar '. __('Plugin') .')' ) 
+              . ' (Event-Calendar '. __('Plugin') .')' ) 
   );
   register_widget_control('event-calendar','ec3_widget_cal_control');
 }

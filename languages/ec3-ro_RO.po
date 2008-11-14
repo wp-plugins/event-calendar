@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-13 22:48+0000\n"
+"POT-Creation-Date: 2008-11-14 13:30+0000\n"
 "PO-Revision-Date: 2007-03-30 17:06+0200\n"
 "Last-Translator: Sushkov Stanislav <cool2sv@gmail.com>\n"
 "Language-Team: WordPress Romania <cool2sv@gmail.com>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin.php:110 admin.php:426
+#: admin.php:110 admin.php:430
 msgid "Event Editor"
 msgstr "Editor Evenimente"
 
@@ -49,46 +49,47 @@ msgstr "Adaugă un nou eveniment"
 msgid "Delete this event"
 msgstr "Şterge acest eveniment"
 
-#: admin.php:347
+#: admin.php:346
 #, php-format
-msgid "Upgraded database to EventCalendar Version %s"
-msgstr "Baza de date actualizată pentru versiunea %s a EventCalendar-ului"
+msgid "Upgraded database to %1$s Version %2$s"
+msgstr "Baza de date actualizată pentru versiunea %2$s a %1$s-ului"
 
-#: admin.php:352
-msgid "Error upgrading database for EventCalendar plugin."
-msgstr "Eroare la actualizarea bazei de date pentru modulul EventCalendar."
+#: admin.php:353
+#, php-format
+msgid "Error upgrading database for %s plugin."
+msgstr "Eroare la actualizarea bazei de date pentru modulul %s."
 
-#: admin.php:361
+#: admin.php:365
 msgid "Table already existed"
 msgstr "Tabelul deja există"
 
-#: admin.php:366
+#: admin.php:370
 #, php-format
 msgid "Created table %s"
 msgstr ""
 
-#: admin.php:391
+#: admin.php:395
 #, php-format
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:412 admin.php:467
+#: admin.php:416 admin.php:471
 msgid "Event Calendar Options"
 msgstr "Opţiuni Calendar Evenimente"
 
-#: admin.php:471
+#: admin.php:475
 msgid "Easter Egg"
 msgstr ""
 
-#: admin.php:473 upgrade-posts.php:119
+#: admin.php:477 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
 msgstr ""
 
-#: admin.php:480
+#: admin.php:484
 msgid "Event category"
 msgstr "Categorie Evenimente"
 
-#: admin.php:490
+#: admin.php:494
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -96,31 +97,31 @@ msgstr ""
 "Articolele evenimente sunt adăugate în această categorie pentru tine. Să nu "
 "faci categoria implicită pentru articole."
 
-#: admin.php:496
+#: admin.php:500
 msgid "Show schedule within posts"
 msgstr "Arată programările în articole"
 
-#: admin.php:500
+#: admin.php:504
 msgid "Show Schedule"
 msgstr "Afişează Programare"
 
-#: admin.php:503
+#: admin.php:507
 msgid "Hide Schedule"
 msgstr "Ascunde Programare"
 
-#: admin.php:510
+#: admin.php:514
 msgid "Show events as blog entries"
 msgstr "Afişează evenimentele drept articole"
 
-#: admin.php:514
+#: admin.php:518
 msgid "Events are Normal Posts"
 msgstr "Evenimentele sunt articole normale"
 
-#: admin.php:517
+#: admin.php:521
 msgid "Keep Events Separate"
 msgstr "Ţine evenimentele separat"
 
-#: admin.php:521
+#: admin.php:525
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -129,15 +130,15 @@ msgstr ""
 "evenimentele din viitor, în ordinea cronologică. Evenimentele nu apar pe "
 "prima pagină."
 
-#: admin.php:527 admin.php:539
+#: admin.php:531 admin.php:543
 msgid "Timezone"
 msgstr "Zona timpului"
 
-#: admin.php:531
+#: admin.php:535
 msgid "unknown"
 msgstr "necunoscut"
 
-#: admin.php:535
+#: admin.php:539
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -149,28 +150,23 @@ msgstr ""
 msgid "Subscribe to iCalendar."
 msgstr "Abonează-te la iCalendar"
 
-#: template-functions-new.php:139
+#: template-functions-new.php:135
 msgid "all day"
 msgstr "întreaga zi"
 
-#: template-functions-new.php:471 widget-list.php:29 widget-list.php:136
+#: template-functions-new.php:472 widget-list.php:29 widget-list.php:136
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Evenimente ce se apropie."
 
-#: template-functions-new.php:537 widget-list.php:71
+#: template-functions-new.php:538 widget-list.php:71
 msgid "No events."
 msgstr "Nici un eveniment."
 
-#: template-functions-new.php:572 template-functions-new.php:589
-#: template-functions-new.php:604
+#: template-functions-new.php:573 template-functions-new.php:590
+#: template-functions-new.php:605
 msgid "to"
 msgstr "până în"
-
-#: template-functions-new.php:616 widget-calendar.php:29
-#: widget-calendar.php:146 K2/ec3_sidebar_module.php:31
-msgid "Event Calendar"
-msgstr "Calendar Evenimente"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
@@ -240,8 +236,9 @@ msgid "Only Show Events"
 msgstr "Afişează doar evenimentele"
 
 #: widget-calendar.php:121
-msgid "Show Event Calendar logo"
-msgstr "Afişează logo-ul modulului"
+#, php-format
+msgid "Show %s logo"
+msgstr "Afişează logo %s"
 
 #: widget-calendar.php:126
 msgid "You might want to disable popups if you use Nicetitles."
@@ -251,6 +248,10 @@ msgstr ""
 #: widget-calendar.php:129
 msgid "Popup event lists"
 msgstr "Liste evenimente popup"
+
+#: widget-calendar.php:146 K2/ec3_sidebar_module.php:31
+msgid "Event Calendar"
+msgstr "Calendar Evenimente"
 
 #: widget-calendar.php:149
 msgid "Display upcoming events in a dynamic calendar."
@@ -264,6 +265,9 @@ msgstr "Numărul de luni"
 msgid "Display upcoming events as a list."
 msgstr ""
 
+#~ msgid "Show Event Calendar logo"
+#~ msgstr "Afişează logo-ul modulului"
+
 #~ msgid "Calendar Display"
 #~ msgstr "Afişare Calendar"
 
@@ -272,9 +276,6 @@ msgstr ""
 
 #~ msgid "Show All Posts"
 #~ msgstr "Afişează toate articolele"
-
-#~ msgid "Show Logo"
-#~ msgstr "Afişează logo"
 
 #~ msgid "Hide Logo"
 #~ msgstr "Ascunde logo"

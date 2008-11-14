@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1._rc1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-13 22:48+0000\n"
+"POT-Creation-Date: 2008-11-14 13:30+0000\n"
 "PO-Revision-Date: 2007-05-03 00:27+0100\n"
 "Last-Translator: Elbandi <elbandi@obinet.hu>\n"
 "Language-Team: Andras Elso <ea333@freemail.hu>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.php:110 admin.php:426
+#: admin.php:110 admin.php:430
 msgid "Event Editor"
 msgstr "Esemény szerkesztõ"
 
@@ -43,46 +43,47 @@ msgstr "Új esemény hozzáadása"
 msgid "Delete this event"
 msgstr "Esemény törléses"
 
-#: admin.php:347
+#: admin.php:346
 #, php-format
-msgid "Upgraded database to EventCalendar Version %s"
-msgstr "Adatbázis frissitve az EventCalendar verziohoz: %s"
+msgid "Upgraded database to %1$s Version %2$s"
+msgstr "Adatbázis frissitve az %1$s verziohoz: %2$s"
 
-#: admin.php:352
-msgid "Error upgrading database for EventCalendar plugin."
-msgstr "Hiba az EventCalendar plugin adatbázis frissítésekor."
+#: admin.php:353
+#, php-format
+msgid "Error upgrading database for %s plugin."
+msgstr "Hiba az %1 plugin adatbázis frissítésekor."
 
-#: admin.php:361
+#: admin.php:365
 msgid "Table already existed"
 msgstr "A tábla már létezik"
 
-#: admin.php:366
+#: admin.php:370
 #, php-format
 msgid "Created table %s"
 msgstr ""
 
-#: admin.php:391
+#: admin.php:395
 #, php-format
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:412 admin.php:467
+#: admin.php:416 admin.php:471
 msgid "Event Calendar Options"
 msgstr "EventCalendar beállítások"
 
-#: admin.php:471
+#: admin.php:475
 msgid "Easter Egg"
 msgstr ""
 
-#: admin.php:473 upgrade-posts.php:119
+#: admin.php:477 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
 msgstr ""
 
-#: admin.php:480
+#: admin.php:484
 msgid "Event category"
 msgstr "Esemény kategória"
 
-#: admin.php:490
+#: admin.php:494
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -90,31 +91,31 @@ msgstr ""
 "Események ebbe a kategóriába tartoznak. Ne tedd ezt a kategóriát az "
 "alapértelmezettnek."
 
-#: admin.php:496
+#: admin.php:500
 msgid "Show schedule within posts"
 msgstr "Ütemezés mutatása"
 
-#: admin.php:500
+#: admin.php:504
 msgid "Show Schedule"
 msgstr "Megmutat"
 
-#: admin.php:503
+#: admin.php:507
 msgid "Hide Schedule"
 msgstr "Elrejt"
 
-#: admin.php:510
+#: admin.php:514
 msgid "Show events as blog entries"
 msgstr "Események mutatása mint blog bejegyzés"
 
-#: admin.php:514
+#: admin.php:518
 msgid "Events are Normal Posts"
 msgstr "Események normál postok"
 
-#: admin.php:517
+#: admin.php:521
 msgid "Keep Events Separate"
 msgstr "Események külön tartása"
 
-#: admin.php:521
+#: admin.php:525
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -122,15 +123,15 @@ msgstr ""
 "Események külön tartása: az esemény kategória oldal mutatja az eljövendõ "
 "eseményeket, datum szerint. Az események nem jelennek meg a fõoldalon."
 
-#: admin.php:527 admin.php:539
+#: admin.php:531 admin.php:543
 msgid "Timezone"
 msgstr "Idõzona"
 
-#: admin.php:531
+#: admin.php:535
 msgid "unknown"
 msgstr "ismeretlen"
 
-#: admin.php:535
+#: admin.php:539
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -142,28 +143,23 @@ msgstr ""
 msgid "Subscribe to iCalendar."
 msgstr "Feliratkozás iCalendar-ra."
 
-#: template-functions-new.php:139
+#: template-functions-new.php:135
 msgid "all day"
 msgstr "egész napos"
 
-#: template-functions-new.php:471 widget-list.php:29 widget-list.php:136
+#: template-functions-new.php:472 widget-list.php:29 widget-list.php:136
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Közeledõ esemény"
 
-#: template-functions-new.php:537 widget-list.php:71
+#: template-functions-new.php:538 widget-list.php:71
 msgid "No events."
 msgstr "Nincs esemény."
 
-#: template-functions-new.php:572 template-functions-new.php:589
-#: template-functions-new.php:604
+#: template-functions-new.php:573 template-functions-new.php:590
+#: template-functions-new.php:605
 msgid "to"
 msgstr "-"
-
-#: template-functions-new.php:616 widget-calendar.php:29
-#: widget-calendar.php:146 K2/ec3_sidebar_module.php:31
-msgid "Event Calendar"
-msgstr "Esemény Naptár"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
@@ -233,8 +229,9 @@ msgid "Only Show Events"
 msgstr "Csak az események mutatása"
 
 #: widget-calendar.php:121
-msgid "Show Event Calendar logo"
-msgstr "EventCalendar logo mutatása"
+#, php-format
+msgid "Show %s logo"
+msgstr "%s logo mutatása"
 
 #: widget-calendar.php:126
 msgid "You might want to disable popups if you use Nicetitles."
@@ -243,6 +240,10 @@ msgstr "Könnyen letilthatod a felugró ablakokat, ha Szépcímeket használsz"
 #: widget-calendar.php:129
 msgid "Popup event lists"
 msgstr "Felugróablakok az események listájával"
+
+#: widget-calendar.php:146 K2/ec3_sidebar_module.php:31
+msgid "Event Calendar"
+msgstr "Esemény Naptár"
 
 #: widget-calendar.php:149
 msgid "Display upcoming events in a dynamic calendar."
@@ -256,6 +257,9 @@ msgstr "Hónapok száma"
 msgid "Display upcoming events as a list."
 msgstr ""
 
+#~ msgid "Show Event Calendar logo"
+#~ msgstr "EventCalendar logo mutatása"
+
 #~ msgid "Calendar Display"
 #~ msgstr "Naptár kinézet"
 
@@ -264,9 +268,6 @@ msgstr ""
 
 #~ msgid "Show All Posts"
 #~ msgstr "Minden bejegyzés mutatása"
-
-#~ msgid "Show Logo"
-#~ msgstr "Logo mutatása"
 
 #~ msgid "Hide Logo"
 #~ msgstr "Logo elrejtése"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._pre15\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-13 22:48+0000\n"
+"POT-Creation-Date: 2008-11-14 13:30+0000\n"
 "PO-Revision-Date: 2008-11-08 11:54+0100\n"
 "Last-Translator: Lorenzo De Tomasi <lorenzo.detomasi@gmail.com>\n"
 "Language-Team: italian <nicola@ruggierobros.com>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
 
-#: admin.php:110 admin.php:426
+#: admin.php:110 admin.php:430
 msgid "Event Editor"
 msgstr "Modifica eventi"
 
@@ -45,48 +45,49 @@ msgstr "Aggiungi un nuovo evento"
 msgid "Delete this event"
 msgstr "Cancella questo evento"
 
-#: admin.php:347
+#: admin.php:346
 #, php-format
-msgid "Upgraded database to EventCalendar Version %s"
-msgstr "Aggiornamento effettuato al database di EventCalendar Versione %s"
+msgid "Upgraded database to %1$s Version %2$s"
+msgstr "Aggiornamento effettuato al database di %1$s Versione %2$s"
 
-#: admin.php:352
-msgid "Error upgrading database for EventCalendar plugin."
+#: admin.php:353
+#, php-format
+msgid "Error upgrading database for %s plugin."
 msgstr ""
 "Si &egrave; verificato un errore durante l'aggiornamento del database del "
-"plugin EventCalendar"
+"plugin %s"
 
-#: admin.php:361
+#: admin.php:365
 msgid "Table already existed"
 msgstr "Tabella gi&agrave; esistente"
 
-#: admin.php:366
+#: admin.php:370
 #, php-format
 msgid "Created table %s"
 msgstr ""
 
-#: admin.php:391
+#: admin.php:395
 #, php-format
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:412 admin.php:467
+#: admin.php:416 admin.php:471
 msgid "Event Calendar Options"
 msgstr "Opzioni di Event Calendar"
 
-#: admin.php:471
+#: admin.php:475
 msgid "Easter Egg"
 msgstr "Uovo di Pasqua"
 
-#: admin.php:473 upgrade-posts.php:119
+#: admin.php:477 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
 msgstr "Aggiorna gli articoli evento"
 
-#: admin.php:480
+#: admin.php:484
 msgid "Event category"
 msgstr "Categoria eventi"
 
-#: admin.php:490
+#: admin.php:494
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -94,31 +95,31 @@ msgstr ""
 "Questa categoria viene assegnata agli eventi automaticamente. Non "
 "utilizzarla come categoria di default."
 
-#: admin.php:496
+#: admin.php:500
 msgid "Show schedule within posts"
 msgstr "Mostra il programma negli articoli"
 
-#: admin.php:500
+#: admin.php:504
 msgid "Show Schedule"
 msgstr "Mostra il programma"
 
-#: admin.php:503
+#: admin.php:507
 msgid "Hide Schedule"
 msgstr "Nascondi il programma"
 
-#: admin.php:510
+#: admin.php:514
 msgid "Show events as blog entries"
 msgstr "Mostra gli eventi come articoli del blog"
 
-#: admin.php:514
+#: admin.php:518
 msgid "Events are Normal Posts"
 msgstr "Gli eventi sono articoli normali"
 
-#: admin.php:517
+#: admin.php:521
 msgid "Keep Events Separate"
 msgstr "Mantieni gli eventi separati"
 
-#: admin.php:521
+#: admin.php:525
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -127,15 +128,15 @@ msgstr ""
 "eventi futuri, in ordine cronologico. Gli eventi non compaiono nella pagina "
 "principale."
 
-#: admin.php:527 admin.php:539
+#: admin.php:531 admin.php:543
 msgid "Timezone"
 msgstr "Fuso orario"
 
-#: admin.php:531
+#: admin.php:535
 msgid "unknown"
 msgstr "sconosciuto"
 
-#: admin.php:535
+#: admin.php:539
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -147,28 +148,23 @@ msgstr ""
 msgid "Subscribe to iCalendar."
 msgstr "Abbonati a iCalendar."
 
-#: template-functions-new.php:139
+#: template-functions-new.php:135
 msgid "all day"
 msgstr "tutto il giorno"
 
-#: template-functions-new.php:471 widget-list.php:29 widget-list.php:136
+#: template-functions-new.php:472 widget-list.php:29 widget-list.php:136
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Prossimi eventi"
 
-#: template-functions-new.php:537 widget-list.php:71
+#: template-functions-new.php:538 widget-list.php:71
 msgid "No events."
 msgstr "Nessun evento."
 
-#: template-functions-new.php:572 template-functions-new.php:589
-#: template-functions-new.php:604
+#: template-functions-new.php:573 template-functions-new.php:590
+#: template-functions-new.php:605
 msgid "to"
 msgstr "a"
-
-#: template-functions-new.php:616 widget-calendar.php:29
-#: widget-calendar.php:146 K2/ec3_sidebar_module.php:31
-msgid "Event Calendar"
-msgstr "Calendario eventi"
 
 #: template-functions.php:29
 msgid "You must choose an event category."
@@ -179,14 +175,13 @@ msgid "Go to Event Calendar Options"
 msgstr "Vai alle opzioni di Event Calendar"
 
 #: upgrade-posts.php:33
-#, fuzzy, php-format
+#, php-format
 msgid "Post upgraded."
 msgid_plural "%d posts upgraded."
 msgstr[0] "Articolo aggiornato."
 msgstr[1] "%d articoli aggiornati."
 
 #: upgrade-posts.php:42
-#, fuzzy
 msgid "Upgrade Event Posts (from version 3.0)"
 msgstr "Aggiorna gli articoli evento"
 
@@ -239,8 +234,9 @@ msgid "Only Show Events"
 msgstr "Mostra solo gli eventi"
 
 #: widget-calendar.php:121
-msgid "Show Event Calendar logo"
-msgstr "Mostra il logo di Event Calendar"
+#, php-format
+msgid "Show %s logo"
+msgstr "Mostra il logo di %s"
 
 #: widget-calendar.php:126
 msgid "You might want to disable popups if you use Nicetitles."
@@ -251,6 +247,10 @@ msgstr ""
 #: widget-calendar.php:129
 msgid "Popup event lists"
 msgstr "Popup lista eventi"
+
+#: widget-calendar.php:146 K2/ec3_sidebar_module.php:31
+msgid "Event Calendar"
+msgstr "Calendario eventi"
 
 #: widget-calendar.php:149
 msgid "Display upcoming events in a dynamic calendar."
@@ -264,6 +264,9 @@ msgstr "Numero di eventi"
 msgid "Display upcoming events as a list."
 msgstr "Mostra i prossimi eventi come lista."
 
+#~ msgid "Show Event Calendar logo"
+#~ msgstr "Mostra il logo di Event Calendar"
+
 #~ msgid "Calendar Display"
 #~ msgstr "Display del calendario"
 
@@ -272,9 +275,6 @@ msgstr "Mostra i prossimi eventi come lista."
 
 #~ msgid "Show All Posts"
 #~ msgstr "Mostra tutti gli articoli"
-
-#~ msgid "Show Logo"
-#~ msgstr "Mostra il logo"
 
 #~ msgid "Hide Logo"
 #~ msgstr "Nascondi il logo"

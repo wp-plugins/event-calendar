@@ -103,7 +103,7 @@ class ec3_Admin
   function filter_edit_form()
   { ?>
     
-    <!-- Build the user interface for Event Calendar. -->
+    <!-- Build the user interface for Event-Calendar. -->
     <div class="dbx-b-ox-wrapper">
     <fieldset id='ec3_schedule_editor' class="dbx-box">
     <div class="dbx-h-andle-wrapper">
@@ -145,7 +145,7 @@ class ec3_Admin
     }
     ?>
 
-    <!-- Event Calendar: Event Editor -->
+    <!-- Event-Calendar: Event Editor -->
     <table width="100%" cellspacing="2" cellpadding="5" class="editform">
      <thead><tr>
       <th><?php _e('Start','ec3'); ?></th>
@@ -343,13 +343,17 @@ class ec3_Admin
       return; // Installed version later than this one ?!?!
 
     // Upgrade.
-    $message = sprintf(
-        __('Upgraded database to EventCalendar Version %s','ec3'), $ec3->version
+    $message = sprintf(__('Upgraded database to %1$s Version %2$s','ec3'),
+        'Event-Calendar',$ec3->version
       ) . '.';
 
     $tables=$wpdb->get_results('SHOW TABLES',ARRAY_N);
     if(!$tables)
-      die(__('Error upgrading database for EventCalendar plugin.','ec3'));
+    {
+      die(sprintf(__('Error upgrading database for %s plugin.','ec3'),
+          'Event-Calendar'
+        ));
+    }
 
     $table_exists=false;
     foreach($tables as $t)
@@ -410,7 +414,7 @@ class ec3_Admin
     global $ec3;
     add_options_page(
       __('Event Calendar Options','ec3'),
-      'EventCalendar',
+      'Event-Calendar',
       6,
       'ec3_admin',
       'ec3_options_subpanel'
