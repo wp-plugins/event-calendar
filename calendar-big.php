@@ -97,37 +97,4 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
 
 };
 
-
-function ec3_filter_the_content_bigcal(&$post_content)
-{
-  if(is_page())
-  {
-    $placeholder = '[EC3BigCalendar';
-    $pos=strpos($post_content,$placeholder);
-    if($pos!==FALSE)
-    {
-      $options=array();
-      $options['id']='ec3_big_cal';
-      $options['num_months']=1;
-      $options['day_length']=9;
-
-      if(preg_match('/\[EC3BigCalendar(:(\w+=\w+(&|&amp;))*(\w+=\w+))?]/',$post_content,$m))
-      {
-        if(!empty($m[1]))
-        {
-          $args = html_entity_decode($m[1]);
-          $options = wp_parse_args(substr($args,1),$options);
-        }
-        $placeholder = $m[0];
-      }
-      $calobj = new ec3_BigCalendar($options);
-      $calcode = $calobj->generate();
-      $post_content = str_replace($placeholder,$calcode,$post_content);
-    }
-  }
-  return $post_content;
-}
-
-add_filter('the_content','ec3_filter_the_content_bigcal');
-
 ?>

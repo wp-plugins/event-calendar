@@ -34,7 +34,6 @@ require_once(dirname(__FILE__).'/admin.php');
 require_once(dirname(__FILE__).'/tz.php');
 require_once(dirname(__FILE__).'/widget-calendar.php');
 require_once(dirname(__FILE__).'/widget-list.php');
-require_once(dirname(__FILE__).'/calendar-big.php');
 
 
 $ec3_today_id=str_replace('_0','_',ec3_strftime("ec3_%Y_%m_%d"));
@@ -513,6 +512,42 @@ function ec3_filter_the_content(&$post_content)
 }
 
 
+/** Page (not post) content can contain a tag like [EC3BigCalendar:<options>]
+ *  which gets replaced by a full-page calendar. */
+function ec3_filter_the_content_bigcal(&$post_content)
+{
+  if(is_page())
+  {
+    $placeholder = '[EC3BigCalendar';
+    $pos=strpos($post_content,$placeholder);
+    if($pos!==FALSE)
+    {
+      // Only load the Big Calendar code now that we know we need it.
+      require_once(dirname(__FILE__).'/calendar-big.php');
+      // Process options.
+      $options=array();
+      $options['id']='ec3_big_cal';
+      $options['num_months']=1;
+      $options['day_length']=9;
+      $re='/\[EC3BigCalendar(:(\w+=\w+(&|&amp;))*(\w+=\w+))?]/i';
+      if(preg_match($re,$post_content,$m))
+      {
+        if(!empty($m[1]))
+        {
+          $args = strtolower(html_entity_decode($m[1]));
+          $options = wp_parse_args(substr($args,1),$options);
+        }
+        $placeholder = $m[0];
+      }
+      $calobj = new ec3_BigCalendar($options);
+      $calcode = $calobj->generate();
+      $post_content = str_replace($placeholder,$calcode,$post_content);
+    }
+  }
+  return $post_content;
+}
+
+
 /** Replaces default wp_trim_excerpt filter. Fakes an excerpt if needed.
  *  Adds a textual summary of the schedule to the excerpt.*/
 function ec3_get_the_excerpt($text)
@@ -550,18 +585,19 @@ function ec3_get_the_excerpt($text)
 // Hook in...
 if($ec3->event_category)
 {
-  add_action('init',         'ec3_action_init');
-  add_action('wp_head',      'ec3_action_wp_head');
-  add_action('admin_head',   'ec3_action_admin_head');
-  add_filter('query_vars',   'ec3_filter_query_vars');
-  add_filter('parse_query',  'ec3_filter_parse_query');
-  add_filter('posts_where',  'ec3_filter_posts_where',11);
-  add_filter('posts_join',   'ec3_filter_posts_join');
-  add_filter('posts_groupby','ec3_filter_posts_groupby');
-  add_filter('posts_fields', 'ec3_filter_posts_fields');
-  add_filter('post_limits',  'ec3_filter_post_limits');
-  add_filter('the_posts',    'ec3_filter_the_posts');
+  add_action('init',             'ec3_action_init');
+  add_action('wp_head',          'ec3_action_wp_head');
+  add_action('admin_head',       'ec3_action_admin_head');
+  add_filter('query_vars',       'ec3_filter_query_vars');
+  add_filter('parse_query',      'ec3_filter_parse_query');
+  add_filter('posts_where',      'ec3_filter_posts_where',11);
+  add_filter('posts_join',       'ec3_filter_posts_join');
+  add_filter('posts_groupby',    'ec3_filter_posts_groupby');
+  add_filter('posts_fields',     'ec3_filter_posts_fields');
+  add_filter('post_limits',      'ec3_filter_post_limits');
+  add_filter('the_posts',        'ec3_filter_the_posts');
   add_filter('get_archives_link','ec3_filter_get_archives_link');
+  add_filter('the_content',      'ec3_filter_the_content_bigcal');
   
   if(!$ec3->hide_event_box)
     add_filter('the_content','ec3_filter_the_content',20);
