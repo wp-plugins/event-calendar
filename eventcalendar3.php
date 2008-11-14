@@ -73,12 +73,17 @@ function ec3_filter_the_posts($posts)
     $posts[$i]->ec3_schedule=array();
   }
   global $ec3,$wpdb;
-  $schedule=$wpdb->get_results(
-    "SELECT *,IF(end>='$ec3->today',1,0) AS active
-     FROM $ec3->schedule
-     WHERE post_id IN (".implode(',',$post_ids).")
-     ORDER BY start"
-  );
+  $sql="SELECT *,IF(end>='$ec3->today',1,0) AS active
+        FROM $ec3->schedule
+        WHERE post_id IN (".implode(',',$post_ids).")
+        ORDER BY start";
+  $key = md5($sql);
+  $schedule = wp_cache_get($key,'ec3');
+  if($schedule===FALSE)
+  {
+    $schedule = $wpdb->get_results($sql);
+    wp_cache_add($key,$schedule,'ec3');
+  }
   // Flip $post_ids so that it maps post ID to position in the $posts array.
   $post_ids=array_flip($post_ids);
   if($post_ids && $schedule)
