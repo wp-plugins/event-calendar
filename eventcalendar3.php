@@ -513,7 +513,7 @@ function ec3_filter_parse_query($wp_query)
 
 function ec3_filter_the_content(&$post_content)
 {
-  return ec3_get_schedule() . $post_content;
+  return ec3_get_iconlets() . $post_content;
 }
 
 

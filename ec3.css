@@ -155,7 +155,66 @@ td.ec3_start { text-align:right; }
 
 td.ec3_to    { text-align:center; }
 
-.ec3_past *  { text-decoration:line-through }
+.ec3_schedule .ec3_past *  { text-decoration:line-through }
+
+/***
+ ***  Iconlet
+ ***/
+
+div.ec3_iconlet {
+ margin:0 1ex 0.2ex 0;
+ padding:0.3ex;
+ border:solid 2px #800;
+ float:left;
+ font-size:1em;
+ text-align:center;
+}
+
+div.ec3_past {
+ border-color:gray;
+ opacity:0.5;
+}
+
+div.ec3_iconlet * {
+ margin:0;
+ padding:0;
+ line-height:90%;
+}
+
+div.ec3_iconlet table {
+ border-collapse:collapse;
+}
+
+div.ec3_iconlet td {
+ padding:0.4ex 0;
+ text-align:center;
+ font-weight:bold;
+}
+
+div.ec3_iconlet tr.ec3_day td {
+ padding-top:0;
+ padding-bottom:0;
+ font-size:2.5em;
+ font-weight:bold;
+ width:2.5ex;
+}
+
+div.ec3_iconlet tr.ec3_time td {
+ font-size:0.75em;
+ font-weight:normal;
+}
+
+div.ec3_iconlet td.ec3_multi_start {
+ padding-right:0.2ex;
+}
+div.ec3_iconlet td.ec3_multi_end {
+ border-left:solid 1px #800;
+ padding-left:0.2ex;
+}
+div.ec3_past td {
+ border-color:gray;
+}
+
 
 /***
  ***  Big Calendar

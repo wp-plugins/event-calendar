@@ -627,6 +627,65 @@ function ec3_get_schedule(
 }
 
 
+/** Formats the schedule for the current post as one or more 'iconlets'.
+ *  Returns the HTML fragment as a string. */
+function ec3_get_iconlets()
+{
+  global $ec3;
+  $result='';
+  $current=false;
+  $this_year=date('Y');
+  for($evt=ec3_iter_post_events(); $evt->valid(); $evt->next())
+  {
+    $year_start =ec3_get_start_date('Y');
+    $month_start=ec3_get_start_date('M');
+    $day_start  =ec3_get_start_date('j');
+    // Don't bother about intr-day details.
+    if($current==$day_start.$month_start.$year_start)
+      continue;
+    $current=$day_start.$month_start.$year_start;
+    // Grey-out past events.
+    if($ec3->event->active)
+      $active ='';
+    else
+      $active =' ec3_past';
+    // Only put the year in if it isn't *this* year.
+    if($year_start!=$this_year)
+      $month_start.='&nbsp;&rsquo;'.substr($year_start,2);
+    // OK, make the iconlet.
+    $result.="<div class='ec3_iconlet$active'><table><tbody>";
+    if(!$ec3->event->allday)
+    {
+      // Event with start time.
+      $time_start=ec3_get_start_time();
+      $result.="<tr class='ec3_month'><td>$month_start</td></tr>"
+             . "<tr class='ec3_day'><td>$day_start</td></tr>"
+             . "<tr class='ec3_time'><td>$time_start</td></tr>";
+    }
+    elseif(substr($ec3->event->start,0,10) == substr($ec3->event->end,0,10))
+    {
+      // Single, all-day event.
+      $result.="<tr class='ec3_month'><td>$month_start</td></tr>"
+             . "<tr class='ec3_day'><td>$day_start</td></tr>";
+    }
+    else
+    {
+      // Multi-day event.
+      $month_end=ec3_get_end_date('M');
+      $day_end  =ec3_get_end_date('j');
+      $result.="<tr class='ec3_month'>"
+             .  "<td class='ec3_multi_start'>$month_start</td>"
+             .  "<td class='ec3_multi_end'>$month_end</td></tr>";
+      $result.="<tr class='ec3_day'>"
+             .  "<td class='ec3_multi_start'>$day_start</td>"
+             .  "<td class='ec3_multi_end'>$day_end</td></tr>";
+    }
+    $result.="</tbody></table></div>\n";
+  }
+  return $result;
+}
+
+
 /** Template function, for backwards compatibility.
  *  Call this from your template to insert the Sidebar Event Calendar. */
 function ec3_get_calendar($options)
