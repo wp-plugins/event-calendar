@@ -186,7 +186,8 @@ div.ec3_iconlet table {
 }
 
 div.ec3_iconlet td {
- padding:0.4ex 0;
+ padding-top:0.4ex;
+ padding-bottom:0.4ex;
  text-align:center;
  font-weight:bold;
 }
