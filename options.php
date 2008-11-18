@@ -64,8 +64,8 @@ class ec3_Options
 
   /** Which category is used for events? DEFAULT=0 */
   var $event_category;
-  /** Display event box within post. DEFAULT=0 */
-  var $hide_event_box;
+  /** Display event box within post: 0=hide, 1=schedule, 2=iconlet[DEFAULT] */
+  var $show_event_box;
   /** Use advanced post behaviour? DEFAULT=0 */
   var $advanced;
   /** Local timezone. */
@@ -100,7 +100,7 @@ class ec3_Options
     }
 
     $this->read_event_category();
-    $this->read_hide_event_box();
+    $this->read_show_event_box();
     $this->read_advanced();
     $this->read_tz();
   }
@@ -132,9 +132,13 @@ class ec3_Options
   {
     $this->event_category=intval( get_option('ec3_event_category') );
   }
-  function read_hide_event_box()
+  function read_show_event_box()
   {
-    $this->hide_event_box=intval(get_option('ec3_hide_event_box'));
+    $val = get_option('ec3_show_event_box');
+    if($val===FALSE)
+      $this->show_event_box = 2;
+    else
+      $this->show_event_box = intval($val);
   }
   function read_advanced()
   {
@@ -167,12 +171,12 @@ class ec3_Options
       $this->read_event_category();
     }
   }
-  function set_hide_event_box($val)
+  function set_show_event_box($val)
   {
-    if($this->hide_event_box!=$val)
+    if($this->show_event_box!=$val)
     {
-      update_option('ec3_hide_event_box',$val);
-      $this->read_hide_event_box();
+      update_option('ec3_show_event_box',$val);
+      $this->read_show_event_box();
     }
   }
   function set_advanced($val)

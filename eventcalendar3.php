@@ -513,7 +513,13 @@ function ec3_filter_parse_query($wp_query)
 
 function ec3_filter_the_content(&$post_content)
 {
-  return ec3_get_iconlets() . $post_content;
+  global $ec3;
+  switch($ec3->show_event_box)
+  {
+    case 1:  return ec3_get_schedule() . $post_content;
+    case 2:  return ec3_get_iconlets() . $post_content;
+    default: return $post_content;
+  }
 }
 
 
@@ -604,7 +610,7 @@ if($ec3->event_category)
   add_filter('get_archives_link','ec3_filter_get_archives_link');
   add_filter('the_content',      'ec3_filter_the_content_bigcal');
   
-  if(!$ec3->hide_event_box)
+  if($ec3->show_event_box)
     add_filter('the_content','ec3_filter_the_content',20);
   
   remove_filter('get_the_excerpt', 'wp_trim_excerpt');

@@ -399,6 +399,16 @@ class ec3_Admin
       );
     }
 
+    // Option ec3_show_event_box is new in v3.2.dev-02
+    $hide_event_box=get_option('ec3_hide_event_box');
+    if($hide_event_box!==false)
+    {
+      if(intval($hide_event_box))
+        $ec3->set_show_event_box(2);
+      else
+        $ec3->set_show_event_box(0);
+    }
+
     // Record the new version number
     update_option('ec3_version',$ec3->version);
 
@@ -455,8 +465,8 @@ class ec3_Admin
       echo '<div id="message" class="updated fade"><p><strong>';
       if(isset($_POST['ec3_event_category']))
           $ec3->set_event_category( intval($_POST['ec3_event_category']) );
-      if(isset($_POST['ec3_hide_event_box']))
-          $ec3->set_hide_event_box( intval($_POST['ec3_hide_event_box']) );
+      if(isset($_POST['ec3_show_event_box']))
+          $ec3->set_show_event_box( intval($_POST['ec3_show_event_box']) );
       if(isset($_POST['ec3_advanced']))
           $ec3->set_advanced( intval($_POST['ec3_advanced']) );
       if(isset($_POST['ec3_tz']))
@@ -497,14 +507,17 @@ class ec3_Admin
       </tr> 
 
        <tr valign="top"> 
-        <th width="33%" scope="row"><?php _e('Show schedule within posts','ec3'); ?>:</th> 
+        <th width="33%" scope="row"><?php _e('Show times within post content','ec3'); ?>:</th> 
         <td>
-         <select name="ec3_hide_event_box">          
-           <option value='0'<?php if(!$ec3->hide_event_box) echo " selected='selected'" ?> >
-           <?php _e('Show Schedule','ec3'); ?>
+         <select name="ec3_show_event_box">          
+          <option value='0'<?php if($ec3->show_event_box==0) echo " selected='selected'" ?> >
+           <?php _e('Hide Times','ec3'); ?>
           </option>
-            <option value='1'<?php if($ec3->hide_event_box) echo " selected='selected'" ?> >
-           <?php _e('Hide Schedule','ec3'); ?>
+          <option value='1'<?php if($ec3->show_event_box==1) echo " selected='selected'" ?> >
+           <?php _e('List Times','ec3'); ?>
+          </option>
+          <option value='2'<?php if($ec3->show_event_box==2) echo " selected='selected'" ?> >
+           <?php _e('Show Times as Icons','ec3'); ?>
           </option>
          </select>
         </td> 
