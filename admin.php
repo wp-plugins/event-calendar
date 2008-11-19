@@ -407,6 +407,7 @@ class ec3_Admin
         $ec3->set_show_event_box(2);
       else
         $ec3->set_show_event_box(0);
+      update_option('ec3_hide_event_box',false);
     }
 
     // Record the new version number

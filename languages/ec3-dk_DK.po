@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1._rc1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-14 13:30+0000\n"
+"POT-Creation-Date: 2008-11-19 00:03+0000\n"
 "PO-Revision-Date: 2007-04-16 17:40+0100\n"
 "Last-Translator: Simon Bognolo <simon@gondol.dk>\n"
 "Language-Team:  <simon@gondol.dk>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.php:110 admin.php:430
+#: admin.php:110 admin.php:440
 msgid "Event Editor"
 msgstr "Begivenhedsredigering"
 
@@ -51,8 +51,7 @@ msgstr "Opgraderede databasen til %1$s version %2$s"
 #: admin.php:353
 #, php-format
 msgid "Error upgrading database for %s plugin."
-msgstr ""
-"Der skete en fejl under opgraderingen af databasen for%ss plugin."
+msgstr "Der skete en fejl under opgraderingen af databasen for%ss plugin."
 
 #: admin.php:365
 msgid "Table already existed"
@@ -68,23 +67,23 @@ msgstr ""
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:416 admin.php:471
+#: admin.php:426 admin.php:481
 msgid "Event Calendar Options"
 msgstr "Indstillinger for EventCalendar"
 
-#: admin.php:475
+#: admin.php:485
 msgid "Easter Egg"
 msgstr ""
 
-#: admin.php:477 upgrade-posts.php:119
+#: admin.php:487 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
 msgstr ""
 
-#: admin.php:484
+#: admin.php:494
 msgid "Event category"
 msgstr "Begivenhedskategorier"
 
-#: admin.php:494
+#: admin.php:504
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -92,31 +91,37 @@ msgstr ""
 "Begivenhedsindlæg indsættes automatisk i denne kategori. Brug ikke denne "
 "kategori som standard for indlæg."
 
-#: admin.php:500
-msgid "Show schedule within posts"
+#: admin.php:510
+#, fuzzy
+msgid "Show times within post content"
 msgstr "Vis tidsplan i indlæg"
 
-#: admin.php:504
-msgid "Show Schedule"
-msgstr "Vis Tidsplan"
-
-#: admin.php:507
-msgid "Hide Schedule"
-msgstr "Gem tidsplan"
-
 #: admin.php:514
+msgid "Hide Times"
+msgstr ""
+
+#: admin.php:517
+msgid "List Times"
+msgstr ""
+
+#: admin.php:520
+#, fuzzy
+msgid "Show Times as Icons"
+msgstr "Vis dagenes navne som"
+
+#: admin.php:527
 msgid "Show events as blog entries"
 msgstr "Vis begivenheder som blogindlæg"
 
-#: admin.php:518
+#: admin.php:531
 msgid "Events are Normal Posts"
 msgstr "Begivenheder er normale indlæg"
 
-#: admin.php:521
+#: admin.php:534
 msgid "Keep Events Separate"
 msgstr "Hold begivenheder separat"
 
-#: admin.php:525
+#: admin.php:538
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -124,15 +129,15 @@ msgstr ""
 "Hold begivenheder separat: Siden for begivenhedskategorier viser fremtidige "
 "begivenheder kronologisk. Begivenheder vises ikke på forsiden."
 
-#: admin.php:531 admin.php:543
+#: admin.php:544 admin.php:556
 msgid "Timezone"
 msgstr "Tidszone"
 
-#: admin.php:535
+#: admin.php:548
 msgid "unknown"
 msgstr "ukendt"
 
-#: admin.php:539
+#: admin.php:552
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -148,17 +153,17 @@ msgstr "Abbonner på iCalendar."
 msgid "all day"
 msgstr "hele dagen"
 
-#: template-functions-new.php:472 widget-list.php:29 widget-list.php:136
+#: template-functions-new.php:489 widget-list.php:29 widget-list.php:136
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Kommende begivenheder"
 
-#: template-functions-new.php:538 widget-list.php:71
+#: template-functions-new.php:555 widget-list.php:71
 msgid "No events."
 msgstr "Ingen begivenheder."
 
-#: template-functions-new.php:573 template-functions-new.php:590
-#: template-functions-new.php:605
+#: template-functions-new.php:590 template-functions-new.php:607
+#: template-functions-new.php:622
 msgid "to"
 msgstr "til"
 
@@ -257,6 +262,12 @@ msgstr "Antal måneder"
 #: widget-list.php:139
 msgid "Display upcoming events as a list."
 msgstr ""
+
+#~ msgid "Show Schedule"
+#~ msgstr "Vis Tidsplan"
+
+#~ msgid "Hide Schedule"
+#~ msgstr "Gem tidsplan"
 
 #~ msgid "Show Event Calendar logo"
 #~ msgstr "Vis EventCalendar logoet"

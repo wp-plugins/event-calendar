@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-14 13:30+0000\n"
+"POT-Creation-Date: 2008-11-19 00:03+0000\n"
 "PO-Revision-Date: 2008-05-19 16:06+0200\n"
 "Last-Translator: Roman Neumüller <email@katpatuka.org>\n"
 "Language-Team: Roman Neumüller <email@katpatuka.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-Language: Turkish\n"
 "X-Poedit-Country: TURKEY\n"
 
-#: admin.php:110 admin.php:430
+#: admin.php:110 admin.php:440
 msgid "Event Editor"
 msgstr "Etkinlik Editörü"
 
@@ -69,23 +69,23 @@ msgstr ""
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:416 admin.php:471
+#: admin.php:426 admin.php:481
 msgid "Event Calendar Options"
 msgstr "Etkinlik Takvimi Tercihleri"
 
-#: admin.php:475
+#: admin.php:485
 msgid "Easter Egg"
 msgstr ""
 
-#: admin.php:477 upgrade-posts.php:119
+#: admin.php:487 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
 msgstr ""
 
-#: admin.php:484
+#: admin.php:494
 msgid "Event category"
 msgstr "Etkinlik kategorisi"
 
-#: admin.php:494
+#: admin.php:504
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -93,31 +93,37 @@ msgstr ""
 "Etkinlik yazıları bu kategoriye konacak. Bu kategori varsayılan kategori "
 "olmasın."
 
-#: admin.php:500
-msgid "Show schedule within posts"
+#: admin.php:510
+#, fuzzy
+msgid "Show times within post content"
 msgstr "Yazılarında programı göster"
 
-#: admin.php:504
-msgid "Show Schedule"
-msgstr "Programı Göster"
-
-#: admin.php:507
-msgid "Hide Schedule"
-msgstr "Programı Gizle"
-
 #: admin.php:514
+msgid "Hide Times"
+msgstr ""
+
+#: admin.php:517
+msgid "List Times"
+msgstr ""
+
+#: admin.php:520
+#, fuzzy
+msgid "Show Times as Icons"
+msgstr "Gün isimlerini şu şekilde göster"
+
+#: admin.php:527
 msgid "Show events as blog entries"
 msgstr "Etkinlikler blogun öğe olarak göster"
 
-#: admin.php:518
+#: admin.php:531
 msgid "Events are Normal Posts"
 msgstr "Etkinlikler normal yazı olarak algıla"
 
-#: admin.php:521
+#: admin.php:534
 msgid "Keep Events Separate"
 msgstr "Etkinlikleri Ayırılsın"
 
-#: admin.php:525
+#: admin.php:538
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -125,15 +131,15 @@ msgstr ""
 "Etkinlikleri Ayırın: Etkinlik Kategori sayfası gelecek zaman içindeki "
 "etkinlikleri tarih sırasına göre gösterir. Etkinlikler ana sayfada görünmez."
 
-#: admin.php:531 admin.php:543
+#: admin.php:544 admin.php:556
 msgid "Timezone"
 msgstr "Zaman dilimi"
 
-#: admin.php:535
+#: admin.php:548
 msgid "unknown"
 msgstr "bilinmeyen"
 
-#: admin.php:539
+#: admin.php:552
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -149,17 +155,17 @@ msgstr "iCalendar'de abone ol"
 msgid "all day"
 msgstr "bütün gün"
 
-#: template-functions-new.php:472 widget-list.php:29 widget-list.php:136
+#: template-functions-new.php:489 widget-list.php:29 widget-list.php:136
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Gelecek Etkinlikler"
 
-#: template-functions-new.php:538 widget-list.php:71
+#: template-functions-new.php:555 widget-list.php:71
 msgid "No events."
 msgstr "Şu anda hiç bir etkinlik yok."
 
-#: template-functions-new.php:573 template-functions-new.php:590
-#: template-functions-new.php:605
+#: template-functions-new.php:590 template-functions-new.php:607
+#: template-functions-new.php:622
 msgid "to"
 msgstr "son:"
 
@@ -260,6 +266,12 @@ msgstr "Ay sayısı"
 #: widget-list.php:139
 msgid "Display upcoming events as a list."
 msgstr ""
+
+#~ msgid "Show Schedule"
+#~ msgstr "Programı Göster"
+
+#~ msgid "Hide Schedule"
+#~ msgstr "Programı Gizle"
 
 #~ msgid "Show Event Calendar logo"
 #~ msgstr "Etkinlik Takvimi Logosunu Göster"

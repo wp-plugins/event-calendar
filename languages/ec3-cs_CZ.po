@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1._rc1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-14 13:30+0000\n"
+"POT-Creation-Date: 2008-11-19 00:03+0000\n"
 "PO-Revision-Date: 2008-04-29 14:02+0100\n"
 "Last-Translator: Michal Franěk <michal.franek@w3w.cz>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.php:110 admin.php:430
+#: admin.php:110 admin.php:440
 msgid "Event Editor"
 msgstr "Editor událostí"
 
@@ -68,23 +68,23 @@ msgstr ""
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:416 admin.php:471
+#: admin.php:426 admin.php:481
 msgid "Event Calendar Options"
 msgstr "Možnosti \"Kalendáře událostí\""
 
-#: admin.php:475
+#: admin.php:485
 msgid "Easter Egg"
 msgstr ""
 
-#: admin.php:477 upgrade-posts.php:119
+#: admin.php:487 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
 msgstr ""
 
-#: admin.php:484
+#: admin.php:494
 msgid "Event category"
 msgstr "Rubrika událostí"
 
-#: admin.php:494
+#: admin.php:504
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -92,31 +92,37 @@ msgstr ""
 "Příspěvky-události jsou automaticky vloženy do této rubriky. Nepoužívejte ji "
 "jako svou výchozí rubriku pro příspěvky."
 
-#: admin.php:500
-msgid "Show schedule within posts"
+#: admin.php:510
+#, fuzzy
+msgid "Show times within post content"
 msgstr "Ukaž rozvrh v příspěvcích"
 
-#: admin.php:504
-msgid "Show Schedule"
-msgstr "Ukaž rozvrh"
-
-#: admin.php:507
-msgid "Hide Schedule"
-msgstr "Skryj rozvrh"
-
 #: admin.php:514
+msgid "Hide Times"
+msgstr ""
+
+#: admin.php:517
+msgid "List Times"
+msgstr ""
+
+#: admin.php:520
+#, fuzzy
+msgid "Show Times as Icons"
+msgstr "Ukazuj jména dní jako"
+
+#: admin.php:527
 msgid "Show events as blog entries"
 msgstr "Ukazuj události jako příspěvky blogu"
 
-#: admin.php:518
+#: admin.php:531
 msgid "Events are Normal Posts"
 msgstr "Události jsou jako obvyklé příspěvky"
 
-#: admin.php:521
+#: admin.php:534
 msgid "Keep Events Separate"
 msgstr "Udržuj události oddělené"
 
-#: admin.php:525
+#: admin.php:538
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -124,15 +130,15 @@ msgstr ""
 "Udržuj události oddělené: Stránka rubriky událostí bude ukazujovat události "
 "v chronologickém pořadí. Události se nebudou objevovat na úvodní stránce."
 
-#: admin.php:531 admin.php:543
+#: admin.php:544 admin.php:556
 msgid "Timezone"
 msgstr "Časové pásmo"
 
-#: admin.php:535
+#: admin.php:548
 msgid "unknown"
 msgstr "neznámý"
 
-#: admin.php:539
+#: admin.php:552
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -148,17 +154,17 @@ msgstr "Sledovat kalendář pomocí iCalendar."
 msgid "all day"
 msgstr "celý den"
 
-#: template-functions-new.php:472 widget-list.php:29 widget-list.php:136
+#: template-functions-new.php:489 widget-list.php:29 widget-list.php:136
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Nadcházející události"
 
-#: template-functions-new.php:538 widget-list.php:71
+#: template-functions-new.php:555 widget-list.php:71
 msgid "No events."
 msgstr "Nejsou žádné události."
 
-#: template-functions-new.php:573 template-functions-new.php:590
-#: template-functions-new.php:605
+#: template-functions-new.php:590 template-functions-new.php:607
+#: template-functions-new.php:622
 msgid "to"
 msgstr "až"
 
@@ -258,6 +264,12 @@ msgstr "Počet měsíců"
 #: widget-list.php:139
 msgid "Display upcoming events as a list."
 msgstr ""
+
+#~ msgid "Show Schedule"
+#~ msgstr "Ukaž rozvrh"
+
+#~ msgid "Hide Schedule"
+#~ msgstr "Skryj rozvrh"
 
 #~ msgid "Show Event Calendar logo"
 #~ msgstr "Ukazuj logo Event Calendar"

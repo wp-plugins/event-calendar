@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-14 13:30+0000\n"
+"POT-Creation-Date: 2008-11-19 00:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.php:110 admin.php:430
+#: admin.php:110 admin.php:440
 msgid "Event Editor"
 msgstr "Редактор событий"
 
@@ -68,23 +68,23 @@ msgstr ""
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:416 admin.php:471
+#: admin.php:426 admin.php:481
 msgid "Event Calendar Options"
 msgstr "Настройки Календаря Событий"
 
-#: admin.php:475
+#: admin.php:485
 msgid "Easter Egg"
 msgstr ""
 
-#: admin.php:477 upgrade-posts.php:119
+#: admin.php:487 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
 msgstr ""
 
-#: admin.php:484
+#: admin.php:494
 msgid "Event category"
 msgstr "Категория событий"
 
-#: admin.php:494
+#: admin.php:504
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -92,45 +92,51 @@ msgstr ""
 "Сообщения с событиями календаря помещаются в эту категорию. Не делайте ее "
 "вашей основнойкатегорией сообщений."
 
-#: admin.php:500
-msgid "Show schedule within posts"
+#: admin.php:510
+#, fuzzy
+msgid "Show times within post content"
 msgstr "Показывать расписание в сообщениях"
 
-#: admin.php:504
-msgid "Show Schedule"
-msgstr "Показать расписание"
-
-#: admin.php:507
-msgid "Hide Schedule"
-msgstr "Спрятать расписание"
-
 #: admin.php:514
+msgid "Hide Times"
+msgstr ""
+
+#: admin.php:517
+msgid "List Times"
+msgstr ""
+
+#: admin.php:520
+#, fuzzy
+msgid "Show Times as Icons"
+msgstr "Показывать названия дней как"
+
+#: admin.php:527
 msgid "Show events as blog entries"
 msgstr "Показывать события как сообщения"
 
-#: admin.php:518
+#: admin.php:531
 msgid "Events are Normal Posts"
 msgstr "События - обычные сообщения"
 
-#: admin.php:521
+#: admin.php:534
 msgid "Keep Events Separate"
 msgstr "Сохранять события отдельно"
 
-#: admin.php:525
+#: admin.php:538
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
 msgstr ""
 
-#: admin.php:531 admin.php:543
+#: admin.php:544 admin.php:556
 msgid "Timezone"
 msgstr "Временная зона"
 
-#: admin.php:535
+#: admin.php:548
 msgid "unknown"
 msgstr "неизвестно"
 
-#: admin.php:539
+#: admin.php:552
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -146,17 +152,17 @@ msgstr "Подпишитесь с помошью iCalendar."
 msgid "all day"
 msgstr "весь день"
 
-#: template-functions-new.php:472 widget-list.php:29 widget-list.php:136
+#: template-functions-new.php:489 widget-list.php:29 widget-list.php:136
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Предстоящие события"
 
-#: template-functions-new.php:538 widget-list.php:71
+#: template-functions-new.php:555 widget-list.php:71
 msgid "No events."
 msgstr "Нет событий."
 
-#: template-functions-new.php:573 template-functions-new.php:590
-#: template-functions-new.php:605
+#: template-functions-new.php:590 template-functions-new.php:607
+#: template-functions-new.php:622
 msgid "to"
 msgstr "по"
 
@@ -257,6 +263,12 @@ msgstr "Количество месяцев"
 #: widget-list.php:139
 msgid "Display upcoming events as a list."
 msgstr ""
+
+#~ msgid "Show Schedule"
+#~ msgstr "Показать расписание"
+
+#~ msgid "Hide Schedule"
+#~ msgstr "Спрятать расписание"
 
 #~ msgid "Show Event Calendar logo"
 #~ msgstr "Показывать логотип календаря"

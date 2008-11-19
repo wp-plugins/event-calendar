@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._pre15\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-14 13:30+0000\n"
+"POT-Creation-Date: 2008-11-19 00:03+0000\n"
 "PO-Revision-Date: 2008-11-08 11:54+0100\n"
 "Last-Translator: Lorenzo De Tomasi <lorenzo.detomasi@gmail.com>\n"
 "Language-Team: italian <nicola@ruggierobros.com>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
 
-#: admin.php:110 admin.php:430
+#: admin.php:110 admin.php:440
 msgid "Event Editor"
 msgstr "Modifica eventi"
 
@@ -71,23 +71,23 @@ msgstr ""
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:416 admin.php:471
+#: admin.php:426 admin.php:481
 msgid "Event Calendar Options"
 msgstr "Opzioni di Event Calendar"
 
-#: admin.php:475
+#: admin.php:485
 msgid "Easter Egg"
 msgstr "Uovo di Pasqua"
 
-#: admin.php:477 upgrade-posts.php:119
+#: admin.php:487 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
 msgstr "Aggiorna gli articoli evento"
 
-#: admin.php:484
+#: admin.php:494
 msgid "Event category"
 msgstr "Categoria eventi"
 
-#: admin.php:494
+#: admin.php:504
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -95,31 +95,37 @@ msgstr ""
 "Questa categoria viene assegnata agli eventi automaticamente. Non "
 "utilizzarla come categoria di default."
 
-#: admin.php:500
-msgid "Show schedule within posts"
+#: admin.php:510
+#, fuzzy
+msgid "Show times within post content"
 msgstr "Mostra il programma negli articoli"
 
-#: admin.php:504
-msgid "Show Schedule"
-msgstr "Mostra il programma"
-
-#: admin.php:507
-msgid "Hide Schedule"
-msgstr "Nascondi il programma"
-
 #: admin.php:514
+msgid "Hide Times"
+msgstr ""
+
+#: admin.php:517
+msgid "List Times"
+msgstr ""
+
+#: admin.php:520
+#, fuzzy
+msgid "Show Times as Icons"
+msgstr "Mostra i nomi dei giorni come"
+
+#: admin.php:527
 msgid "Show events as blog entries"
 msgstr "Mostra gli eventi come articoli del blog"
 
-#: admin.php:518
+#: admin.php:531
 msgid "Events are Normal Posts"
 msgstr "Gli eventi sono articoli normali"
 
-#: admin.php:521
+#: admin.php:534
 msgid "Keep Events Separate"
 msgstr "Mantieni gli eventi separati"
 
-#: admin.php:525
+#: admin.php:538
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -128,15 +134,15 @@ msgstr ""
 "eventi futuri, in ordine cronologico. Gli eventi non compaiono nella pagina "
 "principale."
 
-#: admin.php:531 admin.php:543
+#: admin.php:544 admin.php:556
 msgid "Timezone"
 msgstr "Fuso orario"
 
-#: admin.php:535
+#: admin.php:548
 msgid "unknown"
 msgstr "sconosciuto"
 
-#: admin.php:539
+#: admin.php:552
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -152,17 +158,17 @@ msgstr "Abbonati a iCalendar."
 msgid "all day"
 msgstr "tutto il giorno"
 
-#: template-functions-new.php:472 widget-list.php:29 widget-list.php:136
+#: template-functions-new.php:489 widget-list.php:29 widget-list.php:136
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Prossimi eventi"
 
-#: template-functions-new.php:538 widget-list.php:71
+#: template-functions-new.php:555 widget-list.php:71
 msgid "No events."
 msgstr "Nessun evento."
 
-#: template-functions-new.php:573 template-functions-new.php:590
-#: template-functions-new.php:605
+#: template-functions-new.php:590 template-functions-new.php:607
+#: template-functions-new.php:622
 msgid "to"
 msgstr "a"
 
@@ -263,6 +269,12 @@ msgstr "Numero di eventi"
 #: widget-list.php:139
 msgid "Display upcoming events as a list."
 msgstr "Mostra i prossimi eventi come lista."
+
+#~ msgid "Show Schedule"
+#~ msgstr "Mostra il programma"
+
+#~ msgid "Hide Schedule"
+#~ msgstr "Nascondi il programma"
 
 #~ msgid "Show Event Calendar logo"
 #~ msgstr "Mostra il logo di Event Calendar"

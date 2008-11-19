@@ -21,6 +21,6 @@
   s/YEAR THE PACKAGE.S COPYRIGHT HOLDER/2006, 2007  Alex Tingle/
   s/PACKAGE/wpcal/
   s/FIRST AUTHOR <EMAIL@ADDRESS>, YEAR./Alex Tingle <alex DOT ec3pot AT firetree.net>, 2005./
-  s/VERSION/3.2.dev-01/
+  s/VERSION/3.2.dev-02/
   s/CHARSET/UTF-8/
 }

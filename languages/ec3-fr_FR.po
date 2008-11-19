@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._rc2\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-11-14 13:30+0000\n"
+"POT-Creation-Date: 2008-11-19 00:03+0000\n"
 "PO-Revision-Date: 2008-06-01 23:16+0100\n"
 "Last-Translator: Comme une image <cui@burp.fr>\n"
 "Language-Team: French <davy.morel@tiscali.fr>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: admin.php:110 admin.php:430
+#: admin.php:110 admin.php:440
 msgid "Event Editor"
 msgstr "Editeur d'événement"
 
@@ -55,8 +55,7 @@ msgstr "Mise à jour effectuée de la base de données %1$s Version %2$s"
 #: admin.php:353
 #, php-format
 msgid "Error upgrading database for %s plugin."
-msgstr ""
-"Erreur pendant la mise à jour de la base de données de l'extension %s"
+msgstr "Erreur pendant la mise à jour de la base de données de l'extension %s"
 
 #: admin.php:365
 msgid "Table already existed"
@@ -72,23 +71,23 @@ msgstr ""
 msgid "Added SEQUENCE column to table %s"
 msgstr ""
 
-#: admin.php:416 admin.php:471
+#: admin.php:426 admin.php:481
 msgid "Event Calendar Options"
 msgstr "Options du calendrier d'événement"
 
-#: admin.php:475
+#: admin.php:485
 msgid "Easter Egg"
 msgstr ""
 
-#: admin.php:477 upgrade-posts.php:119
+#: admin.php:487 upgrade-posts.php:119
 msgid "Upgrade Event Posts"
 msgstr ""
 
-#: admin.php:484
+#: admin.php:494
 msgid "Event category"
 msgstr "Catégorie d'événement"
 
-#: admin.php:494
+#: admin.php:504
 msgid ""
 "Event posts are put into this category for you. Don't make this your default "
 "post category."
@@ -96,31 +95,37 @@ msgstr ""
 "Les événements sont placés dans cette catégorie pour vous. N'en faites pas "
 "votre catégorie de message par défaut."
 
-#: admin.php:500
-msgid "Show schedule within posts"
+#: admin.php:510
+#, fuzzy
+msgid "Show times within post content"
 msgstr "Montrer le programme dans les messages"
 
-#: admin.php:504
-msgid "Show Schedule"
-msgstr "Montrer le programme"
-
-#: admin.php:507
-msgid "Hide Schedule"
-msgstr "Cacher le programme"
-
 #: admin.php:514
+msgid "Hide Times"
+msgstr ""
+
+#: admin.php:517
+msgid "List Times"
+msgstr ""
+
+#: admin.php:520
+#, fuzzy
+msgid "Show Times as Icons"
+msgstr "Montrer les noms de jour comme"
+
+#: admin.php:527
 msgid "Show events as blog entries"
 msgstr "Montrer les événements comme des articles du blog"
 
-#: admin.php:518
+#: admin.php:531
 msgid "Events are Normal Posts"
 msgstr "Les événements sont des messages normaux"
 
-#: admin.php:521
+#: admin.php:534
 msgid "Keep Events Separate"
 msgstr "Garder les événements séparés"
 
-#: admin.php:525
+#: admin.php:538
 msgid ""
 "Keep Events Separate: the Event Category page shows future events, in date "
 "order. Events do not appear on front page."
@@ -129,15 +134,15 @@ msgstr ""
 "les événements futurs, par ordre chronologique. Les événements "
 "n'apparaissent pas en première page."
 
-#: admin.php:531 admin.php:543
+#: admin.php:544 admin.php:556
 msgid "Timezone"
 msgstr "Fuseau horaire"
 
-#: admin.php:535
+#: admin.php:548
 msgid "unknown"
 msgstr "inconnu"
 
-#: admin.php:539
+#: admin.php:552
 msgid ""
 "You cannot change your timezone. Turn off PHP's 'safe mode' or upgrade to "
 "PHP5."
@@ -153,17 +158,17 @@ msgstr "S&#39;abonner à iCalendar."
 msgid "all day"
 msgstr "journée entière"
 
-#: template-functions-new.php:472 widget-list.php:29 widget-list.php:136
+#: template-functions-new.php:489 widget-list.php:29 widget-list.php:136
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
 msgid "Upcoming Events"
 msgstr "Evénements à venir"
 
-#: template-functions-new.php:538 widget-list.php:71
+#: template-functions-new.php:555 widget-list.php:71
 msgid "No events."
 msgstr "Pas d'événement."
 
-#: template-functions-new.php:573 template-functions-new.php:590
-#: template-functions-new.php:605
+#: template-functions-new.php:590 template-functions-new.php:607
+#: template-functions-new.php:622
 msgid "to"
 msgstr "au"
 
@@ -264,6 +269,12 @@ msgstr "Nombre de mois"
 #: widget-list.php:139
 msgid "Display upcoming events as a list."
 msgstr ""
+
+#~ msgid "Show Schedule"
+#~ msgstr "Montrer le programme"
+
+#~ msgid "Hide Schedule"
+#~ msgstr "Cacher le programme"
 
 #~ msgid "Show Event Calendar logo"
 #~ msgstr "Montrer le logo du calendrier d'événement"
