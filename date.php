@@ -60,13 +60,19 @@ class ec3_Date
   }
 
   /** Helper function, only called by the constructor. Calculates the value of
-   *  month/year for the current query's 'ec3_from'. */
+   *  month/year for the current query's 'ec3_before/after'. */
   function _from_date_range()
   {
     global $ec3;
-    if('' != $ec3->query->query_vars['ec3_from'])
+    if(!empty($ec3->range_from))
     {
-      $c=explode('_',$ec3->query->query_vars['ec3_from']);
+      $c=explode('-',$ec3->range_from);
+      $this->year_num=intval($c[0]);
+      $this->month_num=intval($c[1]);
+    }
+    elseif(!empty($ec3->range_before))
+    {
+      $c=explode('-',$ec3->range_before);
       $this->year_num=intval($c[0]);
       $this->month_num=intval($c[1]);
     }
