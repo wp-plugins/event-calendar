@@ -321,6 +321,13 @@ class ec3_Admin
         $result[]=$key."=".$value;
     return implode($glue,$result);
   }
+  
+  /** Clear events for the post. */
+  function action_delete_post($post_ID)
+  {
+    global $ec3,$wpdb;
+    $wpdb->query("DELETE FROM $ec3->schedule WHERE post_id=$post_ID");
+  }
 
 
   //
@@ -611,8 +618,9 @@ function ec3_event_editor_box()
 // Hook in...
 if($ec3->event_category)
 {
-  add_filter('admin_head',array(&$ec3_admin,'filter_admin_head'));
-  add_action('save_post', array(&$ec3_admin,'action_save_post'));
+  add_filter('admin_head', array(&$ec3_admin,'filter_admin_head'));
+  add_action('save_post',  array(&$ec3_admin,'action_save_post'));
+  add_action('delete_post',array(&$ec3_admin,'action_delete_post'));
 }
 
 // Always hook into the admin_menu - it's required to allow users to
