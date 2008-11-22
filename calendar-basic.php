@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+if(version_compare(phpversion(),'5.0')<0)
+  require_once(dirname(__FILE__).'/clone.php');
 
 /**
 
@@ -285,7 +287,7 @@ class ec3_BasicCalendar
 
       while(True)
       {
-        $this->dateobj = $curr_dateobj;
+        $this->dateobj = clone($curr_dateobj);
         if($col>6)
         {
           $monthstr .= $this->wrap_week($weekstr,$curr_dateobj);
@@ -305,7 +307,6 @@ class ec3_BasicCalendar
         $weekstr     .= $this->wrap_day($daystr);
 
         $col++;
-        $last_dob = $curr_dateobj;
         $curr_dateobj->increment_day();
         if(1==$curr_dateobj->day_num)
             break;
