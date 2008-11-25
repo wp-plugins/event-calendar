@@ -17,21 +17,28 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-
-/** Upcoming Events widget. */
-function ec3_widget_list($args) 
+/* Upcoming Events List Widget */
+function ec3_widget_list($args, $widget_args = 1) 
 {
-  extract($args);
+  extract( $args, EXTR_SKIP );
+  if ( is_numeric($widget_args) )
+    $widget_args = array( 'number' => $widget_args );
+  $widget_args = wp_parse_args( $widget_args, array( 'number' => -1 ) );
+  extract( $widget_args, EXTR_SKIP );
+
   $options = get_option('ec3_widget_list');
+  if ( !isset($options[$number]) )
+    return;
+
   echo $before_widget . $before_title;
-  echo ec3_widget_title($options['title'],'Upcoming Events');
+  echo ec3_widget_title($options[$number]['title'],'Upcoming Events');
   echo $after_title;
   if(ec3_check_installed(__('Upcoming Events','ec3')))
   {
     // Parse $limit:
     //  NUMBER      - limits number of posts
     //  NUMBER days - next NUMBER of days
-    $limit = $options['limit'];
+    $limit = $options[$number]['limit'];
     $num =intval($limit);
     $query = new WP_Query();
     if(preg_match('/^ *([0-9]+) *d(ays?)?/',$limit,$matches))
@@ -56,7 +63,7 @@ function ec3_widget_list($args)
         {
           if($current_date)
               echo "</ul></li>\n";
-          echo "<li class='ec3_list ec3_list_day'>$date:'\n<ul>\n";
+          echo "<li class='ec3_list ec3_list_day'>$date:\n<ul>\n";
           $current_date=$date;
         }
         // Print the event.
@@ -75,74 +82,118 @@ function ec3_widget_list($args)
   echo $after_widget;
 }
 
+function ec3_widget_list_control($widget_args) {
+  global $wp_registered_widgets;
+  static $updated = false;
 
-/** Upcoming Events widget - control. */
-function ec3_widget_list_control() 
-{
-  $options = $newoptions = get_option('ec3_widget_list');
-  if ( $_POST["ec3_list_submit"] ) 
-  {
-    $newoptions['title'] = strip_tags(stripslashes($_POST["ec3_list_title"]));
-    $newoptions['limit'] = strip_tags(stripslashes($_POST["ec3_limit"]));
-  }
-  if ( $options != $newoptions ) 
-  {
-    $options = $newoptions;
+  if ( is_numeric($widget_args) )
+    $widget_args = array( 'number' => $widget_args );
+  $widget_args = wp_parse_args( $widget_args, array( 'number' => -1 ) );
+  extract( $widget_args, EXTR_SKIP );
+
+  $options = get_option('ec3_widget_list');
+  if ( !is_array($options) )
+    $options = array();
+
+  if ( !$updated && !empty($_POST['sidebar']) ) {
+    $sidebar = (string) $_POST['sidebar'];
+    $sidebars_widgets = wp_get_sidebars_widgets();
+
+    if ( isset($sidebars_widgets[$sidebar]) )
+      $this_sidebar =& $sidebars_widgets[$sidebar];
+    else
+      $this_sidebar = array();
+
+    foreach ( $this_sidebar as $_widget_id ) {
+      if ( 'ec3_widget_list' == $wp_registered_widgets[$_widget_id]['callback'] 
+	    && isset($wp_registered_widgets[$_widget_id]['params'][0]['number']) ) {
+	$widget_number = $wp_registered_widgets[$_widget_id]['params'][0]['number'];
+	unset($options[$widget_number]);
+      }
+    }
+
+    foreach ( (array) $_POST['ec3_widget_list'] as $widget_number => $widget_limit ) {
+      $title = strip_tags(stripslashes($widget_limit['title']));
+      if ( current_user_can('unfiltered_html') )
+	$limit = stripslashes( $widget_limit['limit'] );
+      else
+	$limit = stripslashes(wp_filter_post_kses( $widget_limit['limit'] ));
+      $options[$widget_number] = compact( 'title', 'limit' );
+    }
+
     update_option('ec3_widget_list', $options);
+    $updated = true;
   }
 
-  $title = ec3_widget_title($options['title'],'Upcoming Events');
-  $limit = $options['limit'];
+  if ( -1 == $number ) {
+    $title = ec3_widget_title($options['title'],'Upcoming Events');
+    $limit = '5';
+    $number = '%i%';
+  } else {
+    $title = attribute_escape($options[$number]['title']);
+    $limit = format_to_edit($options[$number]['limit']);
+  }
 
   $ec3_limit_title =
-    __("Examples: '5', '5 days', '5d'. To display recent past events, use a negative number: '-5'.");
-  ?>
+    __("Examples: '5', '5 days', '5d'. To display past events, use a negative number: '-5'.");
+?>
 
   <p>
-   <label for="ec3_list_title">
-    <?php _e('Title:'); ?>
-    <input class="widefat" id="ec3_list_title" name="ec3_list_title"
-     type="text" value="<?php echo htmlspecialchars($title,ENT_QUOTES); ?>" />
-   </label>
+    <label for="ec3_list_title">
+      <?php _e('Title:'); ?>
+      <input class="widefat" id="ec3_widget_list-title-<?php echo $number; ?>" 
+	name="ec3_widget_list[<?php echo $number; ?>][title]" type="text" 
+	value="<?php echo $title; ?>" />
+    </label>
   </p>
   <p>
-   <label for="ec3_limit" title="<?php echo $ec3_limit_title ?>">
-    <?php _e('Number of events','ec3') ?>:
-    <input class="widefat" style="width: 50px; text-align: center;"
-     id="ec3_limit" name="ec3_limit" type="text"
-     value="<?php echo $limit? $limit: '5'; ?>" />
-   </label>
+    <label for="ec3_list_limit" title="<?php echo $ec3_limit_title; ?>">
+      <?php _e('Number of Events','ec3'); ?>:
+      <input class="widefat" style="width: 50px; text-align: center;"
+	id="ec3_widget_list-limit-<?php echo $number; ?>" 
+	name="ec3_widget_list[<?php echo $number; ?>][limit]" value="<?php echo $limit; ?>" />
+    </label>
   </p>
-
   <p>
-    <a href="options-general.php?page=ec3_admin">
-     <?php _e('Go to Event Calendar Options','ec3') ?>.</a>
-  </p>
+    <a href="options-general.php?page=ec3_admin"><?php _e('Go to Event Calendar Options','ec3') ?></a>
+    <input type="hidden" id="ec3_widget_list-submit-<?php echo $number; ?>" 
+      name="ec3_widget_list-submit-<?php echo $number; ?>" value="1" />
+</p>
 
-  <input type="hidden" name="ec3_list_submit" value="1" />
 
-  <?php
+<?php
 }
 
-
-function ec3_action_widgets_init_list() 
-{
-  if(!function_exists('wp_register_sidebar_widget'))
+function ec3_widget_list_register() {
+  if ( !function_exists('wp_register_sidebar_widget') || !function_exists('wp_register_widget_control') )
     return;
 
-  // Upcoming event widget
-  wp_register_sidebar_widget(
-    'upcoming-events',
-    __('Upcoming Events','ec3'),
-    'ec3_widget_list',
-    array('description' =>
-          __('Display upcoming events as a list.','ec3')
-              . ' (Event-Calendar '. __('Plugin') .')' )
-  );
-  register_widget_control('upcoming-events','ec3_widget_list_control');
+  if ( !$options = get_option('ec3_widget_list') )
+    $options = array();
+  $widget_ops = array('classname' => 'ec3_widget_list', 
+		      'description' => __('Dispaly events in a list.','ec3')
+		      . ' (Event-Calendar '. __('Plugin') .')');
+  $control_ops = array('id_base' => 'ec3_event_list');
+  $name = __('Events List','ec3');
+
+  $id = false;
+  foreach ( array_keys($options) as $o ) {
+    // Old widgets can have null values for some reason
+    if ( !isset($options[$o]['title']) || !isset($options[$o]['limit']) )
+      continue;
+    $id = "ec3_event_list-$o"; // Never never never translate an id
+    wp_register_sidebar_widget($id, $name, 'ec3_widget_list', $widget_ops, array( 'number' => $o ));
+    wp_register_widget_control($id, $name, 'ec3_widget_list_control', $control_ops, array( 'number' => $o ));
+  }
+	
+  // If there are none, we register the widget's existance with a generic template
+  if ( !$id ) {
+    wp_register_sidebar_widget( 'ec3_event_list-1', $name, 'ec3_widget_list', $widget_ops, array( 'number' => -1 ) );
+    wp_register_widget_control( 'ec3_event_list-1', $name, 'ec3_widget_list_control', $control_ops, array( 'number' => -1 ) );
+  }
+	
 }
 
-
-add_action('widgets_init', 'ec3_action_widgets_init_list');
+add_action( 'widgets_init', 'ec3_widget_list_register' );
 
 ?>
