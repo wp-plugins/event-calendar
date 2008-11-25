@@ -178,20 +178,17 @@ function ec3_widget_list_register() {
 
   $id = false;
   foreach ( array_keys($options) as $o ) {
-    // Old widgets can have null values for some reason
     if ( !isset($options[$o]['title']) || !isset($options[$o]['limit']) )
       continue;
-    $id = "ec3_event_list-$o"; // Never never never translate an id
+    $id = "ec3_event_list-$o";
     wp_register_sidebar_widget($id, $name, 'ec3_widget_list', $widget_ops, array( 'number' => $o ));
     wp_register_widget_control($id, $name, 'ec3_widget_list_control', $control_ops, array( 'number' => $o ));
   }
 	
-  // If there are none, we register the widget's existance with a generic template
   if ( !$id ) {
     wp_register_sidebar_widget( 'ec3_event_list-1', $name, 'ec3_widget_list', $widget_ops, array( 'number' => -1 ) );
     wp_register_widget_control( 'ec3_event_list-1', $name, 'ec3_widget_list_control', $control_ops, array( 'number' => -1 ) );
   }
-	
 }
 
 add_action( 'widgets_init', 'ec3_widget_list_register' );
