@@ -682,7 +682,7 @@ function ec3_get_iconlets()
     }
     $result.="</tbody></table></div>\n";
   }
-  return $result;
+  return apply_filters( 'ec3_filter_iconlets', $result );
 }
 
 
