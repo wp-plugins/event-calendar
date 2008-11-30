@@ -34,7 +34,6 @@ class MultiWidget
 
   var $id_base;         ///< Root id for all widgets of this type.
   var $name;            ///< Name for this widget type.
-  var $description;     ///< Helpful description of this widget type.
   var $widget_options;  ///< Option array passed to wp_register_sidebar_widget()
   var $control_options; ///< Option array passed to wp_register_widget_control()
 
@@ -89,7 +88,6 @@ class MultiWidget
   {
     $this->id_base = $id_base;
     $this->name = $name;
-    $this->description = $description;
     $this->option_name = 'multiwidget_'.$id_base;
     $this->widget_options =
       wp_parse_args( $widget_options, array('classname'=>$this->option_name) );
