@@ -17,10 +17,47 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+
+  /** Quotes iCalendar special characters. */
+  function ec3_ical_quote($string)
+  {
+    $s = preg_replace('/([\\,;])/','\\\\$1',$string);
+    $s = preg_replace('/\r?\n/','\\\\n',$s);
+    $s = preg_replace('/\r/',' ',$s);
+    return $s;
+  }
+
+
+  /** Folds an iCalendar content-line so that it does not exceed
+   *  75 characters. Appends CRLF to the end of the line. */
+  function ec3_ical_fold($string, $max = 75)
+  {
+    $result = '';
+    $s = $string;
+    while(strlen($s)>$max)
+    {
+      $len = $max;
+      while( $len>($max-10) && substr($s,$len-1,1) == '\\' )
+        $len --;
+      $result .= substr($s,0,$len) . "\r\n\t";
+      $s = substr($s,$len);
+    }
+    $result .= $s;
+    return $result."\r\n";
+  }
+
+
+  /** Folds an iCalendar content-line and echos it to stdout */
+  function ec3_ical_echo($string, $max = 75)
+  {
+    echo ec3_ical_fold($string, $max);
+  }
+
+
   //
   // Generate the iCalendar
 
-  $name=preg_replace('/([\\,;])/','\\\\$1',get_bloginfo_rss('name'));
+  $name=ec3_ical_quote(get_bloginfo_rss('name'));
   $filename=preg_replace('/[^0-9a-zA-Z]/','',$name).'.ics';
 
   header('Content-Type: text/calendar; charset=' . get_option('blog_charset'));
@@ -30,9 +67,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   header('Cache-Control: no-cache, must-revalidate, max-age=0');
   header('Pragma: no-cache');
 
-  echo "BEGIN:VCALENDAR\r\n";
-  echo "VERSION:2.0\r\n";
-  echo "X-WR-CALNAME:$name\r\n";
+  ec3_ical_echo('BEGIN:VCALENDAR');
+  ec3_ical_echo('VERSION:2.0');
+  ec3_ical_echo("X-WR-CALNAME:$name");
 
   global $ec3,$wpdb;
 
@@ -46,46 +83,49 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   {
     for($evt=ec3_iter_all_events(); $evt->valid(); $evt->next())
     {
-      // ?? Should add line folding at 75 octets at some time as per RFC 2445.
-      $summary=preg_replace('/([\\,;])/','\\\\$1',get_the_title());
-      $permalink=get_permalink();
+      $permalink=ec3_ical_quote(get_permalink());
       $entry =& $ec3->event;
 
-      echo "BEGIN:VEVENT\r\n";
-      echo "SUMMARY:$summary\r\n";
-      echo "URL;VALUE=URI:$permalink\r\n";
-      echo "SEQUENCE:$entry->sequence\r\n";
-      echo "UID:$entry->sched_id-$permalink\r\n";
-      $description='';
-      $excerpt = get_the_excerpt();
-      if(strlen($excerpt)>0)
-      {
-        // I can't get iCal to understand iCalendar encoding.
-        // So just strip out newlines here:
-        $description=preg_replace('/[ \r\n]+/',' ',$excerpt.' ');
-        $description=preg_replace('/([\\,;])/','\\\\$1',$description);
-      }
-      $description.='['.sprintf(__('by: %s'),get_the_author_nickname()).']';
-      echo "DESCRIPTION:$description\r\n";
+      ec3_ical_echo('BEGIN:VEVENT');
+      ec3_ical_echo('SUMMARY:'.ec3_ical_quote(get_the_title()));
+      ec3_ical_echo("URL;VALUE=URI:$permalink");
+      ec3_ical_echo("SEQUENCE:$entry->sequence");
+      ec3_ical_echo('UID:'.ec3_ical_quote("$entry->sched_id-$permalink"));
+      $description = get_the_excerpt();
+      $description.= ' ['.sprintf(__('by: %s'),get_the_author_nickname()).']';
+      ec3_ical_echo('DESCRIPTION:'.ec3_ical_quote($description));
       if($entry->allday)
       {
         $dt_start=mysql2date('Ymd',$entry->start);
         $dt_end=date('Ymd', mysql2date('U',$entry->end)+(3600*24) );
-        echo "TRANSP:TRANSPARENT\r\n"; // for availability.
-        echo "DTSTART;VALUE=DATE:$dt_start\r\n";
-        echo "DTEND;VALUE=DATE:$dt_end\r\n";
+        ec3_ical_echo("TRANSP:TRANSPARENT"); // for availability.
+        ec3_ical_echo("DTSTART;VALUE=DATE:$dt_start");
+        ec3_ical_echo("DTEND;VALUE=DATE:$dt_end");
       }
       else
       {
-        echo "TRANSP:OPAQUE\r\n"; // for availability.
+        ec3_ical_echo('TRANSP:OPAQUE'); // for availability.
         // Convert timestamps to UTC
-        echo sprintf("DTSTART;VALUE=DATE-TIME:%s\r\n",ec3_to_utc($entry->start));
-        echo sprintf("DTEND;VALUE=DATE-TIME:%s\r\n",ec3_to_utc($entry->end));
+        ec3_ical_echo('DTSTART;VALUE=DATE-TIME:'.ec3_to_utc($entry->start));
+        ec3_ical_echo('DTEND;VALUE=DATE-TIME:'.ec3_to_utc($entry->end));
       }
+
+      // Location
+      $location=get_post_meta($entry->post_id,'location',true);
+      $location=apply_filters('ical_location',$location);
+      if(!empty($location))
+        ec3_ical_echo('LOCATION:'.ec3_ical_quote($location));
+
+      // GEO
+      $geo=get_post_meta($entry->post_id,'geo',true);
+      $geo=apply_filters('ical_geo',$geo);
+      if(!empty($geo))
+        ec3_ical_echo('GEO:'.ec3_ical_quote($geo));
+
       do_action('ical_item');
-      echo "END:VEVENT\r\n";
+      ec3_ical_echo('END:VEVENT');
     }
   }
-  echo "END:VCALENDAR\r\n";
+  ec3_ical_echo('END:VCALENDAR');
 
 ?>
