@@ -449,9 +449,10 @@ function ec3_get_events(
       else
           $data['TIME']=mysql2date($time_format,$entry->start);
 
+      $entry_title = apply_filters('the_title',$entry->post_title);
       $data['TITLE'] =
         htmlentities(
-          stripslashes(strip_tags($entry->post_title)),
+          stripslashes(strip_tags($entry_title)),
           ENT_QUOTES,get_option('blog_charset')
         );
       $data['LINK']  =get_permalink($entry->id);

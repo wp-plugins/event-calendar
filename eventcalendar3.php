@@ -393,7 +393,8 @@ function ec3_filter_query_vars_ical($wpvarstoreset=NULL)
     foreach($calendar_entries as $entry)
     {
       // ?? Should add line folding at 75 octets at some time as per RFC 2445.
-      $summary=preg_replace('/([\\,;])/','\\\\$1',$entry->post_title);
+      $entry_title=apply_filters('the_title',$entry->post_title);
+      $summary=preg_replace('/([\\,;])/','\\\\$1',$entry_title);
       $permalink=get_permalink($entry->post_id);
 
       echo "BEGIN:VEVENT\r\n";
