@@ -454,6 +454,7 @@ class ec3_Admin
     }
     else
     {
+      global $ec3_admin;
       // Old (pre WP2.5) functionality.
       add_filter('simple_edit_form',    array(&$ec3_admin,'filter_edit_form'));
       if($ec3->wp_have_dbx)
