@@ -123,7 +123,8 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
 
     // Previous
     $prev=$this->begin_dateobj->prev_month();
-    $nav .= "\t<td$idprev><a id='$ec3previd' href='" . $prev->month_link($this->show_only_events) . "'"
+    $nav .= "\t<td$idprev><a id='$ec3previd' href='"
+       . $prev->month_link($this->show_only_events) . "'"
        . '>&laquo;&nbsp;' . $prev->month_abbrev() . "</a></td>\n";
 
     $nav .= "\t<td><img id='$ec3spinnerid' style='display:none' src='" 
@@ -142,7 +143,8 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
 
     // Next
     $next=$this->limit_dateobj;
-    $nav .= "\t<td$idnext><a id='$ec3nextid' href='" . $next->month_link($this->show_only_events) . "'"
+    $nav .= "\t<td$idnext><a id='$ec3nextid' href='"
+       . $next->month_link($this->show_only_events) . "'"
        . '>' . $next->month_abbrev() . "&nbsp;&raquo;</a></td>\n";
 
     $nav .= "</tr></tbody></table>\n";
@@ -154,10 +156,14 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
   {
     // Make a table for this month.
     $title = sprintf(
-      __('View posts for %1$s %2$s'),$this->dateobj->month_name(),$this->dateobj->year_num);
+        __('View posts for %1$s %2$s'),
+        $this->dateobj->month_name(),
+        $this->dateobj->year_num
+      );
     $result =  '<table id="'.$this->id.'-'.$this->dateobj->month_id().'">'."\n"
       . '<caption>'
-      . '<a href="' . $this->dateobj->month_link($this->show_only_events) . '" title="' . $title . '">'
+      . '<a href="' . $this->dateobj->month_link($this->show_only_events)
+      . '" title="' . $title . '">'
       . $this->dateobj->month_name() . ' ' . $this->dateobj->year_num . "</a>"
       . "</caption>\n"
       . $this->_thead
@@ -199,7 +205,8 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     if(!empty($this->dayobj))
     {
       $td_classes[] = 'ec3_postday';
-      $a_attr = ' href="'.$this->dateobj->day_link($this->show_only_events).'" title="'.$daystr.'"';
+      $a_attr = ' href="'.$this->dateobj->day_link($this->show_only_events)
+       . '" title="'.$daystr.'"';
       if($this->dayobj->has_events())
       {
         $td_classes[] = 'ec3_eventday';
