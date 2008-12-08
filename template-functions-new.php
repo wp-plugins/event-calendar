@@ -595,32 +595,29 @@ function ec3_get_schedule(
         $result.=sprintf($format_single,$date_start,$active);
       }
     }
+    else if($date_start!=$date_end)
+    {
+      $current=$date_start;
+      $result.=sprintf(
+          $format_range,
+          "$date_start $time_start",
+          "$date_end $time_end",
+          __('to','ec3'),
+          $active
+        );
+    }
     else
     {
-      if($date_start!=$date_end)
+      if($date_start!=$current)
       {
         $current=$date_start;
-        $result.=sprintf(
-            $format_range,
-            "$date_start $time_start",
-            "$date_end $time_end",
-            __('to','ec3'),
-            $active
-          );
+        $result.=sprintf($format_single,$date_start,$active);
       }
+      if($time_start==$time_end)
+        $result.=sprintf($format_single,$time_start,$active);
       else
-      {
-        if($date_start!=$current)
-        {
-          $current=$date_start;
-          $result.=sprintf($format_single,$date_start,$active);
-        }
-        if($time_start==$time_end)
-          $result.=sprintf($format_single,$time_start,$active);
-        else
-          $result.=
-            sprintf($format_range,$time_start,$time_end,__('to','ec3'),$active);
-      }
+        $result.=
+          sprintf($format_range,$time_start,$time_end,__('to','ec3'),$active);
     }
   }
   return sprintf($format_wrapper,$result);
@@ -688,7 +685,7 @@ function ec3_get_iconlets()
 
 /** Template function, for backwards compatibility.
  *  Call this from your template to insert the Sidebar Event Calendar. */
-function ec3_get_calendar($options)
+function ec3_get_calendar($options = false)
 {
   if(!ec3_check_installed('Event-Calendar'))
     return;
