@@ -536,6 +536,7 @@ function ec3_filter_the_content_bigcal(&$post_content)
       $options['id']='ec3_big_cal';
       $options['num_months']=1;
       $options['day_length']=9;
+      $options['show_only_events']=1;
       $re='/\[EC3BigCalendar(:(\w+=\w+(&|&amp;))*(\w+=\w+))?]/i';
       if(preg_match($re,$post_content,$m))
       {
