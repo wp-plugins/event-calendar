@@ -10,6 +10,10 @@
  width:100%;
 }
 
+#wp-calendar table caption {
+  text-align:center;
+}
+
 #wp-calendar #prev {
   text-align:left;
 }
