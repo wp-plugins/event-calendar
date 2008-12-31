@@ -14,6 +14,19 @@ TODO: Event Calendar 3.2
    every day for multi-day events.
    (Reported by Craig Rothman)
 
+ o ...also fix popup formatting in new sidebar calendar.
+
+ x Allow filtering by tags.
+
+ o API for creating / updating events. Allows other plug-ins to manipulate
+   EC3's data.
+ 
+ x Allow for multiple instances of Event List widget.
+
+ x Look at the qTranslate patch.
+ 
+ o Enhance iconlets.
+
 Event List:
 
  o Provide better example CSS. (Include it in ec3.css).
@@ -25,7 +38,7 @@ FUTURE
    With colour-coding for each category.
    Export each category as a separate iCalendar.
 
- o Fix category count.
+ x Fix category count.
    Templates that show the number of posts in each category will not
    always show the correct number for the event category. In advanced mode,
    expired events are not listed in the cat page, but they would be included in
