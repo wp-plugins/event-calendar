@@ -26,13 +26,23 @@ class ec3_Version
 
   function ec3_Version($str)
   {
-    $s=preg_replace('/([a-z])([0-9])/','\1.\2',$str);
+    $s=preg_replace('/([-a-z]+)([0-9]+)/','\1.\2',$str);
     $v=explode('.',$s);
     $this->part=array();
     foreach($v as $i)
     {
       if(preg_match('/^[0-9]+$/',$i))
           $this->part[]=intval($i);
+      elseif(preg_match('/^dev/',$i))
+          $this->part[]=-1000;
+      elseif(preg_match('/^_/',$i))
+          $this->part[]=-500;
+      elseif(preg_match('/^a(lpha)?/',$i))
+          $this->part[]=-3;
+      elseif(preg_match('/^b(eta)?/',$i))
+          $this->part[]=-2;
+      elseif(preg_match('/^rc?/',$i))
+          $this->part[]=-1;
       elseif(empty($i))
           $this->part[]=0;
       else
@@ -43,18 +53,19 @@ class ec3_Version
   /** Compares this version with $other. */
   function cmp($other)
   {
-    for($i=0; $i < min(count($this->part),count($other->part)); $i++)
+    for($i=0; $i < max(count($this->part),count($other->part)); $i++)
     {
+      // Fill in empty pieces.
+      if( !isset($this->part[$i]) )
+          $this->part[$i] = 0;
+      if( !isset($other->part[$i]) )
+          $other->part[$i] = 0;
+      // Compare
       if( $this->part[$i] > $other->part[$i] )
           return 1;
       if( $this->part[$i] < $other->part[$i] )
           return -1;
     }
-    // Equal so far - compare lengths
-    if( count($this->part) > count($other->part) )
-        return 1;
-    if( count($this->part) < count($other->part) )
-        return -1;
     // They really are equal.
     return 0;
   }
