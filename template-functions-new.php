@@ -690,8 +690,8 @@ function ec3_get_calendar($options = false)
   if(!ec3_check_installed('Event-Calendar'))
     return;
   require_once(dirname(__FILE__).'/calendar-sidebar.php');
-  $calobj = new ec3_SidebarCalendar();
-  echo $calobj->generate($options);
+  $calobj = new ec3_SidebarCalendar($options);
+  echo $calobj->generate();
 }
 
 
