@@ -238,17 +238,4 @@ if (window.opera && !window.XMLHttpRequest) {
     };
   };
 }
-// ActiveXObject emulation
-if (!window.ActiveXObject && window.XMLHttpRequest) {
-  window.ActiveXObject = function(type) {
-    switch (type.toLowerCase()) {
-      case 'microsoft.xmlhttp':
-      case 'msxml2.xmlhttp':
-      case 'msxml2.xmlhttp.3.0':
-      case 'msxml2.xmlhttp.4.0':
-      case 'msxml2.xmlhttp.5.0':
-        return new XMLHttpRequest();
-    }
-    return null;
-  };
-}
+
