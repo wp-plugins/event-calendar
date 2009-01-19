@@ -507,6 +507,15 @@ function ec3_filter_parse_query($wp_query)
 }
 
 
+function ec3_filter_redirect_canonical($redirect_url, $requested_url)
+{
+  if(is_feed() || preg_match('/[?](.*&(amp;)?)?ec3_/',$requested_url))
+    return FALSE; // cancel the redirection.
+  else
+    return $redirect_url;
+}
+
+
 function ec3_filter_the_content(&$post_content)
 {
   global $ec3;
@@ -593,19 +602,20 @@ function ec3_get_the_excerpt($text)
 // Hook in...
 if($ec3->event_category)
 {
-  add_action('init',             'ec3_action_init');
-  add_action('wp_head',          'ec3_action_wp_head');
-  add_action('admin_head',       'ec3_action_admin_head');
-  add_filter('query_vars',       'ec3_filter_query_vars');
-  add_filter('parse_query',      'ec3_filter_parse_query');
-  add_filter('posts_where',      'ec3_filter_posts_where',11);
-  add_filter('posts_join',       'ec3_filter_posts_join');
-  add_filter('posts_groupby',    'ec3_filter_posts_groupby');
-  add_filter('posts_fields',     'ec3_filter_posts_fields');
-  add_filter('post_limits',      'ec3_filter_post_limits');
-  add_filter('the_posts',        'ec3_filter_the_posts');
-  add_filter('get_archives_link','ec3_filter_get_archives_link');
-  add_filter('the_content',      'ec3_filter_the_content_bigcal');
+  add_action('init',              'ec3_action_init');
+  add_action('wp_head',           'ec3_action_wp_head');
+  add_action('admin_head',        'ec3_action_admin_head');
+  add_filter('query_vars',        'ec3_filter_query_vars');
+  add_filter('parse_query',       'ec3_filter_parse_query');
+  add_filter('posts_where',       'ec3_filter_posts_where',11);
+  add_filter('posts_join',        'ec3_filter_posts_join');
+  add_filter('posts_groupby',     'ec3_filter_posts_groupby');
+  add_filter('posts_fields',      'ec3_filter_posts_fields');
+  add_filter('post_limits',       'ec3_filter_post_limits');
+  add_filter('the_posts',         'ec3_filter_the_posts');
+  add_filter('get_archives_link', 'ec3_filter_get_archives_link');
+  add_filter('the_content',       'ec3_filter_the_content_bigcal');
+  add_filter('redirect_canonical','ec3_filter_redirect_canonical',10,2);
   
   if($ec3->show_event_box)
     add_filter('the_content','ec3_filter_the_content',20);
