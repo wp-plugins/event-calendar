@@ -188,9 +188,13 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
         . ($this->hide_logo? " style='display:none'>": ">")
         . "<span class='ec3_ec'><span>EC</span></span></a></td>";
     }
-    else
+    else if($num_days>0)
     {
       return "<td colspan='$num_days' class='pad'>&nbsp;</td>";
+    }
+    else
+    {
+      return '';
     }
   }
   
