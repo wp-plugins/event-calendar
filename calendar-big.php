@@ -29,7 +29,7 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
   }
   
   /** dayobj - ec3_CalendarDay object, may be empty. */
-  function wrap_day($daystr)
+  function wrap_day($dayarr)
   {
     $day_id = $this->dateobj->day_id();
 
@@ -57,7 +57,7 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
                  . $this->dateobj->day_link($this->show_only_events)
 		 . '">'.$this->dateobj->day_num.'</a>';
 
-    $result .= "<div>$daystr</div>";
+    $result .= '<div>'.implode("\n",$dayarr).'</div>';
     $result .= "</td>";
     return $result;
   }

@@ -782,11 +782,7 @@ ec3.extend( ec3.xml.Event.prototype, {
         return ec3.allday;
       var starts=this.element.getElementsByTagName('start');
       if(starts && starts.length)
-      {
-        var date=ec3.parse_datetime(starts[0].firstChild.data);
-        var mins=date.getMinutes();
-        return ''+date.getHours()+(mins<10?':0':':')+mins;
-      }
+        return starts[0].getAttribute('time');
       return null;
     }
 });

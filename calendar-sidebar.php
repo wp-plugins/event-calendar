@@ -199,7 +199,7 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
   }
   
   /** dayobj - ec3_CalendarDay object, may be empty. */
-  function wrap_day($daystr)
+  function wrap_day($dayarr)
   {
     $day_id = $this->dateobj->day_id();
     $td_attr = ' id="'.$this->id.'-'.$day_id.'"';
@@ -210,7 +210,7 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
     {
       $td_classes[] = 'ec3_postday';
       $a_attr = ' href="'.$this->dateobj->day_link($this->show_only_events)
-       . '" title="'.$daystr.'"';
+       . '" title="'.implode(', ',$dayarr).'"';
       if($this->dayobj->has_events())
       {
         $td_classes[] = 'ec3_eventday';

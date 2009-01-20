@@ -40,10 +40,10 @@ class ec3_ec3xml extends ec3_BasicCalendar
     return $weekstr;
   }
   
-  function wrap_day($daystr)
+  function wrap_day($dayarr)
   {
     if(empty($this->dayobj))
-      return $daystr;
+      return '';
 
     $day_id   = $this->dateobj->day_id();
     $date     = $this->dateobj->to_mysqldate();
@@ -53,16 +53,24 @@ class ec3_ec3xml extends ec3_BasicCalendar
       $result.=" titles='".implode(', ',$this->dayobj->titles)."'";
     if($this->dayobj->has_events())
       $result.=" is_event='1'";
-    if(empty($daystr))
+    if(empty($dayarr))
       $result .= "/>\n";
     else
-      $result .= ">\n".$daystr."</day>\n";
+      $result .= ">\n".implode("\n",$dayarr)."</day>\n";
     return $result;
   }
 
   function make_pad($num_days,$is_start_of_month)
   {
     return '';
+  }
+
+  /** Helper function, makes a <start> or <end> element. */
+  function _datetime_element($datetime,$tagname)
+  {
+    $datestr = mysql2date(get_option('date_format'),$datetime);
+    $timestr = mysql2date(get_option('time_format'),$datetime);
+    return "  <$tagname date='$datestr' time='$timestr'>$datetime</$tagname>\n";
   }
 
   function make_event(&$event)
@@ -79,11 +87,12 @@ class ec3_ec3xml extends ec3_BasicCalendar
     {
       $result .= ">\n";
       if(substr($event->start,0,10) < $this->dayobj->date)
-        $result.= "  <end>$event->end</end>\n";
+        $result.= $this->_datetime_element($event->end,'end');
       elseif(substr($event->end,0,10) > $this->dayobj->date)
-        $result.= "  <start>$event->start</start>\n";
+        $result.= $this->_datetime_element($event->start,'start');
       else
-        $result.= "  <start>$event->start</start>\n  <end>$event->end</end>\n";
+        $result.= $this->_datetime_element($event->start,'start')
+               .  $this->_datetime_element($event->end,'end');
     }
     $result .= " </event>\n";
     return $result;

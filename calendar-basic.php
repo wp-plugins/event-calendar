@@ -228,30 +228,31 @@ class ec3_BasicCalendar
   }
   
   /** dayobj - ec3_CalendarDay object, may be empty. */
-  function wrap_day($daystr)
+  function wrap_day($dayarr)
   {
-    return $daystr.' ';
+    return implode(', ',$dayarr).' ';
   }
 
-  /** dayobj - ec3_CalendarDay object, may be empty. */
+  /** dayobj - ec3_CalendarDay object, may be empty.
+   *  This function returns an array of strings, one for each event or post. */
   function make_day()
   {
     global $ec3;
-    $result = '';
+    $result = array();
     if(!empty($this->dayobj))
     {
       for($evt=$this->dayobj->iter_events_allday(); $evt->valid(); $evt->next())
-          $result .= $this->make_event_allday($ec3->event);
+          $result[] = $this->make_event_allday($ec3->event);
 
       for($evt=$this->dayobj->iter_events(); $evt->valid(); $evt->next())
-          $result .= $this->make_event($ec3->event);
+          $result[] = $this->make_event($ec3->event);
 
       foreach($this->dayobj->_posts as $p)
       {
         global $post;
         $post = get_post($p->ID);
         setup_postdata($post);
-        $result .= $this->make_post($post);
+        $result[] = $this->make_post($post);
       }
     }
     return $result;
@@ -303,8 +304,8 @@ class ec3_BasicCalendar
         // insert day
         $datetime    =  $curr_dateobj->to_mysqldate();
         $this->dayobj=  $this->_days[$datetime]; // might be empty
-        $daystr      =  $this->make_day();
-        $weekstr     .= $this->wrap_day($daystr);
+        $dayarr      =  $this->make_day();
+        $weekstr     .= $this->wrap_day($dayarr);
 
         $col++;
         $curr_dateobj->increment_day();
