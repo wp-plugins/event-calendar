@@ -637,7 +637,7 @@ function ec3_get_iconlets()
     $year_start =ec3_get_start_date('Y');
     $month_start=ec3_get_start_date('M');
     $day_start  =ec3_get_start_date('j');
-    // Don't bother about intr-day details.
+    // Don't bother about intra-day details.
     if($current==$day_start.$month_start.$year_start)
       continue;
     $current=$day_start.$month_start.$year_start;
