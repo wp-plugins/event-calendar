@@ -215,4 +215,35 @@ function ec3_widget_title($title,$default)
       return apply_filters('widget_title',$title);
 }
 
+
+if(version_compare(PHP_VERSION, '5.2.3') >= 0)
+{
+  $ec3_htmlspecialchars = 'htmlspecialchars';
+}
+else
+{
+  /** Utility function: provides a backwards compatible implementation of
+   *  htmlspecialchars() which supports the double_encode parameter. */
+  function ec3_htmlspecialchars(
+      $string,
+      $quote_style=FALSE,
+      $charset=FALSE,
+      $double_encode=TRUE
+    )
+  {
+    if($quote_style===FALSE)
+      return htmlspecialchars($string);
+    elseif($charset===FALSE)
+      return htmlspecialchars($string,$quote_style);
+    elseif($double_encode===TRUE)
+      return htmlspecialchars($string,$quote_style,$charset);
+    else
+    {
+      $s = html_entity_decode($string,$quote_style,$charset);
+      return htmlspecialchars($s,$quote_style,$charset);
+    }
+  }
+  $ec3_htmlspecialchars = 'ec3_htmlspecialchars';
+}
+
 ?>

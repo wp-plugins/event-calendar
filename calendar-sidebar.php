@@ -235,15 +235,17 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
 
   function make_post(&$post)
   {
+    global $ec3_htmlspecialchars;
     $safe_title=strip_tags(get_the_title());
     $safe_title=
       str_replace(
         array(',','@'),
         ' ',
-        htmlspecialchars(
+        $ec3_htmlspecialchars(
           stripslashes($safe_title),
           ENT_QUOTES,
-          get_option('blog_charset')
+          get_option('blog_charset'),
+          FALSE // double_encode
         )
       );
     return $safe_title;

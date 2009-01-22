@@ -77,8 +77,7 @@ class ec3_ec3xml extends ec3_BasicCalendar
   {
     global $id;
     $this->_add_detail();
-    $result = " <event post_id='pid_$id'";
-    $result .= " sched_id='sid_$event->sched_id'";
+    $result = " <event post_id='pid_$id' sched_id='sid_$event->sched_id'";
     if($event->allday)
     {
       $result .= " allday='1'>\n";
@@ -108,7 +107,7 @@ class ec3_ec3xml extends ec3_BasicCalendar
     
   function _add_detail()
   {
-    global $id, $post;
+    global $id, $post, $ec3_htmlspecialchars;
 
     // Record the post's title for today.
     $title=get_the_title();
@@ -119,10 +118,11 @@ class ec3_ec3xml extends ec3_BasicCalendar
       str_replace(
         array(',','@'),
         ' ',
-        htmlspecialchars(
+        $ec3_htmlspecialchars(
           stripslashes($safe_title),
           ENT_QUOTES,
-          get_option('blog_charset')
+          get_option('blog_charset'),
+          FALSE // double_encode
         )
       );
     if(!empty($post->ec3_schedule))
