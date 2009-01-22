@@ -566,6 +566,9 @@ function ec3_get_schedule(
   $format_wrapper=EC3_DEFAULT_FORMAT_WRAPPER
 )
 {
+  if(!ec3_is_event())
+    return '';
+
   global $ec3;
   $result='';
   $date_format=get_option('date_format');
@@ -628,6 +631,9 @@ function ec3_get_schedule(
  *  Returns the HTML fragment as a string. */
 function ec3_get_iconlets()
 {
+  if(!ec3_is_event())
+    return '';
+
   global $ec3;
   $result='';
   $current=false;
