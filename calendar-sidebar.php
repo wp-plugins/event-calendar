@@ -230,7 +230,10 @@ class ec3_SidebarCalendar extends ec3_BasicCalendar
   function make_event(&$event)
   {
     global $post;
-    return $this->make_post($post) . ' @' . ec3_get_start_time();
+    if($this->dayobj->date == substr($event->start,0,10))
+      return $this->make_post($post) . ' @' . ec3_get_start_time(); // same day
+    else
+      return '...' . $this->make_post($post); // continued from previous day.
   }
 
   function make_post(&$post)

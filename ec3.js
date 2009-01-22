@@ -780,9 +780,24 @@ ec3.extend( ec3.xml.Event.prototype, {
     {
       if(this.allday())
         return ec3.allday;
+      var result = '';
       var starts=this.element.getElementsByTagName('start');
+      var ends  =this.element.getElementsByTagName('end');
       if(starts && starts.length)
-        return starts[0].getAttribute('time');
-      return null;
+      {
+        result = starts[0].getAttribute('time');
+        if(ends && ends.length)
+          result += ' - ' + ends[0].getAttribute('time');
+        else
+          result += '...';
+      }
+      else
+      {
+        if(ends && ends.length)
+          result = '...' + ends[0].getAttribute('time');
+        else
+          result = '...'+ec3.allday+'...';
+      }
+      return result;
     }
 });

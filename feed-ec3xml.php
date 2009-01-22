@@ -76,7 +76,7 @@ class ec3_ec3xml extends ec3_BasicCalendar
   function make_event(&$event)
   {
     global $id;
-    $this->_add_detail();
+    $this->_add_detail($event);
     $result = " <event post_id='pid_$id' sched_id='sid_$event->sched_id'";
     if($event->allday)
     {
@@ -85,13 +85,10 @@ class ec3_ec3xml extends ec3_BasicCalendar
     else
     {
       $result .= ">\n";
-      if(substr($event->start,0,10) < $this->dayobj->date)
-        $result.= $this->_datetime_element($event->end,'end');
-      elseif(substr($event->end,0,10) > $this->dayobj->date)
+      if(substr($event->start,0,10) == $this->dayobj->date)
         $result.= $this->_datetime_element($event->start,'start');
-      else
-        $result.= $this->_datetime_element($event->start,'start')
-               .  $this->_datetime_element($event->end,'end');
+      if(substr($event->end,0,10) == $this->dayobj->date)
+        $result.= $this->_datetime_element($event->end,'end');
     }
     $result .= " </event>\n";
     return $result;
@@ -105,7 +102,7 @@ class ec3_ec3xml extends ec3_BasicCalendar
     return $result;
   }
     
-  function _add_detail()
+  function _add_detail($event=FALSE)
   {
     global $id, $post, $ec3_htmlspecialchars;
 
@@ -125,8 +122,13 @@ class ec3_ec3xml extends ec3_BasicCalendar
           FALSE // double_encode
         )
       );
-    if(!empty($post->ec3_schedule))
-      $safe_title .= ' @'.ec3_get_start_time();
+    if(!empty($event))
+    {
+      if($this->dayobj->date == substr($event->start,0,10))
+        $safe_title .= ' @'.ec3_get_start_time();
+      else
+        $safe_title = '...'.$safe_title;
+    }
     $this->dayobj->titles[] = $safe_title;
 
     // Make a unique <detail> element.

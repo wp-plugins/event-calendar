@@ -64,8 +64,24 @@ class ec3_BigCalendar extends ec3_SidebarCalendar
 
   function make_event(&$event)
   {
+    if($this->dayobj->date == substr($event->start,0,10))
+    {
+      $title = ec3_get_start_time(); // same day
+      if($this->dayobj->date == substr($event->end,0,10))
+        $title .= ' - ' . ec3_get_end_time();
+      else
+        $title .= '...';
+    }
+    else
+    {
+      if($this->dayobj->date == substr($event->end,0,10))
+        $title = '...' . ec3_get_end_time();
+      else
+        $title .= '...'.__('all day','ec3').'...';
+    }
+
     return "\n\t    "
-      . '<p class="ec3_event"><a title="'.ec3_get_start_time()
+      . '<p class="ec3_event"><a title="'.$title
       . '" href="'.get_permalink().'">'.get_the_title().'</a></p>';
   }
 
