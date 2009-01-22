@@ -16,6 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
+"Plural-Forms: nplurals=2; plural=(n==1? 0 : 1);"
 
 #: admin.php:121 admin.php:459
 msgid "Event Editor"
