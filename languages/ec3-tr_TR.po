@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-12-31 18:44+0000\n"
+"POT-Creation-Date: 2009-01-23 11:26+0000\n"
 "PO-Revision-Date: 2008-05-19 16:06+0200\n"
 "Last-Translator: Roman Neumüller <email@katpatuka.org>\n"
 "Language-Team: Roman Neumüller <email@katpatuka.org>\n"
@@ -147,13 +147,13 @@ msgstr ""
 "Zaman dilimi değişemezsin. PHP 'safe_mode=off' ayarlamak ya da PHP5'e "
 "yükseltmek lazım."
 
+#: calendar-big.php:80 template-functions-new.php:135
+msgid "all day"
+msgstr "bütün gün"
+
 #: calendar-sidebar.php:139
 msgid "Subscribe to iCalendar."
 msgstr "iCalendar'de abone ol"
-
-#: template-functions-new.php:135
-msgid "all day"
-msgstr "bütün gün"
 
 #: template-functions-new.php:489 widget-list.php:30 widget-list.php:46
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
@@ -164,8 +164,8 @@ msgstr "Gelecek Etkinlikler"
 msgid "No events."
 msgstr "Şu anda hiç bir etkinlik yok."
 
-#: template-functions-new.php:590 template-functions-new.php:605
-#: template-functions-new.php:620
+#: template-functions-new.php:593 template-functions-new.php:608
+#: template-functions-new.php:623
 msgid "to"
 msgstr "son:"
 

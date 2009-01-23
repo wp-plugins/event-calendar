@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: wpcal 3.2.beta1\n"
+"Project-Id-Version: wpcal 3.2.beta2\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-12-31 18:44+0000\n"
+"POT-Creation-Date: 2009-01-23 11:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,12 +139,12 @@ msgid ""
 "PHP5."
 msgstr ""
 
-#: calendar-sidebar.php:139
-msgid "Subscribe to iCalendar."
+#: calendar-big.php:80 template-functions-new.php:135
+msgid "all day"
 msgstr ""
 
-#: template-functions-new.php:135
-msgid "all day"
+#: calendar-sidebar.php:139
+msgid "Subscribe to iCalendar."
 msgstr ""
 
 #: template-functions-new.php:489 widget-list.php:30 widget-list.php:46
@@ -156,8 +156,8 @@ msgstr ""
 msgid "No events."
 msgstr ""
 
-#: template-functions-new.php:590 template-functions-new.php:605
-#: template-functions-new.php:620
+#: template-functions-new.php:593 template-functions-new.php:608
+#: template-functions-new.php:623
 msgid "to"
 msgstr ""
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ec3 v3.1.4 sl 1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-12-31 18:44+0000\n"
+"POT-Creation-Date: 2009-01-23 11:26+0000\n"
 "PO-Revision-Date: 2008-11-09 23:57+0100\n"
 "Last-Translator: Damjan Gerli <damjan@damjan.net>\n"
 "Language-Team: \n"
@@ -151,13 +151,13 @@ msgstr ""
 "Ne morete spremeniti časovnega pasa. Izklopite 'varen način' v PHP-ju ali ga "
 "nadgradite s PHP5."
 
+#: calendar-big.php:80 template-functions-new.php:135
+msgid "all day"
+msgstr "ves dan"
+
 #: calendar-sidebar.php:139
 msgid "Subscribe to iCalendar."
 msgstr "Naroči se na iCalendar."
-
-#: template-functions-new.php:135
-msgid "all day"
-msgstr "ves dan"
 
 #: template-functions-new.php:489 widget-list.php:30 widget-list.php:46
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
@@ -168,8 +168,8 @@ msgstr "Prihodnji dogodki"
 msgid "No events."
 msgstr "Ni dogodkov."
 
-#: template-functions-new.php:590 template-functions-new.php:605
-#: template-functions-new.php:620
+#: template-functions-new.php:593 template-functions-new.php:608
+#: template-functions-new.php:623
 msgid "to"
 msgstr "do"
 

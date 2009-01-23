@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.0\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-12-31 18:44+0000\n"
+"POT-Creation-Date: 2009-01-23 11:26+0000\n"
 "PO-Revision-Date: 2007-03-30 17:06+0200\n"
 "Last-Translator: Sushkov Stanislav <cool2sv@gmail.com>\n"
 "Language-Team: WordPress Romania <cool2sv@gmail.com>\n"
@@ -152,13 +152,13 @@ msgstr ""
 "Nu poţi schimba zona timpului. Închide 'safe mode'-ul la PHP sau "
 "actualizează la PHP5."
 
+#: calendar-big.php:80 template-functions-new.php:135
+msgid "all day"
+msgstr "întreaga zi"
+
 #: calendar-sidebar.php:139
 msgid "Subscribe to iCalendar."
 msgstr "Abonează-te la iCalendar"
-
-#: template-functions-new.php:135
-msgid "all day"
-msgstr "întreaga zi"
 
 #: template-functions-new.php:489 widget-list.php:30 widget-list.php:46
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
@@ -169,8 +169,8 @@ msgstr "Evenimente ce se apropie."
 msgid "No events."
 msgstr "Nici un eveniment."
 
-#: template-functions-new.php:590 template-functions-new.php:605
-#: template-functions-new.php:620
+#: template-functions-new.php:593 template-functions-new.php:608
+#: template-functions-new.php:623
 msgid "to"
 msgstr "până în"
 

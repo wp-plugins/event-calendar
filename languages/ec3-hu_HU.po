@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1.1._rc1\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-12-31 18:44+0000\n"
+"POT-Creation-Date: 2009-01-23 11:26+0000\n"
 "PO-Revision-Date: 2007-05-03 00:27+0100\n"
 "Last-Translator: Elbandi <elbandi@obinet.hu>\n"
 "Language-Team: Andras Elso <ea333@freemail.hu>\n"
@@ -145,13 +145,13 @@ msgstr ""
 "Nem tudod változtatni az idõzonát. Kapcsold ki a 'safe mode'-ot a PHP-bõl "
 "vagy frissíts PHP5-re."
 
+#: calendar-big.php:80 template-functions-new.php:135
+msgid "all day"
+msgstr "egész napos"
+
 #: calendar-sidebar.php:139
 msgid "Subscribe to iCalendar."
 msgstr "Feliratkozás iCalendar-ra."
-
-#: template-functions-new.php:135
-msgid "all day"
-msgstr "egész napos"
 
 #: template-functions-new.php:489 widget-list.php:30 widget-list.php:46
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
@@ -162,8 +162,8 @@ msgstr "Közeledõ esemény"
 msgid "No events."
 msgstr "Nincs esemény."
 
-#: template-functions-new.php:590 template-functions-new.php:605
-#: template-functions-new.php:620
+#: template-functions-new.php:593 template-functions-new.php:608
+#: template-functions-new.php:623
 msgid "to"
 msgstr "-"
 

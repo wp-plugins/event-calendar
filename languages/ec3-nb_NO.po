@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._pre15\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-12-31 18:44+0000\n"
+"POT-Creation-Date: 2009-01-23 11:26+0000\n"
 "PO-Revision-Date: 2006-10-05 23:33:22+0200\n"
 "Last-Translator: Realf Ording Helgesen\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,13 +142,13 @@ msgid ""
 "PHP5."
 msgstr ""
 
+#: calendar-big.php:80 template-functions-new.php:135
+msgid "all day"
+msgstr "hele dagen"
+
 #: calendar-sidebar.php:139
 msgid "Subscribe to iCalendar."
 msgstr "Abonner på iCalendar"
-
-#: template-functions-new.php:135
-msgid "all day"
-msgstr "hele dagen"
 
 #: template-functions-new.php:489 widget-list.php:30 widget-list.php:46
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
@@ -159,8 +159,8 @@ msgstr "Kommende hendelser"
 msgid "No events."
 msgstr "Ingen hendelser."
 
-#: template-functions-new.php:590 template-functions-new.php:605
-#: template-functions-new.php:620
+#: template-functions-new.php:593 template-functions-new.php:608
+#: template-functions-new.php:623
 msgid "to"
 msgstr "til"
 

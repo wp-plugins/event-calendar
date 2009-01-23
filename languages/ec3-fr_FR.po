@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpcal 3.1._rc2\n"
 "Report-Msgid-Bugs-To: eventcalendar@firetree.net\n"
-"POT-Creation-Date: 2008-12-31 18:44+0000\n"
+"POT-Creation-Date: 2009-01-23 11:26+0000\n"
 "PO-Revision-Date: 2008-06-01 23:16+0100\n"
 "Last-Translator: Comme une image <cui@burp.fr>\n"
 "Language-Team: French <davy.morel@tiscali.fr>\n"
@@ -150,13 +150,13 @@ msgstr ""
 "Vous ne pouvez changer votre fuseau horaire. Désactivez le  'safe mode' de "
 "PHP ou mettez à jour vers PHP5"
 
+#: calendar-big.php:80 template-functions-new.php:135
+msgid "all day"
+msgstr "journée entière"
+
 #: calendar-sidebar.php:139
 msgid "Subscribe to iCalendar."
 msgstr "S&#39;abonner à iCalendar."
-
-#: template-functions-new.php:135
-msgid "all day"
-msgstr "journée entière"
 
 #: template-functions-new.php:489 widget-list.php:30 widget-list.php:46
 #: K2/ec3_sidebar_module.php:71 K2/ec3_sidebar_module.php:77
@@ -167,8 +167,8 @@ msgstr "Evénements à venir"
 msgid "No events."
 msgstr "Pas d'événement."
 
-#: template-functions-new.php:590 template-functions-new.php:605
-#: template-functions-new.php:620
+#: template-functions-new.php:593 template-functions-new.php:608
+#: template-functions-new.php:623
 msgid "to"
 msgstr "au"
 
