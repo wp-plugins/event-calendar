@@ -276,7 +276,7 @@ class ec3_BasicCalendar
   function generate()
   {
     $result='';
-    $curr_dateobj = $this->begin_dateobj;
+    $curr_dateobj = clone($this->begin_dateobj);
     while($curr_dateobj->less_than($this->limit_dateobj))
     {
       $days_in_month =$curr_dateobj->days_in_month();
