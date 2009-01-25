@@ -297,7 +297,7 @@ function ec3_filter_posts_join(&$join)
   return $join;
 }
 
-/** Change the order of event listings (only advanced mode). */
+/** Change the order of event listings. */
 function ec3_filter_posts_orderby(&$orderby)
 {
   global $ec3, $wpdb;
@@ -609,6 +609,7 @@ if($ec3->event_category)
   add_filter('parse_query',       'ec3_filter_parse_query');
   add_filter('posts_where',       'ec3_filter_posts_where',11);
   add_filter('posts_join',        'ec3_filter_posts_join');
+  add_filter('posts_orderby',     'ec3_filter_posts_orderby',11);
   add_filter('posts_groupby',     'ec3_filter_posts_groupby');
   add_filter('posts_fields',      'ec3_filter_posts_fields');
   add_filter('post_limits',       'ec3_filter_post_limits');
@@ -625,7 +626,6 @@ if($ec3->event_category)
   
   if($ec3->advanced)
   {
-    add_filter('posts_orderby','ec3_filter_posts_orderby',11);
     // In advanced mode, exclude events from the archive.
     add_filter('getarchives_join', 'ec3_filter_getarchives_join');
     add_filter('getarchives_where','ec3_filter_getarchives_where');
