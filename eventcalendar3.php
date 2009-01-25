@@ -546,12 +546,12 @@ function ec3_filter_the_content_bigcal(&$post_content)
       $options['num_months']=1;
       $options['day_length']=9;
       $options['show_only_events']=1;
-      $re='/\[EC3BigCalendar(:(\w+=\w+(&|&amp;))*(\w+=\w+))?]/i';
+      $re='/\[EC3BigCalendar(:(\w+=\w+(&|&amp;|&#0*38;))*(\w+=\w+))?]/i';
       if(preg_match($re,$post_content,$m))
       {
         if(!empty($m[1]))
         {
-          $args = strtolower(html_entity_decode($m[1]));
+          $args = strtolower(preg_replace('/(&amp;|&#0*38;)/','&',$m[1]));
           $options = wp_parse_args(substr($args,1),$options);
         }
         $placeholder = $m[0];
