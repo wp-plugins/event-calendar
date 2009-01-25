@@ -94,7 +94,7 @@ function ec3_widget_cal_control()
    <label for="ec3_cal_navigation"
     title="<?php _e('The navigation links are more usable when they are above the calendar, but you might prefer them below or hidden for aesthetic reasons.','ec3') ?>">
     <?php _e('Position of navigation links','ec3') ?>:<br />
-    <select name="ec3_navigation">
+    <select name="ec3_cal_navigation">
      <option value='0'<?php if(0==!$cal->navigation) echo " selected='selected'" ?> >
       <?php _e('Above Calendar','ec3'); ?>
      </option>
