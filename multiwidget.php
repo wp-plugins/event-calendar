@@ -222,7 +222,8 @@ class MultiWidget
             isset($wp_registered_widgets[$_widget_id]['params'][0]['number']) )
         {
           $number = $wp_registered_widgets[$_widget_id]['params'][0]['number'];
-          if( !in_array( $this->id_base.'-'.$number, $_POST['widget-id'] ) )
+          if( empty($_POST['widget-id']) || !is_array($_POST['widget-id'] ) ||
+              !in_array( $this->id_base.'-'.$number, $_POST['widget-id'] ) )
           {
             // the widget has been removed.
             unset($all_instances[$number]);
@@ -367,7 +368,7 @@ class ExampleMultiWidget extends MultiWidget
 
 // Finally create an object for the widget-type and register it.
 $example_multi = new ExampleMultiWidget();
-add_action( 'widgets_init', array($example_multi,'register') );
+add_action( 'widgets_init', array(&$example_multi,'register') );
 
 */
  
