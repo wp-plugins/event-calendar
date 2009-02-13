@@ -253,9 +253,7 @@ function ec3_filter_posts_where(&$where)
        $ec3->join_ec3_sch=true;
      endif;
 
-  elseif($ec3->advanced):
-
-      if($listing=='E'):                                       // EVENTS only
+  elseif($listing=='E'):                                       // EVENTS only
 
           // Hide inactive events
           $where.=" AND ec3_sch.post_id IS NOT NULL ";
@@ -265,7 +263,8 @@ function ec3_filter_posts_where(&$where)
           global $wp;
           $wp->did_permalink=false; // Allows zero results without -> 404
 
-      elseif($ec3->query->is_search):
+  elseif($ec3->advanced):
+      if($ec3->query->is_search):
 
           $where.=' AND (ec3_sch.post_id IS NULL OR '
                        ."ec3_sch.end>='$ec3->today')";
